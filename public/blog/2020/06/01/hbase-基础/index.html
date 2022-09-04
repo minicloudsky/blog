@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>hbase 基础 - Minicloudsky&#39;s blog</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="minicloudsky" />
+  <meta name="description" content="hbase 是一个基于列存储的数据库，底层存储可以用hdfs，也可以用本地文件系统，这里记录下常用操作。 数据模型 在 HBase 中，数据存储在由行列构成的二维表中" />
+
+  <meta name="keywords" content="minicloudsky" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.99.1" />
+
+
+<link rel="canonical" href="http://minicloudsky.github.io/blog/2020/06/01/hbase-%E5%9F%BA%E7%A1%80/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.fa4b2b9f31b5c6d0b683db81157a9226e17b06e61911791ab547242a4a0556f2.css" integrity="sha256-&#43;ksrnzG1xtC2g9uBFXqSJuF7BuYZEXkatUckKkoFVvI=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+
+
+<meta property="og:title" content="hbase 基础" />
+<meta property="og:description" content="hbase 是一个基于列存储的数据库，底层存储可以用hdfs，也可以用本地文件系统，这里记录下常用操作。 数据模型 在 HBase 中，数据存储在由行列构成的二维表中" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://minicloudsky.github.io/blog/2020/06/01/hbase-%E5%9F%BA%E7%A1%80/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-06-01T15:59:14+00:00" />
+<meta property="article:modified_time" content="2020-06-01T15:59:14+00:00" />
+
+<meta itemprop="name" content="hbase 基础">
+<meta itemprop="description" content="hbase 是一个基于列存储的数据库，底层存储可以用hdfs，也可以用本地文件系统，这里记录下常用操作。 数据模型 在 HBase 中，数据存储在由行列构成的二维表中"><meta itemprop="datePublished" content="2020-06-01T15:59:14+00:00" />
+<meta itemprop="dateModified" content="2020-06-01T15:59:14+00:00" />
+<meta itemprop="wordCount" content="3364">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="hbase 基础"/>
+<meta name="twitter:description" content="hbase 是一个基于列存储的数据库，底层存储可以用hdfs，也可以用本地文件系统，这里记录下常用操作。 数据模型 在 HBase 中，数据存储在由行列构成的二维表中"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">minicloudsky</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://minicloudsky.github.io/">Home</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://minicloudsky.github.io/post/">Archives</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://minicloudsky.github.io/tags/">Tags</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://minicloudsky.github.io/categories/">Categories</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://minicloudsky.github.io/about/">Minicloudsky&#39;s blog</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      minicloudsky
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://minicloudsky.github.io/">Home</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://minicloudsky.github.io/post/">Archives</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://minicloudsky.github.io/tags/">Tags</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://minicloudsky.github.io/categories/">Categories</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://minicloudsky.github.io/about/">Minicloudsky&#39;s blog</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight wallpaper">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">hbase 基础</h1>
+      
+      <div class="post-meta">
+        <time datetime="2020-06-01" class="post-time">
+          2020-06-01
+        </time>
+        <div class="post-category">
+            <a href="http://minicloudsky.github.io/categories/">  </a>
+            
+          </div>
+        
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Table of Contents</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#hbase-是一个基于列存储的数据库底层存储可以用hdfs也可以用本地文件系统这里记录下常用操作">hbase 是一个基于列存储的数据库，底层存储可以用hdfs，也可以用本地文件系统，这里记录下常用操作。</a>
+      <ul>
+        <li><a href="#数据模型">数据模型</a></li>
+        <li><a href="#概念视角---hbase-模式设计">概念视角 - HBase 模式设计</a></li>
+        <li><a href="#物理视角">物理视角</a></li>
+        <li><a href="#命名空间">命名空间</a></li>
+        <li><a href="#命名空间管理">命名空间管理</a></li>
+        <li><a href="#预定义的名称空间">预定义的名称空间</a></li>
+        <li><a href="#表">表</a></li>
+        <li><a href="#行">行</a></li>
+        <li><a href="#列族">列族</a></li>
+        <li><a href="#单元格">单元格</a></li>
+        <li><a href="#数据模型操作">数据模型操作</a></li>
+        <li><a href="#版本">版本</a></li>
+        <li><a href="#排序顺序">排序顺序</a></li>
+        <li><a href="#列的元数据">列的元数据</a></li>
+        <li><a href="#hbase-表-schema-的经验法则">HBase 表 Schema 的经验法则</a></li>
+        <li><a href="#用-hbase-shell连接正在运行的hbase实例">用 hbase shell连接正在运行的Hbase实例</a></li>
+        <li><a href="#创建表">创建表</a></li>
+        <li><a href="#表信息---使用-list-查看存在表">表信息 - 使用 <code>list</code> 查看存在表</a></li>
+        <li><a href="#describe-查看表细节及配置">describe 查看表细节及配置</a></li>
+        <li><a href="#插入数据使用-put-插入数据">插入数据，使用 <code>put</code> 插入数据</a></li>
+        <li><a href="#扫描全部数据">扫描全部数据</a></li>
+        <li><a href="#获取一条数据">获取一条数据</a></li>
+        <li><a href="#禁用表">禁用表</a></li>
+        <li><a href="#删除表---用-drop-删除一个表">删除表 - 用 <code>drop</code> 删除一个表</a></li>
+        <li><a href="#获取表行数">获取表行数</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <h2 id="hbase-是一个基于列存储的数据库底层存储可以用hdfs也可以用本地文件系统这里记录下常用操作">hbase 是一个基于列存储的数据库，底层存储可以用hdfs，也可以用本地文件系统，这里记录下常用操作。</h2>
+<h3 id="数据模型">数据模型</h3>
+<p>在 HBase 中，数据存储在由行列构成的二维表中，这是与一个关系数据库(RDBMS)重叠的术语，但这不是一个有帮助的比喻，相反，将hbase 表视为多表映射会很有帮助。</p>
+<ul>
+<li>表
+HBase 表由多行组成</li>
+<li>行
+HBase 中的一行由一个行键和一个或多个具有与之关联的值的列组成，存储时候按照行键排序，因此，行键设计非常重要，其目标是以相关行彼此靠近的方式存储数据。。常见的行键模式是网站域名。如果您的行键是域名，则应该反向存储它们（org.apache.www，org.apache.mail，org.apache.jira）。这样，所有 Apache 域名都在表中彼此靠近，而不是基于子域名的第一个字母展开。</li>
+<li>列
+HBase 中的列由列族和列限定符组成，它们由 : (冒号) 字符分隔</li>
+<li>列族
+出于性能原因，列族通常在物理上拥有一簇列及其值。每个列族都有一组存储属性，例如是否应该将其值缓存在内存中，如何压缩其数据或对其行间进行编码等，表中的每一行都有相同的列族，到给定的行肯呢个不会再给定的列族中存储任何内容。</li>
+<li>列限定符
+列限定符被添加到列族中，以提供给定数据段的索引，给定<code>列族</code> content，列限定符可能是 <code>content:html</code>,另一个可能是 <code>content:pdf</code>，列族在创建表时候是固定的，但是列限定符是可变的，并且行之间可能有很大差异。</li>
+<li>单元格
+单元格是行，列族和列限定符的组合，它包含一个值和一个时间戳，时间戳表示值的版本。</li>
+<li>时间戳
+时间戳与每个值一起写入，它是该值给定版本的标识符，默认情况下，时间戳表示写入数据时 RegionServer 上的时间，但是当年将数据放入单元格时候，可以指定不同的时间戳值。</li>
+</ul>
+<h3 id="概念视角---hbase-模式设计">概念视角 - HBase 模式设计</h3>
+<p>参考 <a href="https://zhuanlan.zhihu.com/p/36235199">HBase 模式设计介绍</a></p>
+<h3 id="物理视角">物理视角</h3>
+<p>在概念级别，表可以看作一组稀疏的行，但在物理意义上它们是按照列族存储的，可以随时将新的列限定符(column_family:column_qualifier) 添加到现有列族中
+ColumnFamily website
+Row Key | Time Stamp | 列族 anchor
+&ldquo;com.cnn.www&rdquo; |	t9 |	anchor:cnnsi.com = &ldquo;CNN&rdquo;
+&ldquo;com.cnn.www&rdquo; |	t8 |	anchor:my.look.ca = &ldquo;CNN.com&rdquo;</p>
+<p>ColumnFamily contents
+Row Key | Time Stamp | ColumnFamily contents:
+&ldquo;com.cnn.www&rdquo;|	t6  |	contents:html = &ldquo;…​&rdquo;
+&ldquo;com.cnn.www&rdquo;|	t5	|contents:html = &ldquo;…​&rdquo;
+&ldquo;com.cnn.www&rdquo;|	t3  |	contents:html = &ldquo;…​&rdquo;
+概念视角中显示的空单元格不占据物理存储空间，因此，在时间戳 t8 处对 <code>contents:html</code> 列的值的请求将不返回任何值。类似地，在时间戳t9处对anchor:my.look.ca值的请求将不返回任何值。但是，如果未提供时间戳，则将返回特定列的最新值。给定多个版本，最新版本也是第一个版本，因为时间戳按降序存储。因此，如果没有指定时间戳，则对行com.cnn.www中所有列的值的请求将是：来自时间戳t6的contents:html的值，来自时间戳t9的anchor:cnnsi.com的值，来自时间戳t8的anchor:my.look.ca。</p>
+<h3 id="命名空间">命名空间</h3>
+<p>命名空间是与关系数据库系统中的数据库类似的表的逻辑分组，这种抽象为即将出现的多租户相关功能奠定了基础</p>
+<ul>
+<li>配额管理 限制命名空间可以使用的资源数量(即区域、表)</li>
+<li>命名空间安全管理 - 为用户提供另一级别的安全管理</li>
+<li>区域服务器组 - 可以将命名空间/表固定到 RegionServers 的子集上，从而保证粗粒度的隔离级别。</li>
+</ul>
+<h3 id="命名空间管理">命名空间管理</h3>
+<p>一个空间可以被创建，被删除或被更改，通过制定表单的完全限定表名，在表创建期间确定命名空间成员资格</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;table</span> <span style="color:#960050;background-color:#1e0010">namespace</span><span style="color:#f92672">&gt;</span>:<span style="color:#f92672">&lt;table</span> <span style="color:#960050;background-color:#1e0010">qualifier</span><span style="color:#f92672">&gt;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># Create a namespace</span>
+</span></span><span style="display:flex;"><span>create_namespace <span style="color:#e6db74">&#39;project&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># create my_table in project namespace</span>
+</span></span><span style="display:flex;"><span>create <span style="color:#e6db74">&#39;project:my_table&#39;</span> ,<span style="color:#e6db74">&#39;fam&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># drop namespace</span>
+</span></span><span style="display:flex;"><span>drop_namespace <span style="color:#e6db74">&#39;project&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># alter namespace</span>
+</span></span><span style="display:flex;"><span>alter_namespace <span style="color:#e6db74">&#39;project&#39;</span>,<span style="color:#f92672">{</span>METHOD <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#39;set&#39;</span>,<span style="color:#e6db74">&#39;PROPERTY_NAME&#39;</span> <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#39;PROPERTY_NAME&#39;</span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h3 id="预定义的名称空间">预定义的名称空间</h3>
+<p>有两个预定义的特殊命名空间</p>
+<ul>
+<li>hbase - 系统命名空间，用于包含 HBase 内部表</li>
+<li>default - 没有明确制定名称空间的表将自动落入此名称空间</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#namespace=foo and table qualifier=bar</span>
+</span></span><span style="display:flex;"><span>create <span style="color:#e6db74">&#39;foo:bar&#39;</span>, <span style="color:#e6db74">&#39;fam&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#namespace=default and table qualifier=bar</span>
+</span></span><span style="display:flex;"><span>create <span style="color:#e6db74">&#39;bar&#39;</span>, <span style="color:#e6db74">&#39;fam&#39;</span> 
+</span></span></code></pre></div><h3 id="表">表</h3>
+<p>表在模式定义时预先声明</p>
+<h3 id="行">行</h3>
+<p>行键是无解释的字节，行按字典顺序排序，最低顺序首先出现在表中，空字节数组用于表示表的名称空间的开始和结束</p>
+<h3 id="列族">列族</h3>
+<p>HBase 中的列分组为列族，列族的所有列成员都具有相同的前缀。例如，列 <code>courses:history</code> 和 <code>courses:math</code> 都是 <code>courses</code> 列族的成员，冒号字符(:) 从列族限定符中分隔列族。列族前缀必须由可打印字符组成，限定符的右部(列族限定符)可以由任意字节组成。列族必须在模式定义时预先定义，且可以在表启动和运行时动态变化。
+从物理上讲，所有列族成员都存储在文件系统中。由于调优和存储规范是在列族级别完成的，因此建议所有列族成员具有相同的一般访问模式和大小特征。</p>
+<h3 id="单元格">单元格</h3>
+<p>{row,column,version} 它是一个元祖并确切地指定了 HBase 的cell，单元格内容是未解释的字节。</p>
+<h3 id="数据模型操作">数据模型操作</h3>
+<p>四个主要的数据模型操作是 Get,Put,Scan和 Delete，通过表实例应用操作。</p>
+<h3 id="版本">版本</h3>
+<p>{row，column，version} 元祖确切地指定了 HBase 中的 cell，可以有一个无限数量的单元格，其中行和列相同但单元格地址仅在其版本纬度上有所不同。</p>
+<h3 id="排序顺序">排序顺序</h3>
+<p>HBase 中所有数据模型的操作都将按照排序顺序返回数据，首先是行，然后是列族，后面是列限定符，最后是时间戳(反向排序，因此首先返回最新的时间戳。)</p>
+<h3 id="列的元数据">列的元数据</h3>
+<p>列族的内部 KeyValue 实例之外没有列的元数据存储，因此，尽管HBase 不紧可以支持每行的大量列，而且还可以支持行之间的异构列，因此有必要追踪列名。
+获取列族存在的完整列集合的唯一方法是处理所有行。
+虽然行和列键表示为字节，但版本则使用长整数（long integer）类型指定。通常这个长时间类型包含时间实例，例如java.util.Date.getTime()或System.currentTimeMillis()返回的时间实例，即：当前时间与 UTC 时间 1970 年 1 月 1 日午夜之间的差异（以毫秒为单位）。</p>
+<p>HBase 版本维度按递减顺序存储，以便在从存储文件中读取时，首先找到最近的值。
+在 HBase 中，cell版本的语义存在很多混淆。特别是：
+如果对单元格的多次写入具有相同的版本，则只能读取最后写入的内容。
+可以按非增加版本顺序写入单元格。</p>
+<h3 id="hbase-表-schema-的经验法则">HBase 表 Schema 的经验法则</h3>
+<p>因为存在许多种数据集，不同的访问模式和服务层级的要求。以下经验法则只是概述。</p>
+<ul>
+<li>目标是把 region 的大小限制在 10-50 GB之间</li>
+<li>目标是限制 cell 的大小在 10MB 之内，如果使用的是 mob 类型，限制在 50 MB 之内。否则，考虑把 cell 的数据存储在 HDFS中，并在 HBase 中存储指向该数据的指针。</li>
+<li>典型 schema 每张表包含1-3个列族，HBase 表设计不应该和 RDBMS 表设计类似</li>
+<li>对于拥有1或者2个列族的表来说，50-100个 region 是比较合适的。region 是列族的连续段。</li>
+<li>保持列族名称尽可能短。每个值都会存储列族的名称(忽略前缀编码)。它们不应该像典型 RDBMS 那样，是自文档化，描述性的名称。</li>
+<li>如果你正在存储基于时间的机器数据或者日志信息，并且 row key 是基于设备id 或者服务id + 时间，最终会出现这样一种情况，即更旧的数据 region 永远不会有额外写入。在这种情况下，最终会存在少量的活动 region 和大量不会再有新写入的 region。对于这种情况，可以接受更多的 region 数量，因为资源的消耗只取决于活动 region。</li>
+<li>如果只有一个列族会频繁写那么只会让这个列族占用内存，当分配资源时候注意写入模式。</li>
+</ul>
+<h3 id="用-hbase-shell连接正在运行的hbase实例">用 hbase shell连接正在运行的Hbase实例</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#f92672">[</span>tools@uatgw01 ~<span style="color:#f92672">]</span>$ hbase shell
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>HBase Shell
+</span></span><span style="display:flex;"><span>Use <span style="color:#e6db74">&#34;help&#34;</span> to get list of supported commands.
+</span></span><span style="display:flex;"><span>Use <span style="color:#e6db74">&#34;exit&#34;</span> to quit this interactive shell.
+</span></span><span style="display:flex;"><span>For Reference, please visit: http://hbase.apache.org/2.0/book.html#shell
+</span></span><span style="display:flex;"><span>Version 2.1.0-cdh6.3.1, rUnknown, Thu Sep <span style="color:#ae81ff">26</span> 02:56:36 PDT <span style="color:#ae81ff">2019</span>
+</span></span><span style="display:flex;"><span>Took 0.0018 seconds                                                                                
+</span></span><span style="display:flex;"><span>hbase<span style="color:#f92672">(</span>main<span style="color:#f92672">)</span>:001:0&gt; 
+</span></span><span style="display:flex;"><span>hbase<span style="color:#f92672">(</span>main<span style="color:#f92672">)</span>:002:0* 
+</span></span></code></pre></div><h3 id="创建表">创建表</h3>
+<p>使用 create 创建一个表，必须执行一个表名和列族名</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>hbase<span style="color:#f92672">(</span>main<span style="color:#f92672">)</span>:002:0* create <span style="color:#e6db74">&#39;hbase_test&#39;</span>,<span style="color:#e6db74">&#39;cf&#39;</span>
+</span></span><span style="display:flex;"><span>Created table hbase_test
+</span></span><span style="display:flex;"><span>Took 2.5584 seconds                                                                                
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span>&gt; Hbase::Table - hbase_test
+</span></span><span style="display:flex;"><span>hbase<span style="color:#f92672">(</span>main<span style="color:#f92672">)</span>:003:0&gt;
+</span></span></code></pre></div><h3 id="表信息---使用-list-查看存在表">表信息 - 使用 <code>list</code> 查看存在表</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>hbase<span style="color:#f92672">(</span>main<span style="color:#f92672">)</span>:003:0&gt; list <span style="color:#e6db74">&#39;hbase_test&#39;</span>
+</span></span><span style="display:flex;"><span>TABLE                                                                                              
+</span></span><span style="display:flex;"><span>hbase_test                                                                                         
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span> row<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Took 0.0318 seconds                                                                                
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span>&gt; <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;hbase_test&#34;</span><span style="color:#f92672">]</span>
+</span></span></code></pre></div><!-- raw HTML omitted -->
+<h3 id="describe-查看表细节及配置">describe 查看表细节及配置</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>hbase<span style="color:#f92672">(</span>main<span style="color:#f92672">)</span>:004:0&gt; describe <span style="color:#e6db74">&#39;hbase_test&#39;</span>
+</span></span><span style="display:flex;"><span>Table hbase_test is ENABLED                                                                        
+</span></span><span style="display:flex;"><span>hbase_test                                                                                         
+</span></span><span style="display:flex;"><span>COLUMN FAMILIES DESCRIPTION                                                                        
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span>NAME <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#39;cf&#39;</span>, VERSIONS <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#39;1&#39;</span>, EVICT_BLOCKS_ON_CLOSE <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#39;false&#39;</span>, NEW_VERSION_BEHAVIOR <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#39;false&#39;</span>, 
+</span></span><span style="display:flex;"><span>KEEP_DELETED_CELLS <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#39;FALSE&#39;</span>, CACHE_DATA_ON_WRITE <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#39;false&#39;</span>, DATA_BLOCK_ENCODING <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#39;NONE&#39;</span>, TTL <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>&gt; <span style="color:#e6db74">&#39;FOREVER&#39;</span>, MIN_VERSIONS <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#39;0&#39;</span>, REPLICATION_SCOPE <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#39;0&#39;</span>, BLOOMFILTER <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#39;ROW&#39;</span>, CACHE_INDEX_ON_WR
+</span></span><span style="display:flex;"><span>ITE <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#39;false&#39;</span>, IN_MEMORY <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#39;false&#39;</span>, CACHE_BLOOMS_ON_WRITE <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#39;false&#39;</span>, PREFETCH_BLOCKS_ON_OPEN <span style="color:#f92672">=</span>&gt; 
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;false&#39;</span>, COMPRESSION <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#39;NONE&#39;</span>, BLOCKCACHE <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#39;true&#39;</span>, BLOCKSIZE <span style="color:#f92672">=</span>&gt; <span style="color:#e6db74">&#39;65536&#39;</span><span style="color:#f92672">}</span>                        
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span> row<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Took 0.2977 seconds
+</span></span></code></pre></div><h3 id="插入数据使用-put-插入数据">插入数据，使用 <code>put</code> 插入数据</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>hbase<span style="color:#f92672">(</span>main<span style="color:#f92672">)</span>:005:0&gt; put <span style="color:#e6db74">&#39;hbase_test&#39;</span>,<span style="color:#e6db74">&#39;row1&#39;</span>,<span style="color:#e6db74">&#39;cf:aaa&#39;</span>,<span style="color:#e6db74">&#39;value1&#39;</span>
+</span></span><span style="display:flex;"><span>Took 0.2313 seconds                                                                                
+</span></span><span style="display:flex;"><span>hbase<span style="color:#f92672">(</span>main<span style="color:#f92672">)</span>:006:0&gt; put <span style="color:#e6db74">&#39;hbase_test&#39;</span>,<span style="color:#e6db74">&#39;row2&#39;</span>,<span style="color:#e6db74">&#39;cf:bbb&#39;</span>,<span style="color:#e6db74">&#39;value2&#39;</span>
+</span></span><span style="display:flex;"><span>Took 0.0093 seconds                                                                                
+</span></span><span style="display:flex;"><span>hbase<span style="color:#f92672">(</span>main<span style="color:#f92672">)</span>:007:0&gt; put <span style="color:#e6db74">&#39;hbase_test&#39;</span>,<span style="color:#e6db74">&#39;row3&#39;</span>,<span style="color:#e6db74">&#39;cf:ccc&#39;</span>,<span style="color:#e6db74">&#39;value3&#39;</span>
+</span></span><span style="display:flex;"><span>Took 0.0066 seconds  
+</span></span></code></pre></div><p>这里，我们往 <code>test</code> 表插入了三条数据，首先插入了一条 rowky 为 <code>row1</code>，列为 <code>cf:a</code>、值为<code>value``的数据。HBase 中的列是包含列族前缀的，在这个例子里，冒号前的未列</code>cf<code>,冒号后的未列限定符 </code>a`</p>
+<h3 id="扫描全部数据">扫描全部数据</h3>
+<p>从 HBase 获取数据的途径之一就是 <code>scan</code>，使用 scan 命令扫描表数据，你可以对扫描做限制，这里获取全部的数据。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>hbase<span style="color:#f92672">(</span>main<span style="color:#f92672">)</span>:008:0&gt; scan <span style="color:#e6db74">&#39;hbase_test&#39;</span>
+</span></span><span style="display:flex;"><span>ROW                       COLUMN+CELL                                                              
+</span></span><span style="display:flex;"><span> row1                     column<span style="color:#f92672">=</span>cf:aaa, timestamp<span style="color:#f92672">=</span>1612166766975, value<span style="color:#f92672">=</span>value1                     
+</span></span><span style="display:flex;"><span> row2                     column<span style="color:#f92672">=</span>cf:bbb, timestamp<span style="color:#f92672">=</span>1612166780484, value<span style="color:#f92672">=</span>value2                     
+</span></span><span style="display:flex;"><span> row3                     column<span style="color:#f92672">=</span>cf:ccc, timestamp<span style="color:#f92672">=</span>1612166789458, value<span style="color:#f92672">=</span>value3                     
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">3</span> row<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Took 0.0790 seconds 
+</span></span></code></pre></div><h3 id="获取一条数据">获取一条数据</h3>
+<p>使用 <code>get</code> 一次获取一条数据</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>hbase<span style="color:#f92672">(</span>main<span style="color:#f92672">)</span>:009:0&gt; get <span style="color:#e6db74">&#39;hbase_test&#39;</span>,<span style="color:#e6db74">&#39;row1&#39;</span>
+</span></span><span style="display:flex;"><span>COLUMN                    CELL                                                                     
+</span></span><span style="display:flex;"><span> cf:aaa                   timestamp<span style="color:#f92672">=</span>1612166766975, value<span style="color:#f92672">=</span>value1                                    
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span> row<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Took 0.0278 seconds 
+</span></span></code></pre></div><h3 id="禁用表">禁用表</h3>
+<p>删除一个表或者改变表的设置，以及一些其他的场景，需要首先用 <code>disable</code> 禁用表，可以使用<code>enable</code>启用表</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>hbase<span style="color:#f92672">(</span>main<span style="color:#f92672">)</span>:010:0&gt; disable <span style="color:#e6db74">&#39;hbase_test&#39;</span>
+</span></span><span style="display:flex;"><span>Took 1.4835 seconds                                                                                
+</span></span><span style="display:flex;"><span>hbase<span style="color:#f92672">(</span>main<span style="color:#f92672">)</span>:011:0&gt; enable <span style="color:#e6db74">&#39;hbase_test&#39;</span>
+</span></span><span style="display:flex;"><span>Took 0.7826 seconds 
+</span></span></code></pre></div><h3 id="删除表---用-drop-删除一个表">删除表 - 用 <code>drop</code> 删除一个表</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>hbase<span style="color:#f92672">(</span>main<span style="color:#f92672">)</span>:013:0&gt; drop <span style="color:#e6db74">&#39;hbase_test&#39;</span>
+</span></span><span style="display:flex;"><span>Took 0.6806 seconds
+</span></span></code></pre></div><h3 id="获取表行数">获取表行数</h3>
+<p>Count命令返回表中的行数，配置正确的 CACHE 时速度非常快</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>hbase<span style="color:#f92672">(</span>main<span style="color:#f92672">)</span>:001:0&gt; count <span style="color:#e6db74">&#39;test&#39;</span>,CACHE <span style="color:#f92672">=</span>&gt; <span style="color:#ae81ff">1000</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">4</span> row<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Took 0.0524 seconds                                                                                
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span>&gt; <span style="color:#ae81ff">4</span>
+</span></span></code></pre></div><p>上述计数一次取 1000 行。如果行很大，请将 CACHE 设置得较低。默认是每次读取一行。</p>
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">minicloudsky</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+      2020-06-01
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/blog/2020/07/01/neo4j-%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%A6%E4%B9%A0/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">neo4j 图数据库学习</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        
+          <a class="next" href="/blog/2020/02/09/linux%E4%B8%ADswap%E4%B8%8Ememory%E4%BB%8B%E7%BB%8D/">
+            <span class="next-text nav-default">Linux中swap与memory介绍</span>
+            <span class="prev-text nav-mobile">Next</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:minicloudsky@email.com" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="http://github.com/minicloudsky" rel="me noopener" class="iconfont"
+      title="github"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M512 12.672c-282.88 0-512 229.248-512 512 0 226.261333 146.688 418.133333 350.08 485.76 25.6 4.821333 34.986667-11.008 34.986667-24.618667 0-12.16-0.426667-44.373333-0.64-87.04-142.421333 30.890667-172.458667-68.693333-172.458667-68.693333C188.672 770.986667 155.008 755.2 155.008 755.2c-46.378667-31.744 3.584-31.104 3.584-31.104 51.413333 3.584 78.421333 52.736 78.421333 52.736 45.653333 78.293333 119.850667 55.68 149.12 42.581333 4.608-33.109333 17.792-55.68 32.426667-68.48-113.706667-12.8-233.216-56.832-233.216-253.013333 0-55.893333 19.84-101.546667 52.693333-137.386667-5.76-12.928-23.04-64.981333 4.48-135.509333 0 0 42.88-13.738667 140.8 52.48 40.96-11.392 84.48-17.024 128-17.28 43.52 0.256 87.04 5.888 128 17.28 97.28-66.218667 140.16-52.48 140.16-52.48 27.52 70.528 10.24 122.581333 5.12 135.509333 32.64 35.84 52.48 81.493333 52.48 137.386667 0 196.693333-119.68 240-233.6 252.586667 17.92 15.36 34.56 46.762667 34.56 94.72 0 68.522667-0.64 123.562667-0.64 140.202666 0 13.44 8.96 29.44 35.2 24.32C877.44 942.592 1024 750.592 1024 524.672c0-282.752-229.248-512-512-512"></path>
+</svg>
+
+    </a>
+
+
+<a href="http://minicloudsky.github.io/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+  
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+      2017 -
+    2022
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        minicloudsky
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
