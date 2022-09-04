@@ -23,8 +23,9 @@ jobs:
                   hugo-version: "latest"
 
             - name: Build Web
+              run: pwd
+            - name: get dir
               run: ls
-
             - name: Deploy Web
               uses: peaceiris/actions-gh-pages@v3
               with:
