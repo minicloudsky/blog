@@ -20,13 +20,13 @@ jobs:
                   hugo-version: "latest"
 
             - name: Build Web
-              run: cd blog && hugo  && cd public && git add . && git commit -a  && git push origin master
+              run: hugo
 
             - name: Deploy Web
               uses: peaceiris/actions-gh-pages@v3
               with:
                   PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
-                  EXTERNAL_REPOSITORY: pseudoyu/pseudoyu.github.io
+                  EXTERNAL_REPOSITORY: minicloudsky/minicloudsky.github.io
                   PUBLISH_BRANCH: master
-                  PUBLISH_DIR: ./public
+                  PUBLISH_DIR: ./blog/public
                   commit_message: ${{ github.event.head_commit.message }}
