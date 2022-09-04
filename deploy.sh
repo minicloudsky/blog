@@ -1,1 +1,1 @@
-hugo && cd ./public && git add . && git commit -am "feat: update hugo blog" && git pull origin master && git push origin master && cd ../ && git add . && git commit -am "feat: update hugo blog" && git pull origin master
+hugo && cd ./public && git add . && git commit -am "feat: update hugo blog" && git pull origin master && git push origin master && cd ../ && git add . && git commit -am "feat: update hugo blog" && git pull origin master && git push origin master

@@ -21,11 +21,6 @@ jobs:
               uses: peaceiris/actions-hugo@v2
               with:
                   hugo-version: "latest"
-
-            - name: Build Web
-              run: pwd
-            - name: get dir
-              run: ls
             - name: Check out repository
               uses: actions/checkout@v3
             - name: build
