@@ -1,0 +1,4 @@
+[submodule "minicloudsky.github.io"]
+	path = minicloudsky.github.io
+	url = https://github.com/minicloudsky/minicloudsky.github.io.git
+	branch = master
