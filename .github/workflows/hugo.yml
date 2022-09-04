@@ -13,12 +13,8 @@ jobs:
               uses: peaceiris/actions-hugo@v2
               with:
                   hugo-version: "latest"
-            - name: ls
-              run: ls
-            - name: pwd
-              run: pwd
             - name: Build Web
-              run: pwd && ls && cd hugo-blog-backup/blog && hugo && cd public && git add . && git commit -a && git push origin master
+              run:  hugo && cd public && git add . && git commit -a && git push origin master
             - name: Deploy Web
               uses: peaceiris/actions-gh-pages@v3
               with:
