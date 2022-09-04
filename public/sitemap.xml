@@ -72,13 +72,6 @@
   </url>
   
   <url>
-    <loc>http://minicloudsky.github.io/blog/2020/12/17/%E5%85%83%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86-hive-%E5%85%83%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/</loc>
-    <lastmod>2020-12-17T18:06:41+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>http://minicloudsky.github.io/blog/2020/12/17/java-%E5%AE%9E%E7%8E%B0%E5%9B%9B%E8%88%8D%E5%85%AD%E5%85%A5/</loc>
     <lastmod>2020-12-17T17:41:11+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -214,13 +207,6 @@
   <url>
     <loc>http://minicloudsky.github.io/blog/2020/02/09/linux%E4%B8%ADswap%E4%B8%8Ememory%E4%BB%8B%E7%BB%8D/</loc>
     <lastmod>2020-02-09T11:32:09+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>http://minicloudsky.github.io/blog/2019/10/07/%E6%B6%88%E6%81%AF%E6%8E%A8%E9%80%81%E7%AE%80%E4%BB%8B/</loc>
-    <lastmod>2019-10-07T09:49:28+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>

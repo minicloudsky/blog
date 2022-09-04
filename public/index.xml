@@ -18,7 +18,7 @@
       
       <guid>http://minicloudsky.github.io/about/</guid>
       
-        <description>&lt;p&gt;A programmer from China,Shanghai.&lt;/p&gt;
+        <description>&lt;p&gt;A programmer from Shanghai,China.&lt;/p&gt;
 </description>
       
     </item>
@@ -1165,19 +1165,6 @@ END {这里面放的是处理完所有的行后要执行的语句 }
 流控方面，参看：http://www.gnu.org/software/gawk/manual/gawk.html#Statements
 内建函数，参看：http://www.gnu.org/software/gawk/manual/gawk.html#Built_002din
 正则表达式，参看：http://www.gnu.org/software/gawk/manual/gawk.html#Regexp&lt;/p&gt;
-</description>
-      
-    </item>
-    
-    <item>
-      <title>元数据采集 - hive 元数据采集</title>
-      <link>http://minicloudsky.github.io/blog/2020/12/17/%E5%85%83%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86-hive-%E5%85%83%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/</link>
-      <pubDate>Thu, 17 Dec 2020 18:06:41 +0000</pubDate>
-      
-      <guid>http://minicloudsky.github.io/blog/2020/12/17/%E5%85%83%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86-hive-%E5%85%83%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/</guid>
-      
-        <description>&lt;h2 id=&#34;这里是正文&#34;&gt;这里是正文&lt;/h2&gt;
-&lt;!-- raw HTML omitted --&gt;
 </description>
       
     </item>
@@ -2356,177 +2343,379 @@ Row Key | Time Stamp | ColumnFamily contents:
     </item>
     
     <item>
-      <title>消息推送简介</title>
-      <link>http://minicloudsky.github.io/blog/2019/10/07/%E6%B6%88%E6%81%AF%E6%8E%A8%E9%80%81%E7%AE%80%E4%BB%8B/</link>
-      <pubDate>Mon, 07 Oct 2019 09:49:28 +0000</pubDate>
+      <title>docker学习笔记</title>
+      <link>http://minicloudsky.github.io/blog/2019/05/15/docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Wed, 15 May 2019 08:33:42 +0000</pubDate>
       
-      <guid>http://minicloudsky.github.io/blog/2019/10/07/%E6%B6%88%E6%81%AF%E6%8E%A8%E9%80%81%E7%AE%80%E4%BB%8B/</guid>
+      <guid>http://minicloudsky.github.io/blog/2019/05/15/docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
       
-        <description>&lt;p&gt;​     在互联网业务中，有很多场景，都需要向用户推送消息，例如，一个论坛系统中，当用户发帖后，其他用户进行回复，需要对发帖者进行消息通知，在电商业务中，当用户下单后，管理后台需要通知用户下单成功；在一些秒杀和购物场景中，当用户提交订单未付款时候，一般会有一个截止时间，当即将到达截止时间时候，需要通知用户及时付款，在这些场景中，如何对用户实现消息通知呢?&lt;/p&gt;
-&lt;h3 id=&#34;简单消息推送&#34;&gt;简单消息推送&lt;/h3&gt;
-&lt;p&gt;传统的开发模式，一般是前端轮询，例如在论坛系统中，在用户个人页面，前端轮询后端接口，后端返回对应的消息数据，这种方式需要每隔几秒就向后台发请求，对于实时性要求比较高的系统，轮询频率会更高，之前参与维护迭代的pc端消息推送，采用的是这种方式，前端轮询后端接口，后端通过查询数据库，判断是否有新消息，有的话就将数据返回给前端，前端进行弹窗或者其它方式进行展示，数据库设计大概如下：&lt;/p&gt;
+        <description>&lt;h3 id=&#34;什么是docker&#34;&gt;什么是docker&lt;/h3&gt;
+&lt;p&gt;docker包括一个命令行程序、一个后台守护进程、以及一组远程服务。它解决了常见的软件问题，并建华路安装、运行、发布和删除软件。这一切能够实现是使用一项Unix技术，称为容器。&lt;/p&gt;
+&lt;h3 id=&#34;容器不是虚拟化&#34;&gt;容器不是虚拟化&lt;/h3&gt;
+&lt;p&gt;在没有docker时代，使用硬件虚拟化(虚拟机),以提供隔离，虚拟机提供虚拟硬件，可安装一个os和其他程序，需要很长时间创建，资源开销打，因为除了要执行你需要的软件，还需要运行整个操作系统的副本。
+docker容器不使用硬件虚拟化，运行在docker容器中的程序接口和逐渐的Linux内核直接打交道，容器中运行的程序与计算机操作系统直接没有额外的中间层，没有资源被冗余软件的运行或者虚拟硬件模拟而浪费掉，docker不是虚拟化技术，相反，它可以帮助使用已经内置到操作系统中的容器技术。&lt;/p&gt;
 &lt;!-- raw HTML omitted --&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;user_token&lt;/th&gt;
-&lt;th&gt;message&lt;/th&gt;
-&lt;th&gt;add_time&lt;/th&gt;
-&lt;th&gt;is_read&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;张三&lt;/td&gt;
-&lt;td&gt;hello&lt;/td&gt;
-&lt;td&gt;1551671111&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;李四&lt;/td&gt;
-&lt;td&gt;world&lt;/td&gt;
-&lt;td&gt;1561561789&lt;/td&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;王五&lt;/td&gt;
-&lt;td&gt;yes&lt;/td&gt;
-&lt;td&gt;1781567177&lt;/td&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;当需要对某个用户，或者某些业务进行消息推送时候，在消息记录表，插入一条数据，以及消息的阅读状态，已读和未读，然后根据前端需求，返回该用户的全部消息，或者全部未读消息，当用户点击消息后，前端发请求，后端修改消息的阅读状态。&lt;/p&gt;
-&lt;p&gt;这种方式的实现比较简单无脑，基本上只需要查询修改下基本上就可以完成，适合用户量较少，对于实时性要求不高的业务场景，当用户量较大时候，查询和插入效率很低，需要加缓存或者对数据库进行分库分表，从而提高业务的稳定性和可用性，目前在一些小公司和简单的论坛一类的业务，该方式的消息推送可能还在使用，在未来的开发中，这种方式不推荐使用，因为效率低下，前端频繁轮询查接口，会对后端数据库造成很大压力，而且当有多个场景的消息推送时候，这种方式会让用户客户端的网页异常卡顿，加载速度慢，用户体验很差。&lt;/p&gt;
-&lt;h3 id=&#34;多场景消息推送&#34;&gt;多场景消息推送&lt;/h3&gt;
-&lt;p&gt;在电商业务中，很多消息类型，需要向用户发送短信，例如用户下单，退款，下单未付款，快递配送进度等等，这一类消息，通常需要根据不同的业务场景，有些需要给客户发送短信通知，在小程序端，可能需要调用微信开发平台的接口，进行小程序或者公众号消息推送，这一类相对来说比较容易实现，在需要消息推送时候，直接调用发送短信接口，或者微信平台接口进行消息推送，当数据量比较大时候，可以暂时把这些推送服务加入一个异步队列，进行分批次推送，这些适用于对时效性较低的场景，例如微信的每日运动排行。&lt;/p&gt;
-&lt;p&gt;对于这类消息推送，一般需要在业务执行时候，添加到异步队列中，通过倒计时一类的方式进行触发，常用的有 Redis 的发布与订阅，WebSocket 全双工通信，服务器端可以向浏览器发送消息，或者通过 Celery 执行异步队列，从而实现消息推送，下面简单介绍下 Celery。&lt;/p&gt;
-&lt;p&gt;Celery 任务队列一般用于线程或计算机之间分配工作的一种机制。&lt;/p&gt;
-&lt;p&gt;任务队列的输入是一个称为任务的工作单元，有专门的工作进行不断的监视任务队列，进行执行新的任务工作。&lt;/p&gt;
-&lt;p&gt;Celery 通过消息机制进行通信，通常使用中间人（Broker）作为客户端和职程（Worker）调节。启动一个任务，客户端向消息队列发送一条消息，然后中间人（Broker）将消息传递给一个职程（Worker），最后由职程（Worker）进行执行中间人（Broker）分配的任务。&lt;/p&gt;
-&lt;p&gt;Celery 可以有多个职程（Worker）和中间人（Broker），用来提高 Celery 的高可用性以及横向扩展能力。&lt;/p&gt;
-&lt;p&gt;Celery 需要消息中间件来进行发送和接收消息。 RabbitMQ 和 Redis 中间人的功能比较齐全，但也支持其它的实验性的解决方案，其中包括 SQLite 进行本地开发。&lt;/p&gt;
-&lt;p&gt;Celery 可以在一台机器上运行，也可以在多台机器上运行，甚至可以跨数据中心运行。&lt;/p&gt;
-&lt;p&gt;首先我们创建一个简单的task。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; celery &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; Celery
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;app &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Celery(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;tasks&amp;#39;&lt;/span&gt;, broker&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;pyamqp://guest@localhost//&amp;#39;&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;@app&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;task
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;add&lt;/span&gt;(x, y):
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; x &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; y
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;对于中间人，如果是Rabbitmq的话，可以使用 &lt;code&gt;amqp://user:123456@localhost/test&lt;/code&gt;，Redis的话可以用 &lt;code&gt;redis://localhost&lt;/code&gt; ，然后启动下任务队列:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;celery -A tasks worker --loglevel&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;info
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@aliyun amqp&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# celery -A tasks worker --loglevel=info&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;/usr/local/lib/python3.6/site-packages/celery/platforms.py:801: RuntimeWarning: You&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&amp;#39;&lt;/span&gt;re running the worker with superuser privileges: this is
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;absolutely not recommended!
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Please specify a different user using the --uid option.
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;User information: uid&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; euid&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; gid&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; egid&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  uid&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;uid, euid&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;euid, gid&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;gid, egid&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;egid,
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; 
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; -------------- celery@aliyun v4.4.0 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;cliffs&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;--- ***** ----- 
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-- ******* ---- Linux-4.18.0-147.5.1.el8_1.x86_64-x86_64-with-centos-8.1.1911-Core 2019-10-19 01:14:19
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;- *** --- * --- 
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;- ** ---------- &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;config&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;- ** ---------- .&amp;gt; app:         tasks:0x7f12d36d5f28
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;- ** ---------- .&amp;gt; transport:   amqp://user:**@localhost:5672/test
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;- ** ---------- .&amp;gt; results:     redis://localhost/
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;- *** --- * --- .&amp;gt; concurrency: &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;prefork&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-- ******* ---- .&amp;gt; task events: OFF &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;enable -E to monitor tasks in this worker&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;--- ***** ----- 
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; -------------- &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;queues&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                .&amp;gt; celery           exchange&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;celery&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;direct&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; key&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;celery
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;tasks&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  . tasks.add
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  . tasks.mul
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  . tasks.xsum
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;2019-10-19 01:14:20,027: INFO/MainProcess&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Connected to amqp://user:**@127.0.0.1:5672/test
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;2019-10-19 01:14:20,038: INFO/MainProcess&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; mingle: searching &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; neighbors
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;2019-10-19 01:14:21,066: INFO/MainProcess&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; mingle: all alone
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;2019-10-19 01:14:21,085: INFO/MainProcess&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; celery@aliyun ready.
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以看到 Celery 已经启动，通过 python shell 可以调用对应的任务，Celery默认的并发数为 CPU 核心数。&lt;/p&gt;
-&lt;p&gt;调用下试试。&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;In [5]: add.delay(4, 4)                                                                                
-Out[5]: &amp;lt;AsyncResult: 8b3818f8-ebd0-443f-bbf8-5dadb536fcaa&amp;gt;
+&lt;h3 id=&#34;隔离容器中运行软件&#34;&gt;隔离容器中运行软件&lt;/h3&gt;
+&lt;p&gt;docker使用已经成为linux一部分的linux命名空间和cgroups，docker不提供容器技术，但它使得容器更易于使用要了解系统中在容器什么样子，让我们先建立一条基线，如下为计算机系统体系结构上运行的基本容器示例。
 
-In [6]: result = add.delay(1,1)                                                                        
-
-In [7]: result.ready()                                                                                 
-Out[7]: True
-
-In [8]: result.get(timeout=1)                                                                          
-Out[8]: 2
-
-In [9]: result.get(propagate=False)                                                                    
-Out[9]: 2
-
-In [10]: result.traceback 
-&lt;/code&gt;&lt;/pre&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Celery可以通过 rate_limit 方向进行频率限制，例如，以下方式限制每分钟不超过10次
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;celery -A tasks control rate_limit tasks.add 10/m
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Celery 通过 EventLet 方式实现并发，使用 epoll 或 libevent 实现非阻塞 IO ,这样可以充分提高执行的任务数.&lt;/p&gt;
-&lt;p&gt;通过  &lt;a href=&#34;https://docs.celeryproject.org/en/stable/reference/celery.bin.worker.html#cmdoption-celery-worker-p&#34;&gt;&lt;code&gt;celery worker -P&lt;/code&gt;&lt;/a&gt; 的方式可以指定工作方式&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;celery -A proj worker -P eventlet -c &lt;span style=&#34;color:#ae81ff&#34;&gt;1000&lt;/span&gt; // 1000个线程并发执行
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Celery 可以 通过配置backend 来保存任务执行结果，我这里使用 Redis 。&lt;/p&gt;
-&lt;p&gt;Celerys.py&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#!/usr/bin/env python&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# coding=utf-8&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; __future__ &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; absolute_import, unicode_literals
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; celery &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; Celery
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;app &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Celery(
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    broker &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;amqp://user:123456@localhost/test&amp;#39;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    backend&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;redis://localhost&amp;#39;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    include&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;[]
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;app&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;conf&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;update(
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    result_expires&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;3600&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    app&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;start()
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;tasks.py&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#!/usr/bin/env python&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# coding=utf-8&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; celery &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; Celery
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;app &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Celery(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;tasks&amp;#39;&lt;/span&gt;, broker&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;amqp://user:123456@localhost/test&amp;#39;&lt;/span&gt;, backend&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;redis://localhost&amp;#39;&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;app&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;conf&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;task_serializer &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;json&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;@app&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;task
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;add&lt;/span&gt;(x, y):
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; x &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; y
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;@app&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;task
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;mul&lt;/span&gt;(x,y):
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; x&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;y
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;@app&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;task
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;xsum&lt;/span&gt;(numbers):
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; sum(numbers)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    add(&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;查看下 Redis 中是否有结果&lt;/p&gt;
-&lt;p&gt;
-&lt;img src=&#34;1.png&#34; alt=&#34;&#34;&gt;
+&lt;img src=&#34;instance.png&#34; alt=&#34;&#34;&gt;
 &lt;/p&gt;
-&lt;p&gt;可以查看到容器内的redis中已经有了 task的执行结果，我们可以查看下结果&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;127.0.0.1:6379&amp;gt; get celery-task-meta-8b3818f8-ebd0-443f-bbf8-5dadb536fcaa
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;{\&amp;#34;status\&amp;#34;: \&amp;#34;SUCCESS\&amp;#34;, \&amp;#34;result\&amp;#34;: 8, \&amp;#34;traceback\&amp;#34;: null, \&amp;#34;children\&amp;#34;: [], \&amp;#34;date_done\&amp;#34;: \&amp;#34;2020-03-16T17:41:33.382702\&amp;#34;, \&amp;#34;task_id\&amp;#34;: \&amp;#34;8b3818f8-ebd0-443f-bbf8-5dadb536fcaa\&amp;#34;}&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;127.0.0.1:6379&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以看到配置 Redis 为backend后，task的执行结果已经保存到 Redis中，以后开发中，可以通过读取 对应的task_id为 key的 数据，就可以得到每个任务的最终执行结果。&lt;/p&gt;
+&lt;p&gt;运行docker可以认为是在用户控件运行两个程序，首先是docker守护进程，如果正确安装，该进程应该始终处于运行状态。另一个为docker CLI，它是与用户交互的docker程序，如果要启动，停止，运行或安装软件，你可以用docker CLI执行相应命令。
+
+&lt;img src=&#34;three.png&#34; alt=&#34;&#34;&gt;
+&lt;/p&gt;
+&lt;h3 id=&#34;docker容器隔离&#34;&gt;docker容器隔离&lt;/h3&gt;
+&lt;p&gt;docker构建容器隔离包括8个方面，具体如下:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;PID命令空间&lt;/code&gt; &amp;mdash;&amp;ndash; 进程标识符和能力&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;UTS命名空间&lt;/code&gt; &amp;mdash;&amp;ndash; 主机名和域名&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;MNT命名空间&lt;/code&gt; &amp;mdash;&amp;ndash; 文件系统访问和结构&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;IPC命名空间&lt;/code&gt; &amp;mdash;&amp;ndash; 通过共享内存的进程间通信&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;NET命名空间&lt;/code&gt; &amp;mdash;&amp;ndash; 网络访问和结构&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;chroot()&lt;/code&gt;   &amp;mdash;&amp;ndash; 控制文件系统根目录的位置&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cgroups&lt;/code&gt;    &amp;mdash;&amp;ndash; 资源保护&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Linux命名空间和&lt;code&gt;cgroups&lt;/code&gt;管理着运行时容器，docker采用另一套技术，就像运输集装箱一样为文件提供容器。&lt;/p&gt;
+&lt;h3 id=&#34;分发容器&#34;&gt;分发容器&lt;/h3&gt;
+&lt;p&gt;docker容器可以看成物理运输的集装箱，这是你存储、运行应用程序及其所有依赖的盒子。docker可以执行、复制、轻松地分发容器。docker通过一种打包和分发软件，完成传统容器的封装。这个用来充当容器分发角色的组件被称为&lt;code&gt;镜像&lt;/code&gt;。&lt;br&gt;
+Docker镜像，是一个容器中运行程序的所有文件的捆绑快照。你可以从镜像中创造尽可能多的容器，但是你这样做时候，从相同的镜像启动的容器不共享文件系统的更改。当你用docker分发软件，其实就是分发这些镜像，并在接收的机器上创建容器镜像在docker生态系统中是可交付的基本单位。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;docker下安装常用工具命令总结&#34;&gt;docker下安装常用工具命令总结&lt;/h3&gt;
+&lt;p&gt;查看docker磁盘占用&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;docker system df&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;查看虚悬镜像&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;docker image ls  -f dangling=true&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;删除虚悬镜像&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;docker image  prune&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;根据仓库名列出镜像&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;docker images ls Ubuntu&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;列出镜像和标签&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;docker images ls Ubuntu:18.04&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;容器重命名&lt;/p&gt;
+&lt;p&gt;docker rename name1 name2&lt;/p&gt;
+&lt;h2 id=&#34;dockerfile&#34;&gt;Dockerfile&lt;/h2&gt;
+&lt;p&gt;from 指定基础镜像&lt;/p&gt;
+&lt;p&gt;以一个镜像为基础，在其上进行定制。必须是第一条命令&lt;/p&gt;
+&lt;p&gt;除了选择现有镜像为基础镜像外，Docker 还存在一个特殊的镜像，名为scratch。这个镜像是虚拟的概念，并不实际存在，它表示一个空白的镜像。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;FROM scratch&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;如果你以scratch为基础镜像的话，意味着你不以任何镜像为基础，接下来所写的指令将作为镜像第一层开始存在&lt;/p&gt;
+&lt;h3 id=&#34;cmd-容器启动命令&#34;&gt;CMD 容器启动命令&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;CMD&lt;/code&gt; 指令的格式和 &lt;code&gt;RUN&lt;/code&gt; 相似，也是两种格式：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;shell&lt;/code&gt; 格式：&lt;code&gt;CMD &amp;lt;命令&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;exec&lt;/code&gt; 格式：&lt;code&gt;CMD [&amp;quot;可执行文件&amp;quot;, &amp;quot;参数1&amp;quot;, &amp;quot;参数2&amp;quot;...]&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;参数列表格式：&lt;code&gt;CMD [&amp;quot;参数1&amp;quot;, &amp;quot;参数2&amp;quot;...]&lt;/code&gt;。在指定了 &lt;code&gt;ENTRYPOINT&lt;/code&gt; 指令后，用 &lt;code&gt;CMD&lt;/code&gt; 指定具体的参数。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;之前介绍容器的时候曾经说过，Docker 不是虚拟机，容器就是进程。既然是进程，那么在启动容器的时候，需要指定所运行的程序及参数。&lt;code&gt;CMD&lt;/code&gt; 指令就是用于指定默认的容器主进程的启动命令的。&lt;/p&gt;
+&lt;p&gt;在运行时可以指定新的命令来替代镜像设置中的这个默认命令，比如，&lt;code&gt;ubuntu&lt;/code&gt; 镜像默认的 &lt;code&gt;CMD&lt;/code&gt; 是 &lt;code&gt;/bin/bash&lt;/code&gt;，如果我们直接 &lt;code&gt;docker run -it ubuntu&lt;/code&gt; 的话，会直接进入 &lt;code&gt;bash&lt;/code&gt;。我们也可以在运行时指定运行别的命令，如 &lt;code&gt;docker run -it ubuntu cat /etc/os-release&lt;/code&gt;。这就是用 &lt;code&gt;cat /etc/os-release&lt;/code&gt; 命令替换了默认的 &lt;code&gt;/bin/bash&lt;/code&gt; 命令了，输出了系统版本信息。&lt;/p&gt;
+&lt;p&gt;在指令格式上，一般推荐使用 &lt;code&gt;exec&lt;/code&gt; 格式，这类格式在解析时会被解析为 JSON 数组，因此一定要使用双引号 &lt;code&gt;&amp;quot;&lt;/code&gt;，而不要使用单引号。&lt;/p&gt;
+&lt;h3 id=&#34;entrypoint-入口点&#34;&gt;ENTRYPOINT 入口点&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;ENTRYPOINT&lt;/code&gt; 的格式和 &lt;code&gt;RUN&lt;/code&gt; 指令格式一样，分为 &lt;code&gt;exec&lt;/code&gt; 格式和 &lt;code&gt;shell&lt;/code&gt; 格式。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;ENTRYPOINT&lt;/code&gt; 的目的和 &lt;code&gt;CMD&lt;/code&gt; 一样，都是在指定容器启动程序及参数。&lt;code&gt;ENTRYPOINT&lt;/code&gt; 在运行时也可以替代，不过比 &lt;code&gt;CMD&lt;/code&gt; 要略显繁琐，需要通过 &lt;code&gt;docker run&lt;/code&gt; 的参数 &lt;code&gt;--entrypoint&lt;/code&gt; 来指定。&lt;/p&gt;
+&lt;p&gt;当指定了 &lt;code&gt;ENTRYPOINT&lt;/code&gt; 后，&lt;code&gt;CMD&lt;/code&gt; 的含义就发生了改变，不再是直接的运行其命令，而是将 &lt;code&gt;CMD&lt;/code&gt; 的内容作为参数传给 &lt;code&gt;ENTRYPOINT&lt;/code&gt; 指令，换句话说实际执行时，将变为：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;ENTRYPOINT&amp;gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;lt;CMD&amp;gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;当利用 docker run 来创建容器时，Docker 在后台运行的标准操作包括：
+检查本地是否存在指定的镜像，不存在就从公有仓库下载
+利用镜像创建并启动一个容器
+分配一个文件系统，并在只读的镜像层外面挂载一层可读写层
+从宿主主机配置的网桥接口中桥接一个虚拟接口到容器中去
+从地址池配置一个 ip 地址给容器
+执行用户指定的应用程序
+执行完毕后容器被终止&lt;/p&gt;
+&lt;h4 id=&#34;mysql&#34;&gt;mysql&lt;/h4&gt;
+&lt;h5 id=&#34;拉取mysql镜像&#34;&gt;拉取mysql镜像&lt;/h5&gt;
+&lt;p&gt;&lt;code&gt;docker pull mysql&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;启动一个镜像，并将mysql映射到服务器3306端口&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker  run  -it --name  mysql -p 3306:3306   -e MYSQL_ROOT_PASSWORD&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;root   -v   /home/containermaps/mysql/log/:/var/log/mysql  -v /home/containermaps/mysql/conf.d/:/etc/mysql     -v   /home/containermaps/mysql/data:/var/lib/mysql -d mysql:5.7
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;默认用户为root&lt;/p&gt;
+&lt;p&gt;&amp;ndash;name为容器名&lt;/p&gt;
+&lt;p&gt;-p指定端口&lt;/p&gt;
+&lt;p&gt;MYSQL_ROOT_PASSWORD 指定密码&lt;/p&gt;
+&lt;p&gt;进入mysql&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;docker exec -it mysql5.7-2  bash&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;mysql     -uroot  -p&lt;/code&gt;&lt;/p&gt;
+&lt;h4 id=&#34;nginx服务器&#34;&gt;nginx服务器&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;docker pull nginx&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;运行nginx&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;docker run --name  nginx-test -p 80:80 -d nginx&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;将nginx映射到本地目录&lt;/p&gt;
+&lt;p&gt;首先在/usr/local下新建目录&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mkdir -p /usr/local/docker-nginx/www /usr/local/docker-nginx/logs /usr/local/docker-nginx/conf
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;将docker中nginx配置文件复制到到服务器
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker cp 63185c51103a:/etc/nginx/nginx.conf /usr/local/docker-nginx/conf/
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;关闭上一个容器，重新启动一个nginx容器
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker run -d -p 80:80 --name nginx-server -v /usr/local/docker-nginx/www:/usr/share/nginx/html -v /usr/local/docker-nginx/conf/nginx.conf:/etc/nginx/nginx.conf -v /usr/local/docker-nginx/logs:/var/log/nginx nginx
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;由此配置好以后，修改/usr/local/docker-nginx目录下的conf中的nginx.conf，就可以完成对nginx的配置，修改www目录下的html文件即可更新nginx部署的网页&lt;/p&gt;
+&lt;h4 id=&#34;redis数据库&#34;&gt;redis数据库&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker pull redis
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker run --restart&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;always -d -p 6379:6379 -v /usr/local/docker-redis/data/:/data --name redis redis redis-server --appendonly yes --requirepass &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;redis&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h5 id=&#34;命令说明&#34;&gt;命令说明：&lt;/h5&gt;
+&lt;p&gt;&lt;code&gt;-p 6388:6379 : 将容器的 6379 端口映射到主机的 6379 端口&lt;/code&gt;
+&lt;code&gt;-v /usr/local/docker-redis/data/ : 将主机中 /usr/local/docker-redis/data/ 目录下的 redis 挂载到容器的 /data&lt;/code&gt;
+&lt;code&gt;redis-server --appendonly yes : 在容器执行 redis-server 启动命令，并打开 redis 持久化配置&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;连接redis&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;docker exec -ti 5f4c4cf5a5f5 redis-cli a &amp;quot;redis passwd&amp;quot;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://luoliangdsga.github.io/2018/04/26/%E4%BD%BF%E7%94%A8Docker%E9%83%A8%E7%BD%B2Redis/&#34;&gt;https://luoliangdsga.github.io/2018/04/26/%E4%BD%BF%E7%94%A8Docker%E9%83%A8%E7%BD%B2Redis/&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;mongodb&#34;&gt;mongodb&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;docker pull mongo&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker run -p 27017:27017 -v /usr/local/docker-mongodb/data:/data/db -d mongo
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;进入mongo&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;docker exec -it mongo mongo admin&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id=&#34;elasticsearch&#34;&gt;elasticsearch&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker pull docker.elastic.co/elasticsearch/elasticsearch:7.5.2
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker run -p 9200:9200 -p 9300:9300 -e &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;discovery.type=single-node&amp;#34;&lt;/span&gt; docker.elastic.co/elasticsearch/elasticsearch:7.5.2
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;kibana&#34;&gt;kibana&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker pull docker.elastic.co/kibana/kibana:7.6.0
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker run --link YOUR_ELASTICSEARCH_CONTAINER_NAME_OR_ID:elasticsearch -p 5601:5601 &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;docker-repo&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;:&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;version&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;docker-容器中软件安装&#34;&gt;docker 容器中软件安装&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;使用国内镜像&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mv /etc/apt/sources.list /etc/apt/sources.list.bak
+echo &amp;#34;deb http://mirrors.163.com/debian/ jessie main non-free contrib&amp;#34; &amp;gt;&amp;gt; /etc/apt/sources.list
+echo &amp;#34;deb http://mirrors.163.com/debian/ jessie-proposed-updates main non-free contrib&amp;#34; &amp;gt;&amp;gt;/etc/apt/sources.list
+echo &amp;#34;deb-src http://mirrors.163.com/debian/ jessie main non-free contrib&amp;#34; &amp;gt;&amp;gt;/etc/apt/sources.list
+echo &amp;#34;deb-src http://mirrors.163.com/debian/ jessie-proposed-updates main non-free contrib&amp;#34; &amp;gt;&amp;gt;/etc/apt/sources.list
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;更新 &lt;code&gt;apt-get&lt;/code&gt; 指令&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;apt-get update
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;安装 &lt;code&gt;yum&lt;/code&gt; 命令&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;apt-get install vim
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;添加 &lt;code&gt;ls&lt;/code&gt; 命令&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;vim ~/.bashrc
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;在最后一行添加&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;alias ll=&amp;#39;ls $LS_OPTIONS -l&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;使之生效&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;source ~/.bashrc
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;postgresql&#34;&gt;postgresql&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker run -p 80:80 &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    -e &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;PGADMIN_DEFAULT_EMAIL=1397991131@qq.com&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    -e &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;PGADMIN_DEFAULT_PASSWORD=pgadmin&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    -e &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION=True&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    -e &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;PGADMIN_CONFIG_LOGIN_BANNER=&amp;#34;Authorised users only!&amp;#34;&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    -e &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;PGADMIN_CONFIG_CONSOLE_LOG_LEVEL=10&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    -d dpage/pgadmin4
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; docker run --rm   --name pg-docker -e POSTGRES_PASSWORD&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;root -d -p 5432:5432 -v /home/containermaps/postgres/:/var/lib/postgresql/data  postgres
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;orcale&#34;&gt;orcale&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker pull alexeiled/docker-oracle-xe-11g
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker run -h &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;oracle&amp;#34;&lt;/span&gt; --name &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;oracle&amp;#34;&lt;/span&gt; -d -p 49160:22 -p 49161:1521 -p 49162:8080 alexeiled/docker-oracle-xe-11g
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;create user orcale identified by orcale;&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>linux shell 学习</title>
+      <link>http://minicloudsky.github.io/blog/2019/02/23/linux-shell-%E5%AD%A6%E4%B9%A0/</link>
+      <pubDate>Sat, 23 Feb 2019 16:32:18 +0000</pubDate>
+      
+      <guid>http://minicloudsky.github.io/blog/2019/02/23/linux-shell-%E5%AD%A6%E4%B9%A0/</guid>
+      
+        <description>&lt;h2 id=&#34;记录下常用的-shell-命令&#34;&gt;记录下常用的 shell 命令&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;pwd 打印工作目录&lt;/li&gt;
+&lt;li&gt;ls 列出目录下文件
+ls -a 列出全部文件，包含隐藏文件
+ls -l  长数据串列出，包含文件的属性与权限&lt;/li&gt;
+&lt;li&gt;cd 切换目录
+cd 绝对路径	切换路径
+cd 相对路径	切换路径
+cd ~或者cd	回到自己的家目录
+cd -	回到上一次所在目录
+cd ..	回到当前目录的上一级目录
+cd -P	跳转到实际物理路径，而非快捷方式路径&lt;/li&gt;
+&lt;li&gt;mkdir 创建目录
+mkdir -p dir 创建多层目录&lt;/li&gt;
+&lt;li&gt;rmdir 删除目录&lt;/li&gt;
+&lt;li&gt;touch 创建空文件&lt;/li&gt;
+&lt;li&gt;cp 复制文件或目录
+cp source target
+cp -r 递归复制整个目录或文件
+\cp  强制覆盖不提示&lt;/li&gt;
+&lt;li&gt;rm 移除文件或目录
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-r	递归删除目录中所有内容
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-f	强制执行删除操作，而不提示用于进行确认。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-v	显示指令的详细执行过程
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;-mv 移动文件与目录或重命名
+  1. mv oldNameFile newNameFile	（功能描述：重命名）
+  2. mv /temp/movefile /targetFolder	（功能描述：移动文件）
+- cat 查看文件内容
+```shell
+cat filename
+cat -n 显示所有行的行号，包括空行
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;more指令是一个基于VI编辑器的文本过滤器，它以全屏幕的方式按页显示文本文件的内容。more指令中内置了若干快捷键，详见操作说明。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;基本语法：
+more 要查看的文件&lt;/li&gt;
+&lt;li&gt;操作说明
+| 操作	|功能说明|
+|空白键 (space)|	代表向下翻一页；|
+|Enter	|代表向下翻『一行』；|
+|q	|代表立刻离开 more ，不再显示该文件内容。|
+|Ctrl+f|	向下滚动一屏|
+|Ctrl+b	|返回上一屏|
+|=|	输出当前行的行号|
+|:f	|输出文件名和当前行的行号|&lt;/li&gt;
+&lt;/ol&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;less指令用来分屏查看文件内容，它的功能与more指令类似，但是比more指令更加强大，支持各种显示终端。less指令在显示文件内容时，并不是一次将整个文件加载之后才显示，而是根据显示需要加载内容，对于显示大型文件具有较高的效率。
+1）基本语法：
+less 要查看的文件
+2）操作说明
+操作	功能说明
+空白键	向下翻动一页；
+[pagedown]	向下翻动一页
+[pageup]	向上翻动一页；
+/字串	向下搜寻『字串』的功能；n：向下查找；N：向上查找；
+?字串	向上搜寻『字串』的功能；n：向上查找；N：向下查找；
+q  	离开 less 这个程序；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;echo输出内容到控制台
+基本语法：
+echo [选项] [输出内容]
+选项：
+-e：  支持反斜线控制的字符转换
+|控制字符 | 	作用 |
+|\  |	输出\本身|
+|\n  |	换行符|
+|\t  |	制表符，也就是Tab键|&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;head用于显示文件的开头部分内容，默认情况下head指令显示文件的前10行内容。
+head 文件	      （功能描述：查看文件头10行内容）
+head -n 5 文件      （功能描述：查看文件头5行内容，5可以是任意行数）
+-n&amp;lt;行数&amp;gt;	指定显示头部内容的行数&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@aliyun ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# head -10 defer.go &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;package main
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;import &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;fmt&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;func main&lt;span style=&#34;color:#f92672&#34;&gt;(){&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  //  &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; i:&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;0;i&amp;lt;5;i++&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;//        defer fmt.Printf&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;%d &amp;#34;&lt;/span&gt;,i&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   // &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    // fmt.Println&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;\n&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    //x:&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[]&lt;/span&gt;int&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;1,2,3&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;tail用于输出文件中尾部的内容，默认情况下tail指令显示文件的后10行内容。
+1.基本语法tail
+&lt;ol&gt;
+&lt;li&gt;tail  文件 			（功能描述：查看文件头10行内容）&lt;/li&gt;
+&lt;li&gt;tail  -n 5 文件 		（功能描述：查看文件头5行内容，5可以是任意行数）&lt;/li&gt;
+&lt;li&gt;tail  -f  文件		（功能描述：实时追踪该文档的所有更新）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;选项说明
+选项	功能
+-n&amp;lt;行数&amp;gt;	输出文件尾部n行内容
+-f	显示文件最新追加的内容，监视文件变化
+实时追踪该档的所有更新&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@aliyun ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# tail -f a.txt&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;date~123
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;输出重定向和 &amp;raquo; 追加
+1）基本语法：ll
+（1）ls -l &amp;gt;文件		（功能描述：列表的内容写入文件a.txt中（覆盖写））
+（2）ls -al &amp;raquo;文件		（功能描述：列表的内容追加到文件aa.txt的末尾）
+（3）cat 文件1 &amp;gt; 文件2	（功能描述：将文件1的内容覆盖到文件2）
+（4）echo “内容” &amp;raquo; 文件&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;软链接也称为符号链接，类似于windows里的快捷方式，有自己的数据块，主要存放了链接其他文件的路径。
+1）基本语法：
+ln -s [原文件或目录] [软链接名]		（功能描述：给原文件创建一个软链接）
+2）经验技巧
+删除软链接： rm -rf 软链接名，而不是rm -rf 软链接名/
+查询：通过ll就可以查看，列表属性第1位是l，尾部会有位置指向&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;history 查看已经执行过历史命令&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;date 显示当前时间
+1.基本语法：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;date								（功能描述：显示当前时间）&lt;/li&gt;
+&lt;li&gt;date +%Y							（功能描述：显示当前年份）&lt;/li&gt;
+&lt;li&gt;date +%m							（功能描述：显示当前月份）&lt;/li&gt;
+&lt;li&gt;date +%d							（功能描述：显示当前是哪一天）&lt;/li&gt;
+&lt;li&gt;date &amp;ldquo;+%Y-%m-%d %H:%M:%S&amp;rdquo;		（功能描述：显示年月日时分秒）&lt;/li&gt;
+&lt;li&gt;date -d &amp;lsquo;1 days ago&amp;rsquo;			（功能描述：显示前一天时间）&lt;/li&gt;
+&lt;li&gt;date -d &amp;lsquo;-1 days ago&amp;rsquo;			（功能描述：显示明天时间）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;date 设置系统时间&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;基本语法：
+date -s 字符串时间&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;设置系统当前时间&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@aliyun ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# date -s &amp;#34;2017-06-19 20:52:18&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;cal 查看日历&lt;/li&gt;
+&lt;li&gt;useradd 添加新用户
+useradd 用户名			（功能描述：添加新用户）
+useradd -g 组名 用户名	（功能描述：添加新用户到某个组）&lt;/li&gt;
+&lt;li&gt;passwd 设置用户密码
+passwd 用户名	（功能描述：设置用户密码）&lt;/li&gt;
+&lt;li&gt;id 查看用户是否存在&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;root@aliyun ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# id root&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;uid&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;0&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;root&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; gid&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;0&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;root&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; groups&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;0&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;root&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;cat  /etc/passwd 查看创建了哪些用户&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;tools@uatgw01 ~&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;$ cat /etc/passwd
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root❌0:0:root:/root:/bin/bash
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;bin❌1:1:bin:/bin:/sbin/nologin
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;daemon❌2:2:daemon:/sbin:/sbin/nologin
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;adm❌3:4:adm:/var/adm:/sbin/nologin
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;su username 切换用户&lt;/li&gt;
+&lt;li&gt;userdel 删除用户
+userdel -r 删除用户和用户目录&lt;/li&gt;
+&lt;li&gt;whoami 查看当前登录用户名&lt;/li&gt;
+&lt;/ul&gt;
 </description>
       
     </item>
