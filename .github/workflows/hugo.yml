@@ -26,6 +26,8 @@ jobs:
               run: pwd
             - name: get dir
               run: ls
+            - name: build
+              run: cd /home/runner/work/hugo-blog-backup/hugo-blog-backup && hugo
             - name: Deploy Web
               uses: peaceiris/actions-gh-pages@v3
               with:
