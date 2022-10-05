@@ -9,21 +9,56 @@
   </url>
   
   <url>
-    <loc>http://minicloudsky.github.io/blog/2021/06/14/css%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2021-06-14T19:23:09+00:00</lastmod>
+    <loc>http://minicloudsky.github.io/categories/</loc>
+    <lastmod>2022-10-04T00:35:12+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://minicloudsky.github.io/blog/2022/10/04/kkndme/</loc>
+    <lastmod>2022-10-04T00:35:12+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>http://minicloudsky.github.io/</loc>
-    <lastmod>2021-06-14T19:23:09+00:00</lastmod>
+    <lastmod>2022-10-04T00:35:12+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>http://minicloudsky.github.io/post/</loc>
+    <lastmod>2022-10-04T00:35:12+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://minicloudsky.github.io/tags/</loc>
+    <lastmod>2022-10-04T00:35:12+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://minicloudsky.github.io/tags/%E6%80%9D%E8%80%83/</loc>
+    <lastmod>2022-10-04T00:35:12+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://minicloudsky.github.io/categories/%E6%80%9D%E8%80%83/</loc>
+    <lastmod>2022-10-04T00:35:12+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://minicloudsky.github.io/blog/2021/06/14/css%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2021-06-14T19:23:09+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -100,13 +135,6 @@
   </url>
   
   <url>
-    <loc>http://minicloudsky.github.io/tags/</loc>
-    <lastmod>2020-09-05T16:41:41+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>http://minicloudsky.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
     <lastmod>2020-09-05T16:41:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -116,13 +144,6 @@
   <url>
     <loc>http://minicloudsky.github.io/blog/2020/08/26/dapper-%E5%88%86%E5%B8%83%E5%BC%8F%E8%BF%BD%E8%B8%AA%E7%B3%BB%E7%BB%9F%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2020-08-26T11:35:09+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>http://minicloudsky.github.io/categories/</loc>
-    <lastmod>2020-08-14T14:33:42+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>

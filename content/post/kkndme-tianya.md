@@ -1,10 +1,12 @@
 ---
 categories:
 - 思考
-date: 2022-10-05 14:01:35
-tags: null
-title: kkndme 天涯神贴
+date: 2022-10-04 00:35:12
+tags:
+- 思考
+title: kkndme
 ---
+
 
 ## kkndme_tianya（持续更新中...）
 
