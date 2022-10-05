@@ -9,6 +9,7 @@ title: kkndme
 
 
 ## kkndme_tianya（持续更新中...）
+从[kkndme](https://github.com/shengcaishizhan/kkndme_tianya)备份，以防万一。
 
 > 天涯神贴[「2010年的房地产调控，我们收获了什么？写在房价暴涨前」](http://bbs.tianya.cn/post-house-252774-1.shtml)脱水版，内容时间顺序和原贴一致，原贴中的优质非楼主写的内容，添加了引用格式便于区分。
 > 
