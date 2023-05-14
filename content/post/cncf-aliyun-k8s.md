@@ -1,32 +1,12 @@
 ---
-title: "cncf阿里巴巴云原生课程笔记"
-date: 2023-05-13T17:56:35+08:00
-lastmod: 2023-05-13T17:56:35+08:00
-draft: true
-keywords: []
-description: ""
-tags: []
-categories: []
-author: ""
-
-# Uncomment to pin article to front page
-# weight: 1
-# You can also close(false) or open(true) something for this content.
-# P.S. comment can only be closed
-comment: false
-toc: false
-autoCollapseToc: false
-# You can also define another contentCopyright. e.g. contentCopyright: "This is another copyright."
-contentCopyright: false
-reward: false
-mathjax: false
-
-# Uncomment to add to the homepage's dropdown menu; weight = order of article
-# menu:
-#   main:
-#     parent: "docs"
-#     weight: 1
+categories:
+- k8a
+date: 2023-05-14 21:35:12
+tags:
+- 思考
+title: cncf & aliyun k8s笔记
 ---
+
 ## K8s核心概念
 * 调度
 *  自动修复
