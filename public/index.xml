@@ -6,7 +6,7 @@
     <description>Recent content on Minicloudsky&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 04 Oct 2022 00:35:12 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 May 2023 21:35:12 +0000</lastBuildDate>
     
         <atom:link href="http://minicloudsky.github.io/index.xml" rel="self" type="application/rss+xml" />
     
@@ -20,6 +20,318 @@
       
         <description>&lt;p&gt;A programmer from Shanghai,China.&lt;/p&gt;
 </description>
+      
+    </item>
+    
+    <item>
+      <title>cncf &amp; aliyun k8s笔记</title>
+      <link>http://minicloudsky.github.io/blog/2023/05/14/cncf-aliyun-k8s%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Sun, 14 May 2023 21:35:12 +0000</pubDate>
+      
+      <guid>http://minicloudsky.github.io/blog/2023/05/14/cncf-aliyun-k8s%E7%AC%94%E8%AE%B0/</guid>
+      
+        <description>&lt;h2 id=&#34;k8s核心概念&#34;&gt;K8s核心概念&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;调度&lt;/li&gt;
+&lt;li&gt;自动修复&lt;/li&gt;
+&lt;li&gt;水平伸缩&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;k8s架构&#34;&gt;k8s架构&lt;/h3&gt;
+&lt;p&gt;典型的两层client-server架构&lt;/p&gt;
+&lt;h3 id=&#34;master-核心组件&#34;&gt;master 核心组件&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;API Server&lt;/li&gt;
+&lt;li&gt;Controller&lt;/li&gt;
+&lt;li&gt;Scheduler&lt;/li&gt;
+&lt;li&gt;etcd&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;pod&#34;&gt;Pod&lt;/h3&gt;
+&lt;p&gt;容器的本质实际上是一个进程，是一个视图被隔离，资源受限的进程&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;k8s -&amp;gt; 云操作系统&lt;/li&gt;
+&lt;li&gt;容器镜像 -&amp;gt; 云操作系统安装包&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;进程组&#34;&gt;进程组&lt;/h3&gt;
+&lt;p&gt;容器是单进程模型，管理容器就是管理进程，一个程序有多个进程&lt;/p&gt;
+&lt;p&gt;pod = &amp;ldquo;进程组&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;一个应用的多个进程定义为多个容器启动起来，定义在一个pod里面&lt;/p&gt;
+&lt;p&gt;Pod 在 Kubernetes 里面只有一个逻辑单位，没有一个真实的东西对应说这个就是 Pod，真正起来在物理上存在的东西，就是四个容器。&lt;/p&gt;
+&lt;h3 id=&#34;pod---k8s原子调度单位-why&#34;&gt;Pod -&amp;gt; K8s原子调度单位 Why?&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;容器之间紧密协作，有依赖Task co-scheduling关系&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;超亲密关系&#34;&gt;超亲密关系&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;亲密关系：调度解决
+&lt;ul&gt;
+&lt;li&gt;两个应用需要运行在同一个宿主机上&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;超亲密关系: pod解决
+&lt;ul&gt;
+&lt;li&gt;会发生直接的文件交换&lt;/li&gt;
+&lt;li&gt;localhost或者socket本地通信&lt;/li&gt;
+&lt;li&gt;频繁的RPC调用&lt;/li&gt;
+&lt;li&gt;共享linux namespace(etc,一个容器要加入另一个容器的network namespace)&lt;/li&gt;
+&lt;li&gt;&amp;hellip;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;pod-实现&#34;&gt;Pod 实现&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;共享网络
+&lt;ul&gt;
+&lt;li&gt;infra container，整个pod内的container共享同一个网络，其他所有容器加入infra container的network namespace，启动时候infra container 先启动，整个 Pod 的生命周期是等同于 Infra container 的生命周期&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;共享存储
+&lt;ul&gt;
+&lt;li&gt;pod内多个容器挂载同一个volume&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;容器设计模式&#34;&gt;容器设计模式&lt;/h3&gt;
+&lt;p&gt;Init Container 按照定义顺序做初始化工作&lt;/p&gt;
+&lt;h3 id=&#34;sidecar&#34;&gt;Sidecar&lt;/h3&gt;
+&lt;p&gt;在 Pod 里面，可以定义一些专门的容器，来执行主业务容器所需要的一些辅助工作&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ssh&lt;/li&gt;
+&lt;li&gt;日志收集&lt;/li&gt;
+&lt;li&gt;debug
+辅助功能解耦业务，可以独立发布sidecar容器&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;sidecar-代理容器&#34;&gt;Sidecar 代理容器&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;代理容器对业务容器屏蔽被代理的服务集群，简化业务代码的实现逻辑
+&lt;ul&gt;
+&lt;li&gt;容器之间通过localhost直接访问&lt;/li&gt;
+&lt;li&gt;代理容器的代码可以对全公司复用&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;sidecar适配器容器&#34;&gt;Sidecar适配器容器&lt;/h3&gt;
+&lt;h3 id=&#34;设计模式本质-解耦和复用&#34;&gt;设计模式本质	: 解耦和复用&lt;/h3&gt;
+&lt;h2 id=&#34;应用编排管理&#34;&gt;应用编排管理&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;k8s资源元信息
+&lt;ul&gt;
+&lt;li&gt;Spec: 期望状态&lt;/li&gt;
+&lt;li&gt;Status: 观测到的状态&lt;/li&gt;
+&lt;li&gt;Labels: 资源注解&lt;/li&gt;
+&lt;li&gt;Annotations: 多个资源之间相互关系的 OwnerReference&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Labels
+&lt;ul&gt;
+&lt;li&gt;key: value元数据&lt;/li&gt;
+&lt;li&gt;筛选资源，唯一的组合资源方法&lt;/li&gt;
+&lt;li&gt;集合型selector&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Annotations
+&lt;ul&gt;
+&lt;li&gt;系统或者工具用来存储资源的非标示性信息&lt;/li&gt;
+&lt;li&gt;扩展资源的 spec/status 的描述&lt;/li&gt;
+&lt;li&gt;特点
+&lt;ul&gt;
+&lt;li&gt;一般比label更大&lt;/li&gt;
+&lt;li&gt;可以包含特殊字符&lt;/li&gt;
+&lt;li&gt;可以结构化也可以非结构化&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Ownerreference
+&lt;ul&gt;
+&lt;li&gt;所有者，一般就是指集合类的资源&lt;/li&gt;
+&lt;li&gt;集合类资源的控制器会创建对应的归属资源。比如：replicaset 控制器在操作中会创建 Pod，被创建 Pod 的 Ownereference 就指向了创建 Pod 的 replicaset，Ownereference 使得用户可以方便地查找一个创建资源的对象，另外，还可以用来实现级联删除的效果。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;控制器模式&#34;&gt;控制器模式&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;控制循环&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;控制器&lt;/li&gt;
+&lt;li&gt;被控制的系统&lt;/li&gt;
+&lt;li&gt;能跟观测系统的传感器&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;外界通过修改资源 spec 来控制资源，控制器比较资源 spec 和 status，从而计算一个 diff，diff 最后会用来决定执行对系统进行什么样的控制操作，控制操作会使得系统产生新的输出，并被传感器以资源 status 形式上报，控制器的各个组件将都会是独立自主地运行，不断使系统向 spec 表示终态趋近。&lt;/p&gt;
+&lt;p&gt;各组件独立自主运行，不断使系统向终态趋近 status -&amp;gt; spec&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Sensor
+逻辑传感器&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;Reflector&lt;/li&gt;
+&lt;li&gt;Informer&lt;/li&gt;
+&lt;li&gt;Indexer&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Reflector 通过 List 和 Watch K8s server 来获取资源的数据。List 用来在 Controller 重启以及 Watch 中断的情况下，进行系统资源的全量更新；而 Watch 则在多次 List 之间进行增量的资源更新；Reflector 在获取新的资源数据后，会在 Delta 队列中塞入一个包括资源对象信息本身以及资源对象事件类型的 Delta 记录，Delta 队列中可以保证同一个对象在队列中仅有一条记录，从而避免 Reflector 重新 List 和 Watch 的时候产生重复的记录。&lt;/p&gt;
+&lt;p&gt;Informer 组件不断地从 Delta 队列中弹出 delta 记录，然后把资源对象交给 indexer，让 indexer 把资源记录在一个缓存中，缓存在默认设置下是用资源的命名空间来做索引的，并且可以被 Controller Manager 或多个 Controller 所共享。之后，再把这个事件交给事件的回调函数&lt;/p&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;控制循环例子 - 扩容
+ReplicaSet 是一个用来描述无状态应用的扩缩容行为的资源， ReplicaSet controler 通过监听 ReplicaSet 资源来维持应用希望的状态数量，ReplicaSet 中通过 selector 来匹配所关联的 Pod，在这里考虑 ReplicaSet rsA 的，replicas 从 2 被改到 3 的场景。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;首先，Reflector 会 watch 到 ReplicaSet 和 Pod 两种资源的变化，为什么我们还会 watch pod 资源的变化稍后会讲到。发现 ReplicaSet 发生变化后，在 delta 队列中塞入了对象是 rsA，而且类型是更新的记录。&lt;/p&gt;
+&lt;p&gt;Informer 一方面把新的 ReplicaSet 更新到缓存中，并与 Namespace nsA 作为索引。另外一方面，调用 Update 的回调函数，ReplicaSet 控制器发现 ReplicaSet 发生变化后会把字符串的 nsA/rsA 字符串塞入到工作队列中，工作队列后的一个 Worker 从工作队列中取到了 nsA/rsA 这个字符串的 key，并且从缓存中取到了最新的 ReplicaSet 数据。&lt;/p&gt;
+&lt;p&gt;Worker 通过比较 ReplicaSet 中 spec 和 status 里的数值，发现需要对这个 ReplicaSet 进行扩容，因此 ReplicaSet 的 Worker 创建了一个 Pod，这个 pod 中的 Ownereference 取向了 ReplicaSet rsA。&lt;/p&gt;
+&lt;p&gt;然后 Reflector Watch 到的 Pod 新增事件，在 delta 队列中额外加入了 Add 类型的 deta 记录，一方面把新的 Pod 记录通过 Indexer 存储到了缓存中，另一方面调用了 ReplicaSet 控制器的 Add 回调函数，Add 回调函数通过检查 pod ownerReferences 找到了对应的 ReplicaSet，并把包括 ReplicaSet 命名空间和字符串塞入到了工作队列中。&lt;/p&gt;
+&lt;p&gt;ReplicaSet 的 Woker 在得到新的工作项之后，从缓存中取到了新的 ReplicaSet 记录，并得到了其所有创建的 Pod，因为 ReplicaSet 的状态不是最新的，也就是所有创建 Pod 的数量不是最新的。因此在此时 ReplicaSet 更新 status 使得 spec 和 status 达成一致。&lt;/p&gt;
+&lt;h3 id=&#34;控制器模式总结&#34;&gt;控制器模式总结&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;两种 API 设计方法
+Kubernetes 控制器模式依赖声明式的 API&lt;/li&gt;
+&lt;li&gt;命令式 API 的问题
+命令 API 最大的一个问题在于错误处理；
+在大规模的分布式系统中，错误是无处不在的。一旦发出的命令没有响应，调用方只能通过反复重试的方式来试图恢复错误，然而盲目的重试可能会带来更大的问题。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;假设原来的命令，后台实际上已经执行完成了，重试后又多执行了一个重试的命令操作。为了避免重试的问题，系统往往还需要在执行命令前，先记录一下需要执行的命令，并且在重启等场景下，重做待执行的命令，而且在执行的过程中，还需要考虑多个命令的先后顺序、覆盖关系等等一些复杂的逻辑情况。&lt;/p&gt;
+&lt;p&gt;实际上许多命令式的交互系统后台往往还会做一个巡检的系统，用来修正命令处理超时、重试等一些场景造成数据不一致的问题；&lt;/p&gt;
+&lt;p&gt;然而，因为巡检逻辑和日常操作逻辑是不一样的，往往在测试上覆盖不够，在错误处理上不够严谨，具有很大的操作风险，因此往往很多巡检系统都是人工来触发的。&lt;/p&gt;
+&lt;p&gt;最后，命令式 API 在处理多并发访问时，也很容易出现问题；
+假如有多方并发的对一个资源请求进行操作，并且一旦其中有操作出现了错误，就需要重试。那么最后哪一个操作生效了，就很难确认，也无法保证。很多命令式系统往往在操作前会对系统进行加锁，从而保证整个系统最后生效行为的可预见性，但是加锁行为会降低整个系统的操作执行效率。&lt;/p&gt;
+&lt;p&gt;相对的，声明式 API 系统里天然地记录了系统现在和最终的状态。
+不需要额外的操作数据。另外因为状态的幂等性，可以在任意时刻反复操作。在声明式系统运行的方式里，正常的操作实际上就是对资源状态的巡检，不需要额外开发巡检系统，系统的运行逻辑也能够在日常的运行中得到测试和锤炼，因此整个操作的稳定性能够得到保证。
+3. 控制器模式总结
+* Kubernetes 所采用的控制器模式，是由声明式 API 驱动的。确切来说，是基于对Kubernetes 资源对象的修改来驱动的；
+* Kubernetes 资源之后，是关注该资源的控制器。这些控制器将异步的控制系统向设置的终态驱近；这些控制器是自主运行的，使得系统的自动化和无人值守成为可能；
+* 因为 Kubernetes 的控制器和资源都是可以自定义的，因此可以方便的扩展控制器模式。特别是对于有状态应用，我们往往通过自定义资源和控制器的方式，来自动化运维操作。这个也就是后续会介绍的 operator 的场景。&lt;/p&gt;
+&lt;h2 id=&#34;应用编排与管理&#34;&gt;应用编排与管理&lt;/h2&gt;
+&lt;h3 id=&#34;deployment-管理部署发布的控制器&#34;&gt;Deployment: 管理部署发布的控制器&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;deployment定义一种 Pod 期望数量，controller会持续维持 Pod 数量为期望的数量，当出现问题时候，controller会帮我们恢复，新扩出来对应的 Pod，保证可用的 Pod数量与期望数量一致&lt;/li&gt;
+&lt;li&gt;配置 Pod 发布方式。 controller 会按照用户给定的策略来更新 Pod，更新过程中，也可以设定不可用 Pod 数量在多少范围内。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;用例解读&#34;&gt;用例解读&lt;/h3&gt;
+&lt;h4 id=&#34;deployment-status&#34;&gt;Deployment Status&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Processing&lt;/li&gt;
+&lt;li&gt;Complete&lt;/li&gt;
+&lt;li&gt;Failed&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;架构设计&#34;&gt;架构设计&lt;/h3&gt;
+&lt;h4 id=&#34;管理模式&#34;&gt;管理模式&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Deployment 只负责管理不同版本的Replicaset，由Replicaset管理Pod副本数。&lt;/li&gt;
+&lt;li&gt;每个ReplicaSet 对应了Deployment template 的一个版本&lt;/li&gt;
+&lt;li&gt;一个ReplicaSet 下的Pod都是相同的版本&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;deployment-控制器&#34;&gt;Deployment 控制器&lt;/h4&gt;
+&lt;p&gt;所有的控制器都是通过 Informer 中的 Event 做一些 Handler 和 Watch。这个地方 Deployment 控制器，其实是关注 Deployment 和 ReplicaSet 中的 event，收到事件后会加入到队列中。而 Deployment controller 从队列中取出来之后，它的逻辑会判断 Check Paused，这个 Paused 其实是 Deployment 是否需要新的发布，如果 Paused 设置为 true 的话，就表示这个 Deployment 只会做一个数量上的维持，不会做新的发布。&lt;/p&gt;
+&lt;p&gt;如果 Check paused 为 Yes 也就是 true 的话，那么只会做 Sync replicas。也就是说把 replicas sync 同步到对应的 ReplicaSet 中，最后再 Update Deployment status，那么 controller 这一次的 ReplicaSet 就结束了。&lt;/p&gt;
+&lt;p&gt;那么如果 paused 为 false 的话，它就会做 Rollout，也就是通过 Create 或者是 Rolling 的方式来做更新，更新的方式其实也是通过 Create/Update/Delete 这种 ReplicaSet 来做实现的。&lt;/p&gt;
+&lt;h4 id=&#34;replicaset-控制器&#34;&gt;ReplicaSet 控制器&lt;/h4&gt;
+&lt;p&gt;当 Deployment 分配 ReplicaSet 之后，ReplicaSet 控制器本身也是从 Informer 中 watch 一些事件，这些事件包含了 ReplicaSet 和 Pod 的事件。从队列中取出之后，ReplicaSet controller 的逻辑很简单，就只管理副本数。也就是说如果 controller 发现 replicas 比 Pod 数量大的话，就会扩容，而如果发现实际数量超过期望数量的话，就会删除 Pod。&lt;/p&gt;
+&lt;p&gt;上面 Deployment 控制器的图中可以看到，Deployment 控制器其实做了更复杂的事情，包含了版本管理，而它把每一个版本下的数量维持工作交给 ReplicaSet 来做。&lt;/p&gt;
+&lt;h4 id=&#34;扩缩容模拟&#34;&gt;扩/缩容模拟&lt;/h4&gt;
+&lt;p&gt;下面来看一些操作模拟，比如说扩容模拟。这里有一个 Deployment，它的副本数是 2，对应的 ReplicaSet 有 Pod1 和 Pod2。这时如果我们修改 Deployment replicas， controller 就会把 replicas 同步到当前版本的 ReplicaSet 中，这个 ReplicaSet 发现当前有 2 个 Pod，不满足当前期望 3 个，就会创建一个新的 Pod3。&lt;/p&gt;
+&lt;h4 id=&#34;发布模拟&#34;&gt;发布模拟&lt;/h4&gt;
+&lt;p&gt;我们再模拟一下发布，发布的情况会稍微复杂一点。这里可以看到 Deployment 当前初始的 template，比如说 template1 这个版本。template1 这个 ReplicaSet 对应的版本下有三个 Pod：Pod1，Pod2，Pod3。&lt;/p&gt;
+&lt;p&gt;这时修改 template 中一个容器的 image， Deployment controller 就会新建一个对应 template2 的 ReplicaSet。创建出来之后 ReplicaSet 会逐渐修改两个 ReplicaSet 的数量，比如它会逐渐增加 ReplicaSet2 中 replicas 的期望数量，而逐渐减少 ReplicaSet1 中的 Pod 数量。&lt;/p&gt;
+&lt;p&gt;那么最终达到的效果是：新版本的 Pod 为 Pod4、Pod5和Pod6，旧版本的 Pod 已经被删除了，这里就完成了一次发布。&lt;/p&gt;
+&lt;h4 id=&#34;回滚模拟&#34;&gt;回滚模拟&lt;/h4&gt;
+&lt;p&gt;来看一下回滚模拟，根据上面的发布模拟可以知道 Pod4、Pod5、Pod6 已经发布完成。这时发现当前的业务版本是有问题的，如果做回滚的话，不管是通过 rollout 命令还是通过回滚修改 template，它其实都是把 template 回滚为旧版本的 template1。&lt;/p&gt;
+&lt;p&gt;这个时候 Deployment 会重新修改 ReplicaSet1 中 Pod 的期望数量，把期望数量修改为 3 个，且会逐渐减少新版本也就是 ReplicaSet2 中的 replica 数量，最终的效果就是把 Pod 从旧版本重新创建出来。&lt;/p&gt;
+&lt;h4 id=&#34;spec-字段解析&#34;&gt;spec 字段解析&lt;/h4&gt;
+&lt;p&gt;最后再来简单看一些 Deployment 中的字段解析。首先看一下 Deployment 中其他的 spec 字段：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;MinReadySeconds：Deployment 会根据 Pod ready 来看 Pod 是否可用，但是如果我们设置了 MinReadySeconds 之后，比如设置为 30 秒，那 Deployment 就一定会等到 Pod ready 超过 30 秒之后才认为 Pod 是 available 的。Pod available 的前提条件是 Pod ready，但是 ready 的 Pod 不一定是 available 的，它一定要超过 MinReadySeconds 之后，才会判断为 available；&lt;/li&gt;
+&lt;li&gt;revisionHistoryLimit：保留历史 revision，即保留历史 ReplicaSet 的数量，默认值为 10 个。这里可以设置为一个或两个，如果回滚可能性比较大的话，可以设置数量超过 10；&lt;/li&gt;
+&lt;li&gt;paused：paused 是标识，Deployment 只做数量维持，不做新的发布，这里在 Debug 场景可能会用到；&lt;/li&gt;
+&lt;li&gt;progressDeadlineSeconds：前面提到当 Deployment 处于扩容或者发布状态时，它的 condition 会处于一个 processing 的状态，processing 可以设置一个超时时间。如果超过超时时间还处于 processing，那么 controller 将认为这个 Pod 会进入 failed 的状态。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;升级策略字段解析&#34;&gt;升级策略字段解析&lt;/h4&gt;
+&lt;p&gt;Deployment 在 RollingUpdate 中主要提供了两个策略，一个是 MaxUnavailable，另一个是 MaxSurge。这两个字段解析的意思，可以看下图中详细的 comment，或者简单解释一下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;MaxUnavailable：滚动过程中最多有多少个 Pod 不可用；&lt;/li&gt;
+&lt;li&gt;MaxSurge：滚动过程中最多存在多少个 Pod 超过预期 replicas 数量。
+上文提到，ReplicaSet 为 3 的 Deployment 在发布的时候可能存在一种情况：新版本的 ReplicaSet 和旧版本的 ReplicaSet 都可能有两个 replicas，加在一起就是 4 个，超过了我们期望的数量三个。这是因为我们默认的 MaxUnavailable 和 MaxSurge 都是 25%，默认 Deployment 在发布的过程中，可能有 25% 的 replica 是不可用的，也可能超过 replica 数量 25% 是可用的，最高可以达到 125% 的 replica 数量。
+这里其实可以根据用户实际场景来做设置。比如当用户的资源足够，且更注重发布过程中的可用性，可设置 MaxUnavailable 较小、MaxSurge 较大。但如果用户的资源比较紧张，可以设置 MaxSurge 较小，甚至设置为 0，这里要注意的是 MaxSurge 和 MaxUnavailable 不能同时为 0。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;理由不难理解，当 MaxSurge 为 0 的时候，必须要删除 Pod，才能扩容 Pod；如果不删除 Pod 是不能新扩 Pod 的，因为新扩出来的话，总共的 Pod 数量就会超过期望数量。而两者同时为 0 的话，MaxSurge 保证不能新扩 Pod，而 MaxUnavailable 不能保证 ReplicaSet 中有 Pod 是 available 的，这样就会产生问题。所以说这两个值不能同时为 0。用户可以根据自己的实际场景来设置对应的、合适的值。&lt;/p&gt;
+&lt;h3 id=&#34;summary&#34;&gt;Summary&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Deployment 是 Kubernetes 中常见的一种 Workload，支持部署管理多版本的 Pod；&lt;/li&gt;
+&lt;li&gt;Deployment 管理多版本的方式，是针对每个版本的 template 创建一个 ReplicaSet，由 * ReplicaSet 维护一定数量的 Pod 副本，而 Deployment 只需要关心不同版本的 ReplicaSet 里要指定多少数量的 Pod；&lt;/li&gt;
+&lt;li&gt;Deployment 发布部署的根本原理，就是 Deployment 调整不同版本 ReplicaSet 里的终态副本数，以此来达到多版本 Pod 的升级和回滚。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;job&#34;&gt;Job&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;kubernetes 的 Job 是一个管理任务的控制器，它可以创建一个或多个 Pod 来指定 Pod 的数量，并可以监控它是否成功地运行或终止；&lt;/li&gt;
+&lt;li&gt;可以根据 Pod 的状态来给 Job 设置重置的方式及重试的次数；&lt;/li&gt;
+&lt;li&gt;还可以根据依赖关系，保证上一个任务运行完成之后再运行下一个任务；&lt;/li&gt;
+&lt;li&gt;同时还可以控制任务的并行度，根据并行度来确保 Pod 运行过程中的并行次数和总体完成大小。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;并行运行job&#34;&gt;并行运行Job&lt;/h4&gt;
+&lt;p&gt;有时候有些需求：希望 Job 运行的时候可以最大化的并行，并行出 n 个 Pod 去快速地执行。同时，由于我们的节点数有限制，可能也不希望同时并行的 Pod 数过多，有那么一个管道的概念，我们可以希望最大的并行度是多少，Job 控制器都可以帮我们来做到。&lt;/p&gt;
+&lt;p&gt;这里主要看两个参数: 一个是 completions，一个是 parallelism。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;completions: 是用来指定本 Pod 队列执行次数。可能这个不是很好理解，其实可以把它认为是这个 Job 指定的可以运行的总次数。比如这里设置成 8，即这个任务一共会被执行 8 次；&lt;/li&gt;
+&lt;li&gt;parallelism: 代表这个并行执行的个数。所谓并行执行的次数，其实就是一个管道或者缓冲器中缓冲队列的大小，把它设置成 2，也就是说这个 Job 一定要执行 8 次，每次并行 2 个 Pod，这样的话，一共会执行 4 个批次。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;cronjob&#34;&gt;CronJob&lt;/h3&gt;
+&lt;h3 id=&#34;架构设计-1&#34;&gt;架构设计&lt;/h3&gt;
+&lt;h4 id=&#34;job管理模式&#34;&gt;Job管理模式&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;Job Controller 负责根据配置创建Pod。&lt;/li&gt;
+&lt;li&gt;Job Controller 跟踪Job状态，根据配置及时重试或者继续创建。&lt;/li&gt;
+&lt;li&gt;Job Controller 会自动添加label 来跟踪对应的pod，并根据配置并行或者串行创建pod。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;daemonset-守护进程控制器&#34;&gt;DaemonSet 守护进程控制器&lt;/h3&gt;
+&lt;p&gt;DaemonSet 也是 Kubernetes 提供的一个 default controller，它实际是做一个守护进程的控制器，它能帮我们做到以下几件事情：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;首先能保证集群内的每一个节点都运行一组相同的 pod；&lt;/li&gt;
+&lt;li&gt;同时还能根据节点的状态保证新加入的节点自动创建对应的 pod；&lt;/li&gt;
+&lt;li&gt;在移除节点的时候，能删除对应的 pod；&lt;/li&gt;
+&lt;li&gt;而且它会跟踪每个 pod 的状态，当这个 pod 出现异常、Crash 掉了，会及时地去 recovery 这个状态。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;daemonset语法&#34;&gt;DaemonSet语法&lt;/h4&gt;
+&lt;p&gt;适用场景&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;集群存储进程: glusterd、ceph&lt;/li&gt;
+&lt;li&gt;日志收集进程: fluentd、logstash&lt;/li&gt;
+&lt;li&gt;需要在每个节点运行的监控收集器&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;更新-daemonset&#34;&gt;更新 DaemonSet&lt;/h4&gt;
+&lt;p&gt;DaemonSet 和 deployment 特别像，它也有两种更新策略：一个是 RollingUpdate，另一个是 OnDelete。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;RollingUpdate 其实比较好理解，就是会一个一个的更新。先更新第一个 pod，然后老的 pod 被移除，通过健康检查之后再去见第二个 pod，这样对于业务上来说会比较平滑地升级，不会中断；&lt;/li&gt;
+&lt;li&gt;OnDelete 其实也是一个很好的更新策略，就是模板更新之后，pod 不会有任何变化，需要我们手动控制。我们去删除某一个节点对应的 pod，它就会重建，不删除的话它就不会重建，这样的话对于一些我们需要手动控制的特殊需求也会有特别好的作用。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;daemonset管理模式&#34;&gt;DaemonSet管理模式&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;DaemonSet Controller 负责根据配置创建Pod&lt;/li&gt;
+&lt;li&gt;DaemonSet Controller 跟踪 Job 状态，根据配置及时重试Pod或者继续创建&lt;/li&gt;
+&lt;li&gt;DaemonSet Controller 会自动添加affinity &amp;amp; label来跟踪对应的Pod，并根据配置在每个节点或者适合的部分节点创建Pod&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;daemonset-的控制器&#34;&gt;DaemonSet 的控制器&lt;/h4&gt;
+&lt;p&gt;DaemonSet 其实和 Job controller 做的差不多：两者都需要根据 watch 这个 API Server 的状态。现在 DaemonSet 和 Job controller 唯一的不同点在于，DaemonsetSet Controller需要去 watch node 的状态，但其实这个 node 的状态还是通过 API Server 传递到 ETCD 上。&lt;/p&gt;
+&lt;p&gt;当有 node 状态节点发生变化时，它会通过一个内存消息队列发进来，然后DaemonSet controller 会去 watch 这个状态，看一下各个节点上是都有对应的 Pod，如果没有的话就去创建。当然它会去做一个对比，如果有的话，它会比较一下版本，然后加上刚才提到的是否去做 RollingUpdate？如果没有的话就会重新创建，Ondelete 删除 pod 的时候也会去做 check 它做一遍检查，是否去更新，或者去创建对应的 pod。&lt;/p&gt;
+&lt;p&gt;当然最后的时候，如果全部更新完了之后，它会把整个 DaemonSet 的状态去更新到 API Server 上，完成最后全部的更新。&lt;/p&gt;
+&lt;h2 id=&#34;应用配置管理&#34;&gt;应用配置管理&lt;/h2&gt;
+&lt;h3 id=&#34;pod配置管理&#34;&gt;Pod配置管理&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;可变配置: COnfigMap&lt;/li&gt;
+&lt;li&gt;敏感信息: Secret&lt;/li&gt;
+&lt;li&gt;身份认证: ServiceAccount&lt;/li&gt;
+&lt;li&gt;资源配置: Resources&lt;/li&gt;
+&lt;li&gt;安全管控: SecurityContext&lt;/li&gt;
+&lt;li&gt;前置校验: InitContainers&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;configmap&#34;&gt;ConfigMap&lt;/h3&gt;
+&lt;p&gt;管理容器运行所需的配置文件、环境变量、命令行参数等可变配置，解耦容器镜像和可变配置，保证工作负载(Pod)的可移植性&lt;/p&gt;
+&lt;h3 id=&#34;configmap-注意要点&#34;&gt;ConfigMap 注意要点&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;ConfigMap 文件大小: etcd有写入1MB限制&lt;/li&gt;
+&lt;li&gt;Pod 引入 ConfigMap 时必须是相同 namespace 的 ConfigMap&lt;/li&gt;
+&lt;li&gt;Pod 引用的 ConfigMap 如何不存在，pod会创建失败，pod需要先创建好要引用的configmap&lt;/li&gt;
+&lt;li&gt;使用 envFrom 的方式，把 ConfigMap 里面所有的信息导入成环境变量时，如果 ConfigMap 里有些 key 是无效的，比如 key 的名字里面带有数字，这个环境变量是不会注入容器的，它会被忽略。但是这个 pod 本身是可以创建的。这个和第三点是不一样的方式，是 ConfigMap 文件存在基础上，整体导入成环境变量的一种形式。&lt;/li&gt;
+&lt;li&gt;什么样的 pod 才能使用 ConfigMap？这里只有通过 K8s api 创建的 pod 才能使用 ConfigMap，比如说通过用命令行 kubectl 来创建的 pod，肯定是可以使用 ConfigMap 的，但其他方式创建的 pod，比如说 kubelet 通过 manifest 创建的 static pod，它是不能使用 ConfigMap 的。&lt;/li&gt;
+&lt;/ol&gt;</description>
       
     </item>
     
@@ -6403,188 +6715,6 @@ Row Key | Time Stamp | ColumnFamily contents:
 &lt;p&gt;
 &lt;img src=&#34;8.png&#34; alt=&#34;&#34;&gt;
 &lt;/p&gt;
-</description>
-      
-    </item>
-    
-    <item>
-      <title>docker学习笔记</title>
-      <link>http://minicloudsky.github.io/blog/2019/05/15/docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
-      <pubDate>Wed, 15 May 2019 08:33:42 +0000</pubDate>
-      
-      <guid>http://minicloudsky.github.io/blog/2019/05/15/docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
-      
-        <description>&lt;h3 id=&#34;什么是docker&#34;&gt;什么是docker&lt;/h3&gt;
-&lt;p&gt;docker包括一个命令行程序、一个后台守护进程、以及一组远程服务。它解决了常见的软件问题，并建华路安装、运行、发布和删除软件。这一切能够实现是使用一项Unix技术，称为容器。&lt;/p&gt;
-&lt;h3 id=&#34;容器不是虚拟化&#34;&gt;容器不是虚拟化&lt;/h3&gt;
-&lt;p&gt;在没有docker时代，使用硬件虚拟化(虚拟机),以提供隔离，虚拟机提供虚拟硬件，可安装一个os和其他程序，需要很长时间创建，资源开销打，因为除了要执行你需要的软件，还需要运行整个操作系统的副本。
-docker容器不使用硬件虚拟化，运行在docker容器中的程序接口和逐渐的Linux内核直接打交道，容器中运行的程序与计算机操作系统直接没有额外的中间层，没有资源被冗余软件的运行或者虚拟硬件模拟而浪费掉，docker不是虚拟化技术，相反，它可以帮助使用已经内置到操作系统中的容器技术。&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;h3 id=&#34;隔离容器中运行软件&#34;&gt;隔离容器中运行软件&lt;/h3&gt;
-&lt;p&gt;docker使用已经成为linux一部分的linux命名空间和cgroups，docker不提供容器技术，但它使得容器更易于使用要了解系统中在容器什么样子，让我们先建立一条基线，如下为计算机系统体系结构上运行的基本容器示例。
-
-&lt;img src=&#34;instance.png&#34; alt=&#34;&#34;&gt;
-&lt;/p&gt;
-&lt;p&gt;运行docker可以认为是在用户控件运行两个程序，首先是docker守护进程，如果正确安装，该进程应该始终处于运行状态。另一个为docker CLI，它是与用户交互的docker程序，如果要启动，停止，运行或安装软件，你可以用docker CLI执行相应命令。
-
-&lt;img src=&#34;three.png&#34; alt=&#34;&#34;&gt;
-&lt;/p&gt;
-&lt;h3 id=&#34;docker容器隔离&#34;&gt;docker容器隔离&lt;/h3&gt;
-&lt;p&gt;docker构建容器隔离包括8个方面，具体如下:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;PID命令空间&lt;/code&gt; &amp;mdash;&amp;ndash; 进程标识符和能力&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;UTS命名空间&lt;/code&gt; &amp;mdash;&amp;ndash; 主机名和域名&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;MNT命名空间&lt;/code&gt; &amp;mdash;&amp;ndash; 文件系统访问和结构&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;IPC命名空间&lt;/code&gt; &amp;mdash;&amp;ndash; 通过共享内存的进程间通信&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;NET命名空间&lt;/code&gt; &amp;mdash;&amp;ndash; 网络访问和结构&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;chroot()&lt;/code&gt;   &amp;mdash;&amp;ndash; 控制文件系统根目录的位置&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;cgroups&lt;/code&gt;    &amp;mdash;&amp;ndash; 资源保护&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Linux命名空间和&lt;code&gt;cgroups&lt;/code&gt;管理着运行时容器，docker采用另一套技术，就像运输集装箱一样为文件提供容器。&lt;/p&gt;
-&lt;h3 id=&#34;分发容器&#34;&gt;分发容器&lt;/h3&gt;
-&lt;p&gt;docker容器可以看成物理运输的集装箱，这是你存储、运行应用程序及其所有依赖的盒子。docker可以执行、复制、轻松地分发容器。docker通过一种打包和分发软件，完成传统容器的封装。这个用来充当容器分发角色的组件被称为&lt;code&gt;镜像&lt;/code&gt;。&lt;br&gt;
-Docker镜像，是一个容器中运行程序的所有文件的捆绑快照。你可以从镜像中创造尽可能多的容器，但是你这样做时候，从相同的镜像启动的容器不共享文件系统的更改。当你用docker分发软件，其实就是分发这些镜像，并在接收的机器上创建容器镜像在docker生态系统中是可交付的基本单位。&lt;/p&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;docker下安装常用工具命令总结&#34;&gt;docker下安装常用工具命令总结&lt;/h3&gt;
-&lt;p&gt;查看docker磁盘占用&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;docker system df&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;查看虚悬镜像&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;docker image ls  -f dangling=true&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;删除虚悬镜像&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;docker image  prune&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;根据仓库名列出镜像&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;docker images ls Ubuntu&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;列出镜像和标签&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;docker images ls Ubuntu:18.04&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;容器重命名&lt;/p&gt;
-&lt;p&gt;docker rename name1 name2&lt;/p&gt;
-&lt;h2 id=&#34;dockerfile&#34;&gt;Dockerfile&lt;/h2&gt;
-&lt;p&gt;from 指定基础镜像&lt;/p&gt;
-&lt;p&gt;以一个镜像为基础，在其上进行定制。必须是第一条命令&lt;/p&gt;
-&lt;p&gt;除了选择现有镜像为基础镜像外，Docker 还存在一个特殊的镜像，名为scratch。这个镜像是虚拟的概念，并不实际存在，它表示一个空白的镜像。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;FROM scratch&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;如果你以scratch为基础镜像的话，意味着你不以任何镜像为基础，接下来所写的指令将作为镜像第一层开始存在&lt;/p&gt;
-&lt;h3 id=&#34;cmd-容器启动命令&#34;&gt;CMD 容器启动命令&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;CMD&lt;/code&gt; 指令的格式和 &lt;code&gt;RUN&lt;/code&gt; 相似，也是两种格式：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;code&gt;shell&lt;/code&gt; 格式：&lt;code&gt;CMD &amp;lt;命令&amp;gt;&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;code&gt;exec&lt;/code&gt; 格式：&lt;code&gt;CMD [&amp;quot;可执行文件&amp;quot;, &amp;quot;参数1&amp;quot;, &amp;quot;参数2&amp;quot;...]&lt;/code&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;参数列表格式：&lt;code&gt;CMD [&amp;quot;参数1&amp;quot;, &amp;quot;参数2&amp;quot;...]&lt;/code&gt;。在指定了 &lt;code&gt;ENTRYPOINT&lt;/code&gt; 指令后，用 &lt;code&gt;CMD&lt;/code&gt; 指定具体的参数。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;之前介绍容器的时候曾经说过，Docker 不是虚拟机，容器就是进程。既然是进程，那么在启动容器的时候，需要指定所运行的程序及参数。&lt;code&gt;CMD&lt;/code&gt; 指令就是用于指定默认的容器主进程的启动命令的。&lt;/p&gt;
-&lt;p&gt;在运行时可以指定新的命令来替代镜像设置中的这个默认命令，比如，&lt;code&gt;ubuntu&lt;/code&gt; 镜像默认的 &lt;code&gt;CMD&lt;/code&gt; 是 &lt;code&gt;/bin/bash&lt;/code&gt;，如果我们直接 &lt;code&gt;docker run -it ubuntu&lt;/code&gt; 的话，会直接进入 &lt;code&gt;bash&lt;/code&gt;。我们也可以在运行时指定运行别的命令，如 &lt;code&gt;docker run -it ubuntu cat /etc/os-release&lt;/code&gt;。这就是用 &lt;code&gt;cat /etc/os-release&lt;/code&gt; 命令替换了默认的 &lt;code&gt;/bin/bash&lt;/code&gt; 命令了，输出了系统版本信息。&lt;/p&gt;
-&lt;p&gt;在指令格式上，一般推荐使用 &lt;code&gt;exec&lt;/code&gt; 格式，这类格式在解析时会被解析为 JSON 数组，因此一定要使用双引号 &lt;code&gt;&amp;quot;&lt;/code&gt;，而不要使用单引号。&lt;/p&gt;
-&lt;h3 id=&#34;entrypoint-入口点&#34;&gt;ENTRYPOINT 入口点&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;ENTRYPOINT&lt;/code&gt; 的格式和 &lt;code&gt;RUN&lt;/code&gt; 指令格式一样，分为 &lt;code&gt;exec&lt;/code&gt; 格式和 &lt;code&gt;shell&lt;/code&gt; 格式。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;ENTRYPOINT&lt;/code&gt; 的目的和 &lt;code&gt;CMD&lt;/code&gt; 一样，都是在指定容器启动程序及参数。&lt;code&gt;ENTRYPOINT&lt;/code&gt; 在运行时也可以替代，不过比 &lt;code&gt;CMD&lt;/code&gt; 要略显繁琐，需要通过 &lt;code&gt;docker run&lt;/code&gt; 的参数 &lt;code&gt;--entrypoint&lt;/code&gt; 来指定。&lt;/p&gt;
-&lt;p&gt;当指定了 &lt;code&gt;ENTRYPOINT&lt;/code&gt; 后，&lt;code&gt;CMD&lt;/code&gt; 的含义就发生了改变，不再是直接的运行其命令，而是将 &lt;code&gt;CMD&lt;/code&gt; 的内容作为参数传给 &lt;code&gt;ENTRYPOINT&lt;/code&gt; 指令，换句话说实际执行时，将变为：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;ENTRYPOINT&amp;gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;lt;CMD&amp;gt;&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;当利用 docker run 来创建容器时，Docker 在后台运行的标准操作包括：
-检查本地是否存在指定的镜像，不存在就从公有仓库下载
-利用镜像创建并启动一个容器
-分配一个文件系统，并在只读的镜像层外面挂载一层可读写层
-从宿主主机配置的网桥接口中桥接一个虚拟接口到容器中去
-从地址池配置一个 ip 地址给容器
-执行用户指定的应用程序
-执行完毕后容器被终止&lt;/p&gt;
-&lt;h4 id=&#34;mysql&#34;&gt;mysql&lt;/h4&gt;
-&lt;h5 id=&#34;拉取mysql镜像&#34;&gt;拉取mysql镜像&lt;/h5&gt;
-&lt;p&gt;&lt;code&gt;docker pull mysql&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;启动一个镜像，并将mysql映射到服务器3306端口&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker  run  -it --name  mysql -p 3306:3306   -e MYSQL_ROOT_PASSWORD&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;root   -v   /home/containermaps/mysql/log/:/var/log/mysql  -v /home/containermaps/mysql/conf.d/:/etc/mysql     -v   /home/containermaps/mysql/data:/var/lib/mysql -d mysql:5.7
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;默认用户为root&lt;/p&gt;
-&lt;p&gt;&amp;ndash;name为容器名&lt;/p&gt;
-&lt;p&gt;-p指定端口&lt;/p&gt;
-&lt;p&gt;MYSQL_ROOT_PASSWORD 指定密码&lt;/p&gt;
-&lt;p&gt;进入mysql&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;docker exec -it mysql5.7-2  bash&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;mysql     -uroot  -p&lt;/code&gt;&lt;/p&gt;
-&lt;h4 id=&#34;nginx服务器&#34;&gt;nginx服务器&lt;/h4&gt;
-&lt;p&gt;&lt;code&gt;docker pull nginx&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;运行nginx&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;docker run --name  nginx-test -p 80:80 -d nginx&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;将nginx映射到本地目录&lt;/p&gt;
-&lt;p&gt;首先在/usr/local下新建目录&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mkdir -p /usr/local/docker-nginx/www /usr/local/docker-nginx/logs /usr/local/docker-nginx/conf
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;将docker中nginx配置文件复制到到服务器
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker cp 63185c51103a:/etc/nginx/nginx.conf /usr/local/docker-nginx/conf/
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;关闭上一个容器，重新启动一个nginx容器
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker run -d -p 80:80 --name nginx-server -v /usr/local/docker-nginx/www:/usr/share/nginx/html -v /usr/local/docker-nginx/conf/nginx.conf:/etc/nginx/nginx.conf -v /usr/local/docker-nginx/logs:/var/log/nginx nginx
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;由此配置好以后，修改/usr/local/docker-nginx目录下的conf中的nginx.conf，就可以完成对nginx的配置，修改www目录下的html文件即可更新nginx部署的网页&lt;/p&gt;
-&lt;h4 id=&#34;redis数据库&#34;&gt;redis数据库&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker pull redis
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker run --restart&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;always -d -p 6379:6379 -v /usr/local/docker-redis/data/:/data --name redis redis redis-server --appendonly yes --requirepass &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;redis&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h5 id=&#34;命令说明&#34;&gt;命令说明：&lt;/h5&gt;
-&lt;p&gt;&lt;code&gt;-p 6388:6379 : 将容器的 6379 端口映射到主机的 6379 端口&lt;/code&gt;
-&lt;code&gt;-v /usr/local/docker-redis/data/ : 将主机中 /usr/local/docker-redis/data/ 目录下的 redis 挂载到容器的 /data&lt;/code&gt;
-&lt;code&gt;redis-server --appendonly yes : 在容器执行 redis-server 启动命令，并打开 redis 持久化配置&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;连接redis&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;docker exec -ti 5f4c4cf5a5f5 redis-cli a &amp;quot;redis passwd&amp;quot;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://luoliangdsga.github.io/2018/04/26/%E4%BD%BF%E7%94%A8Docker%E9%83%A8%E7%BD%B2Redis/&#34;&gt;https://luoliangdsga.github.io/2018/04/26/%E4%BD%BF%E7%94%A8Docker%E9%83%A8%E7%BD%B2Redis/&lt;/a&gt;&lt;/p&gt;
-&lt;h4 id=&#34;mongodb&#34;&gt;mongodb&lt;/h4&gt;
-&lt;p&gt;&lt;code&gt;docker pull mongo&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker run -p 27017:27017 -v /usr/local/docker-mongodb/data:/data/db -d mongo
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;进入mongo&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;docker exec -it mongo mongo admin&lt;/code&gt;&lt;/p&gt;
-&lt;h3 id=&#34;elasticsearch&#34;&gt;elasticsearch&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker pull docker.elastic.co/elasticsearch/elasticsearch:7.5.2
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker run -p 9200:9200 -p 9300:9300 -e &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;discovery.type=single-node&amp;#34;&lt;/span&gt; docker.elastic.co/elasticsearch/elasticsearch:7.5.2
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;kibana&#34;&gt;kibana&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker pull docker.elastic.co/kibana/kibana:7.6.0
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker run --link YOUR_ELASTICSEARCH_CONTAINER_NAME_OR_ID:elasticsearch -p 5601:5601 &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;docker-repo&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;:&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;version&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;docker-容器中软件安装&#34;&gt;docker 容器中软件安装&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;使用国内镜像&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mv /etc/apt/sources.list /etc/apt/sources.list.bak
-echo &amp;#34;deb http://mirrors.163.com/debian/ jessie main non-free contrib&amp;#34; &amp;gt;&amp;gt; /etc/apt/sources.list
-echo &amp;#34;deb http://mirrors.163.com/debian/ jessie-proposed-updates main non-free contrib&amp;#34; &amp;gt;&amp;gt;/etc/apt/sources.list
-echo &amp;#34;deb-src http://mirrors.163.com/debian/ jessie main non-free contrib&amp;#34; &amp;gt;&amp;gt;/etc/apt/sources.list
-echo &amp;#34;deb-src http://mirrors.163.com/debian/ jessie-proposed-updates main non-free contrib&amp;#34; &amp;gt;&amp;gt;/etc/apt/sources.list
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;更新 &lt;code&gt;apt-get&lt;/code&gt; 指令&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;apt-get update
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;安装 &lt;code&gt;yum&lt;/code&gt; 命令&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;apt-get install vim
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;添加 &lt;code&gt;ls&lt;/code&gt; 命令&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;vim ~/.bashrc
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;在最后一行添加&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;alias ll=&amp;#39;ls $LS_OPTIONS -l&amp;#39;
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;使之生效&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;source ~/.bashrc
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;postgresql&#34;&gt;postgresql&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker run -p 80:80 &lt;span style=&#34;color:#ae81ff&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    -e &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;PGADMIN_DEFAULT_EMAIL=1397991131@qq.com&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    -e &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;PGADMIN_DEFAULT_PASSWORD=pgadmin&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    -e &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION=True&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    -e &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;PGADMIN_CONFIG_LOGIN_BANNER=&amp;#34;Authorised users only!&amp;#34;&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    -e &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;PGADMIN_CONFIG_CONSOLE_LOG_LEVEL=10&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    -d dpage/pgadmin4
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; docker run --rm   --name pg-docker -e POSTGRES_PASSWORD&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;root -d -p 5432:5432 -v /home/containermaps/postgres/:/var/lib/postgresql/data  postgres
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;orcale&#34;&gt;orcale&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker pull alexeiled/docker-oracle-xe-11g
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker run -h &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;oracle&amp;#34;&lt;/span&gt; --name &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;oracle&amp;#34;&lt;/span&gt; -d -p 49160:22 -p 49161:1521 -p 49162:8080 alexeiled/docker-oracle-xe-11g
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;create user orcale identified by orcale;&lt;/p&gt;
 </description>
       
     </item>

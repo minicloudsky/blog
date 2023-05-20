@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>cncf &amp; aliyun k8s笔记 - Minicloudsky&#39;s blog</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="minicloudsky" />
+  <meta name="description" content="K8s核心概念  调度 自动修复 水平伸缩  k8s架构 典型的两层client-server架构
+master 核心组件  API Server Controller Scheduler etcd " />
+
+  <meta name="keywords" content="minicloudsky" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.99.1" />
+
+
+<link rel="canonical" href="http://minicloudsky.github.io/blog/2023/05/14/cncf-aliyun-k8s%E7%AC%94%E8%AE%B0/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.8f0ec83f8e157abb4cb8fabe03ebefa49b3959c5be68dc28870652f8a2d07dcd.css" integrity="sha256-jw7IP44VertMuPq&#43;A&#43;vvpJs5WcW&#43;aNwohwZS&#43;KLQfc0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+
+
+<meta property="og:title" content="cncf &amp; aliyun k8s笔记" />
+<meta property="og:description" content="K8s核心概念
+
+调度
+自动修复
+水平伸缩
+
+k8s架构
+典型的两层client-server架构
+master 核心组件
+
+API Server
+Controller
+Scheduler
+etcd
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://minicloudsky.github.io/blog/2023/05/14/cncf-aliyun-k8s%E7%AC%94%E8%AE%B0/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-05-14T21:35:12+00:00" />
+<meta property="article:modified_time" content="2023-05-14T21:35:12+00:00" />
+
+<meta itemprop="name" content="cncf &amp; aliyun k8s笔记">
+<meta itemprop="description" content="K8s核心概念
+
+调度
+自动修复
+水平伸缩
+
+k8s架构
+典型的两层client-server架构
+master 核心组件
+
+API Server
+Controller
+Scheduler
+etcd
+"><meta itemprop="datePublished" content="2023-05-14T21:35:12+00:00" />
+<meta itemprop="dateModified" content="2023-05-14T21:35:12+00:00" />
+<meta itemprop="wordCount" content="7347">
+<meta itemprop="keywords" content="思考," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="cncf &amp; aliyun k8s笔记"/>
+<meta name="twitter:description" content="K8s核心概念
+
+调度
+自动修复
+水平伸缩
+
+k8s架构
+典型的两层client-server架构
+master 核心组件
+
+API Server
+Controller
+Scheduler
+etcd
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Minicloudsky's blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://minicloudsky.github.io/">Home</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://minicloudsky.github.io/post/">Archives</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://minicloudsky.github.io/tags/">Tags</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://minicloudsky.github.io/categories/">Categories</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://minicloudsky.github.io/about/">About</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Minicloudsky's blog
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://minicloudsky.github.io/">Home</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://minicloudsky.github.io/post/">Archives</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://minicloudsky.github.io/tags/">Tags</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://minicloudsky.github.io/categories/">Categories</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://minicloudsky.github.io/about/">About</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight wallpaper">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">cncf &amp; aliyun k8s笔记</h1>
+      
+      <div class="post-meta">
+        <time datetime="2023-05-14" class="post-time">
+          2023-05-14
+        </time>
+        <div class="post-category">
+            <a href="http://minicloudsky.github.io/categories/k8a/"> k8a </a>
+            
+          </div>
+        
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Table of Contents</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#k8s核心概念">K8s核心概念</a>
+      <ul>
+        <li><a href="#k8s架构">k8s架构</a></li>
+        <li><a href="#master-核心组件">master 核心组件</a></li>
+        <li><a href="#pod">Pod</a></li>
+        <li><a href="#进程组">进程组</a></li>
+        <li><a href="#pod---k8s原子调度单位-why">Pod -&gt; K8s原子调度单位 Why?</a></li>
+        <li><a href="#超亲密关系">超亲密关系</a></li>
+        <li><a href="#pod-实现">Pod 实现</a></li>
+        <li><a href="#容器设计模式">容器设计模式</a></li>
+        <li><a href="#sidecar">Sidecar</a></li>
+        <li><a href="#sidecar-代理容器">Sidecar 代理容器</a></li>
+        <li><a href="#sidecar适配器容器">Sidecar适配器容器</a></li>
+        <li><a href="#设计模式本质-解耦和复用">设计模式本质	: 解耦和复用</a></li>
+      </ul>
+    </li>
+    <li><a href="#应用编排管理">应用编排管理</a>
+      <ul>
+        <li><a href="#控制器模式">控制器模式</a></li>
+        <li><a href="#控制器模式总结">控制器模式总结</a></li>
+      </ul>
+    </li>
+    <li><a href="#应用编排与管理">应用编排与管理</a>
+      <ul>
+        <li><a href="#deployment-管理部署发布的控制器">Deployment: 管理部署发布的控制器</a></li>
+        <li><a href="#用例解读">用例解读</a></li>
+        <li><a href="#架构设计">架构设计</a></li>
+        <li><a href="#summary">Summary</a></li>
+        <li><a href="#job">Job</a></li>
+        <li><a href="#cronjob">CronJob</a></li>
+        <li><a href="#架构设计-1">架构设计</a></li>
+        <li><a href="#daemonset-守护进程控制器">DaemonSet 守护进程控制器</a></li>
+      </ul>
+    </li>
+    <li><a href="#应用配置管理">应用配置管理</a>
+      <ul>
+        <li><a href="#pod配置管理">Pod配置管理</a></li>
+        <li><a href="#configmap">ConfigMap</a></li>
+        <li><a href="#configmap-注意要点">ConfigMap 注意要点</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <h2 id="k8s核心概念">K8s核心概念</h2>
+<ul>
+<li>调度</li>
+<li>自动修复</li>
+<li>水平伸缩</li>
+</ul>
+<h3 id="k8s架构">k8s架构</h3>
+<p>典型的两层client-server架构</p>
+<h3 id="master-核心组件">master 核心组件</h3>
+<ul>
+<li>API Server</li>
+<li>Controller</li>
+<li>Scheduler</li>
+<li>etcd</li>
+</ul>
+<h3 id="pod">Pod</h3>
+<p>容器的本质实际上是一个进程，是一个视图被隔离，资源受限的进程</p>
+<ul>
+<li>k8s -&gt; 云操作系统</li>
+<li>容器镜像 -&gt; 云操作系统安装包</li>
+</ul>
+<h3 id="进程组">进程组</h3>
+<p>容器是单进程模型，管理容器就是管理进程，一个程序有多个进程</p>
+<p>pod = &ldquo;进程组&rdquo;</p>
+<p>一个应用的多个进程定义为多个容器启动起来，定义在一个pod里面</p>
+<p>Pod 在 Kubernetes 里面只有一个逻辑单位，没有一个真实的东西对应说这个就是 Pod，真正起来在物理上存在的东西，就是四个容器。</p>
+<h3 id="pod---k8s原子调度单位-why">Pod -&gt; K8s原子调度单位 Why?</h3>
+<ul>
+<li>容器之间紧密协作，有依赖Task co-scheduling关系</li>
+</ul>
+<h3 id="超亲密关系">超亲密关系</h3>
+<ul>
+<li>亲密关系：调度解决
+<ul>
+<li>两个应用需要运行在同一个宿主机上</li>
+</ul>
+</li>
+<li>超亲密关系: pod解决
+<ul>
+<li>会发生直接的文件交换</li>
+<li>localhost或者socket本地通信</li>
+<li>频繁的RPC调用</li>
+<li>共享linux namespace(etc,一个容器要加入另一个容器的network namespace)</li>
+<li>&hellip;</li>
+</ul>
+</li>
+</ul>
+<h3 id="pod-实现">Pod 实现</h3>
+<ul>
+<li>共享网络
+<ul>
+<li>infra container，整个pod内的container共享同一个网络，其他所有容器加入infra container的network namespace，启动时候infra container 先启动，整个 Pod 的生命周期是等同于 Infra container 的生命周期</li>
+</ul>
+</li>
+<li>共享存储
+<ul>
+<li>pod内多个容器挂载同一个volume</li>
+</ul>
+</li>
+</ul>
+<h3 id="容器设计模式">容器设计模式</h3>
+<p>Init Container 按照定义顺序做初始化工作</p>
+<h3 id="sidecar">Sidecar</h3>
+<p>在 Pod 里面，可以定义一些专门的容器，来执行主业务容器所需要的一些辅助工作</p>
+<ul>
+<li>ssh</li>
+<li>日志收集</li>
+<li>debug
+辅助功能解耦业务，可以独立发布sidecar容器</li>
+</ul>
+<h3 id="sidecar-代理容器">Sidecar 代理容器</h3>
+<ul>
+<li>代理容器对业务容器屏蔽被代理的服务集群，简化业务代码的实现逻辑
+<ul>
+<li>容器之间通过localhost直接访问</li>
+<li>代理容器的代码可以对全公司复用</li>
+</ul>
+</li>
+</ul>
+<h3 id="sidecar适配器容器">Sidecar适配器容器</h3>
+<h3 id="设计模式本质-解耦和复用">设计模式本质	: 解耦和复用</h3>
+<h2 id="应用编排管理">应用编排管理</h2>
+<ol>
+<li>k8s资源元信息
+<ul>
+<li>Spec: 期望状态</li>
+<li>Status: 观测到的状态</li>
+<li>Labels: 资源注解</li>
+<li>Annotations: 多个资源之间相互关系的 OwnerReference</li>
+</ul>
+</li>
+<li>Labels
+<ul>
+<li>key: value元数据</li>
+<li>筛选资源，唯一的组合资源方法</li>
+<li>集合型selector</li>
+</ul>
+</li>
+<li>Annotations
+<ul>
+<li>系统或者工具用来存储资源的非标示性信息</li>
+<li>扩展资源的 spec/status 的描述</li>
+<li>特点
+<ul>
+<li>一般比label更大</li>
+<li>可以包含特殊字符</li>
+<li>可以结构化也可以非结构化</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Ownerreference
+<ul>
+<li>所有者，一般就是指集合类的资源</li>
+<li>集合类资源的控制器会创建对应的归属资源。比如：replicaset 控制器在操作中会创建 Pod，被创建 Pod 的 Ownereference 就指向了创建 Pod 的 replicaset，Ownereference 使得用户可以方便地查找一个创建资源的对象，另外，还可以用来实现级联删除的效果。</li>
+</ul>
+</li>
+</ol>
+<h3 id="控制器模式">控制器模式</h3>
+<ol>
+<li>
+<p>控制循环</p>
+<ul>
+<li>控制器</li>
+<li>被控制的系统</li>
+<li>能跟观测系统的传感器</li>
+</ul>
+<p>外界通过修改资源 spec 来控制资源，控制器比较资源 spec 和 status，从而计算一个 diff，diff 最后会用来决定执行对系统进行什么样的控制操作，控制操作会使得系统产生新的输出，并被传感器以资源 status 形式上报，控制器的各个组件将都会是独立自主地运行，不断使系统向 spec 表示终态趋近。</p>
+<p>各组件独立自主运行，不断使系统向终态趋近 status -&gt; spec</p>
+</li>
+<li>
+<p>Sensor
+逻辑传感器</p>
+</li>
+</ol>
+<ul>
+<li>Reflector</li>
+<li>Informer</li>
+<li>Indexer</li>
+</ul>
+<p>Reflector 通过 List 和 Watch K8s server 来获取资源的数据。List 用来在 Controller 重启以及 Watch 中断的情况下，进行系统资源的全量更新；而 Watch 则在多次 List 之间进行增量的资源更新；Reflector 在获取新的资源数据后，会在 Delta 队列中塞入一个包括资源对象信息本身以及资源对象事件类型的 Delta 记录，Delta 队列中可以保证同一个对象在队列中仅有一条记录，从而避免 Reflector 重新 List 和 Watch 的时候产生重复的记录。</p>
+<p>Informer 组件不断地从 Delta 队列中弹出 delta 记录，然后把资源对象交给 indexer，让 indexer 把资源记录在一个缓存中，缓存在默认设置下是用资源的命名空间来做索引的，并且可以被 Controller Manager 或多个 Controller 所共享。之后，再把这个事件交给事件的回调函数</p>
+<ol start="3">
+<li>控制循环例子 - 扩容
+ReplicaSet 是一个用来描述无状态应用的扩缩容行为的资源， ReplicaSet controler 通过监听 ReplicaSet 资源来维持应用希望的状态数量，ReplicaSet 中通过 selector 来匹配所关联的 Pod，在这里考虑 ReplicaSet rsA 的，replicas 从 2 被改到 3 的场景。</li>
+</ol>
+<p>首先，Reflector 会 watch 到 ReplicaSet 和 Pod 两种资源的变化，为什么我们还会 watch pod 资源的变化稍后会讲到。发现 ReplicaSet 发生变化后，在 delta 队列中塞入了对象是 rsA，而且类型是更新的记录。</p>
+<p>Informer 一方面把新的 ReplicaSet 更新到缓存中，并与 Namespace nsA 作为索引。另外一方面，调用 Update 的回调函数，ReplicaSet 控制器发现 ReplicaSet 发生变化后会把字符串的 nsA/rsA 字符串塞入到工作队列中，工作队列后的一个 Worker 从工作队列中取到了 nsA/rsA 这个字符串的 key，并且从缓存中取到了最新的 ReplicaSet 数据。</p>
+<p>Worker 通过比较 ReplicaSet 中 spec 和 status 里的数值，发现需要对这个 ReplicaSet 进行扩容，因此 ReplicaSet 的 Worker 创建了一个 Pod，这个 pod 中的 Ownereference 取向了 ReplicaSet rsA。</p>
+<p>然后 Reflector Watch 到的 Pod 新增事件，在 delta 队列中额外加入了 Add 类型的 deta 记录，一方面把新的 Pod 记录通过 Indexer 存储到了缓存中，另一方面调用了 ReplicaSet 控制器的 Add 回调函数，Add 回调函数通过检查 pod ownerReferences 找到了对应的 ReplicaSet，并把包括 ReplicaSet 命名空间和字符串塞入到了工作队列中。</p>
+<p>ReplicaSet 的 Woker 在得到新的工作项之后，从缓存中取到了新的 ReplicaSet 记录，并得到了其所有创建的 Pod，因为 ReplicaSet 的状态不是最新的，也就是所有创建 Pod 的数量不是最新的。因此在此时 ReplicaSet 更新 status 使得 spec 和 status 达成一致。</p>
+<h3 id="控制器模式总结">控制器模式总结</h3>
+<ol>
+<li>两种 API 设计方法
+Kubernetes 控制器模式依赖声明式的 API</li>
+<li>命令式 API 的问题
+命令 API 最大的一个问题在于错误处理；
+在大规模的分布式系统中，错误是无处不在的。一旦发出的命令没有响应，调用方只能通过反复重试的方式来试图恢复错误，然而盲目的重试可能会带来更大的问题。</li>
+</ol>
+<p>假设原来的命令，后台实际上已经执行完成了，重试后又多执行了一个重试的命令操作。为了避免重试的问题，系统往往还需要在执行命令前，先记录一下需要执行的命令，并且在重启等场景下，重做待执行的命令，而且在执行的过程中，还需要考虑多个命令的先后顺序、覆盖关系等等一些复杂的逻辑情况。</p>
+<p>实际上许多命令式的交互系统后台往往还会做一个巡检的系统，用来修正命令处理超时、重试等一些场景造成数据不一致的问题；</p>
+<p>然而，因为巡检逻辑和日常操作逻辑是不一样的，往往在测试上覆盖不够，在错误处理上不够严谨，具有很大的操作风险，因此往往很多巡检系统都是人工来触发的。</p>
+<p>最后，命令式 API 在处理多并发访问时，也很容易出现问题；
+假如有多方并发的对一个资源请求进行操作，并且一旦其中有操作出现了错误，就需要重试。那么最后哪一个操作生效了，就很难确认，也无法保证。很多命令式系统往往在操作前会对系统进行加锁，从而保证整个系统最后生效行为的可预见性，但是加锁行为会降低整个系统的操作执行效率。</p>
+<p>相对的，声明式 API 系统里天然地记录了系统现在和最终的状态。
+不需要额外的操作数据。另外因为状态的幂等性，可以在任意时刻反复操作。在声明式系统运行的方式里，正常的操作实际上就是对资源状态的巡检，不需要额外开发巡检系统，系统的运行逻辑也能够在日常的运行中得到测试和锤炼，因此整个操作的稳定性能够得到保证。
+3. 控制器模式总结
+* Kubernetes 所采用的控制器模式，是由声明式 API 驱动的。确切来说，是基于对Kubernetes 资源对象的修改来驱动的；
+* Kubernetes 资源之后，是关注该资源的控制器。这些控制器将异步的控制系统向设置的终态驱近；这些控制器是自主运行的，使得系统的自动化和无人值守成为可能；
+* 因为 Kubernetes 的控制器和资源都是可以自定义的，因此可以方便的扩展控制器模式。特别是对于有状态应用，我们往往通过自定义资源和控制器的方式，来自动化运维操作。这个也就是后续会介绍的 operator 的场景。</p>
+<h2 id="应用编排与管理">应用编排与管理</h2>
+<h3 id="deployment-管理部署发布的控制器">Deployment: 管理部署发布的控制器</h3>
+<ul>
+<li>deployment定义一种 Pod 期望数量，controller会持续维持 Pod 数量为期望的数量，当出现问题时候，controller会帮我们恢复，新扩出来对应的 Pod，保证可用的 Pod数量与期望数量一致</li>
+<li>配置 Pod 发布方式。 controller 会按照用户给定的策略来更新 Pod，更新过程中，也可以设定不可用 Pod 数量在多少范围内。</li>
+</ul>
+<h3 id="用例解读">用例解读</h3>
+<h4 id="deployment-status">Deployment Status</h4>
+<ul>
+<li>Processing</li>
+<li>Complete</li>
+<li>Failed</li>
+</ul>
+<h3 id="架构设计">架构设计</h3>
+<h4 id="管理模式">管理模式</h4>
+<ul>
+<li>Deployment 只负责管理不同版本的Replicaset，由Replicaset管理Pod副本数。</li>
+<li>每个ReplicaSet 对应了Deployment template 的一个版本</li>
+<li>一个ReplicaSet 下的Pod都是相同的版本</li>
+</ul>
+<h4 id="deployment-控制器">Deployment 控制器</h4>
+<p>所有的控制器都是通过 Informer 中的 Event 做一些 Handler 和 Watch。这个地方 Deployment 控制器，其实是关注 Deployment 和 ReplicaSet 中的 event，收到事件后会加入到队列中。而 Deployment controller 从队列中取出来之后，它的逻辑会判断 Check Paused，这个 Paused 其实是 Deployment 是否需要新的发布，如果 Paused 设置为 true 的话，就表示这个 Deployment 只会做一个数量上的维持，不会做新的发布。</p>
+<p>如果 Check paused 为 Yes 也就是 true 的话，那么只会做 Sync replicas。也就是说把 replicas sync 同步到对应的 ReplicaSet 中，最后再 Update Deployment status，那么 controller 这一次的 ReplicaSet 就结束了。</p>
+<p>那么如果 paused 为 false 的话，它就会做 Rollout，也就是通过 Create 或者是 Rolling 的方式来做更新，更新的方式其实也是通过 Create/Update/Delete 这种 ReplicaSet 来做实现的。</p>
+<h4 id="replicaset-控制器">ReplicaSet 控制器</h4>
+<p>当 Deployment 分配 ReplicaSet 之后，ReplicaSet 控制器本身也是从 Informer 中 watch 一些事件，这些事件包含了 ReplicaSet 和 Pod 的事件。从队列中取出之后，ReplicaSet controller 的逻辑很简单，就只管理副本数。也就是说如果 controller 发现 replicas 比 Pod 数量大的话，就会扩容，而如果发现实际数量超过期望数量的话，就会删除 Pod。</p>
+<p>上面 Deployment 控制器的图中可以看到，Deployment 控制器其实做了更复杂的事情，包含了版本管理，而它把每一个版本下的数量维持工作交给 ReplicaSet 来做。</p>
+<h4 id="扩缩容模拟">扩/缩容模拟</h4>
+<p>下面来看一些操作模拟，比如说扩容模拟。这里有一个 Deployment，它的副本数是 2，对应的 ReplicaSet 有 Pod1 和 Pod2。这时如果我们修改 Deployment replicas， controller 就会把 replicas 同步到当前版本的 ReplicaSet 中，这个 ReplicaSet 发现当前有 2 个 Pod，不满足当前期望 3 个，就会创建一个新的 Pod3。</p>
+<h4 id="发布模拟">发布模拟</h4>
+<p>我们再模拟一下发布，发布的情况会稍微复杂一点。这里可以看到 Deployment 当前初始的 template，比如说 template1 这个版本。template1 这个 ReplicaSet 对应的版本下有三个 Pod：Pod1，Pod2，Pod3。</p>
+<p>这时修改 template 中一个容器的 image， Deployment controller 就会新建一个对应 template2 的 ReplicaSet。创建出来之后 ReplicaSet 会逐渐修改两个 ReplicaSet 的数量，比如它会逐渐增加 ReplicaSet2 中 replicas 的期望数量，而逐渐减少 ReplicaSet1 中的 Pod 数量。</p>
+<p>那么最终达到的效果是：新版本的 Pod 为 Pod4、Pod5和Pod6，旧版本的 Pod 已经被删除了，这里就完成了一次发布。</p>
+<h4 id="回滚模拟">回滚模拟</h4>
+<p>来看一下回滚模拟，根据上面的发布模拟可以知道 Pod4、Pod5、Pod6 已经发布完成。这时发现当前的业务版本是有问题的，如果做回滚的话，不管是通过 rollout 命令还是通过回滚修改 template，它其实都是把 template 回滚为旧版本的 template1。</p>
+<p>这个时候 Deployment 会重新修改 ReplicaSet1 中 Pod 的期望数量，把期望数量修改为 3 个，且会逐渐减少新版本也就是 ReplicaSet2 中的 replica 数量，最终的效果就是把 Pod 从旧版本重新创建出来。</p>
+<h4 id="spec-字段解析">spec 字段解析</h4>
+<p>最后再来简单看一些 Deployment 中的字段解析。首先看一下 Deployment 中其他的 spec 字段：</p>
+<ul>
+<li>MinReadySeconds：Deployment 会根据 Pod ready 来看 Pod 是否可用，但是如果我们设置了 MinReadySeconds 之后，比如设置为 30 秒，那 Deployment 就一定会等到 Pod ready 超过 30 秒之后才认为 Pod 是 available 的。Pod available 的前提条件是 Pod ready，但是 ready 的 Pod 不一定是 available 的，它一定要超过 MinReadySeconds 之后，才会判断为 available；</li>
+<li>revisionHistoryLimit：保留历史 revision，即保留历史 ReplicaSet 的数量，默认值为 10 个。这里可以设置为一个或两个，如果回滚可能性比较大的话，可以设置数量超过 10；</li>
+<li>paused：paused 是标识，Deployment 只做数量维持，不做新的发布，这里在 Debug 场景可能会用到；</li>
+<li>progressDeadlineSeconds：前面提到当 Deployment 处于扩容或者发布状态时，它的 condition 会处于一个 processing 的状态，processing 可以设置一个超时时间。如果超过超时时间还处于 processing，那么 controller 将认为这个 Pod 会进入 failed 的状态。</li>
+</ul>
+<h4 id="升级策略字段解析">升级策略字段解析</h4>
+<p>Deployment 在 RollingUpdate 中主要提供了两个策略，一个是 MaxUnavailable，另一个是 MaxSurge。这两个字段解析的意思，可以看下图中详细的 comment，或者简单解释一下：</p>
+<ul>
+<li>MaxUnavailable：滚动过程中最多有多少个 Pod 不可用；</li>
+<li>MaxSurge：滚动过程中最多存在多少个 Pod 超过预期 replicas 数量。
+上文提到，ReplicaSet 为 3 的 Deployment 在发布的时候可能存在一种情况：新版本的 ReplicaSet 和旧版本的 ReplicaSet 都可能有两个 replicas，加在一起就是 4 个，超过了我们期望的数量三个。这是因为我们默认的 MaxUnavailable 和 MaxSurge 都是 25%，默认 Deployment 在发布的过程中，可能有 25% 的 replica 是不可用的，也可能超过 replica 数量 25% 是可用的，最高可以达到 125% 的 replica 数量。
+这里其实可以根据用户实际场景来做设置。比如当用户的资源足够，且更注重发布过程中的可用性，可设置 MaxUnavailable 较小、MaxSurge 较大。但如果用户的资源比较紧张，可以设置 MaxSurge 较小，甚至设置为 0，这里要注意的是 MaxSurge 和 MaxUnavailable 不能同时为 0。</li>
+</ul>
+<p>理由不难理解，当 MaxSurge 为 0 的时候，必须要删除 Pod，才能扩容 Pod；如果不删除 Pod 是不能新扩 Pod 的，因为新扩出来的话，总共的 Pod 数量就会超过期望数量。而两者同时为 0 的话，MaxSurge 保证不能新扩 Pod，而 MaxUnavailable 不能保证 ReplicaSet 中有 Pod 是 available 的，这样就会产生问题。所以说这两个值不能同时为 0。用户可以根据自己的实际场景来设置对应的、合适的值。</p>
+<h3 id="summary">Summary</h3>
+<ul>
+<li>Deployment 是 Kubernetes 中常见的一种 Workload，支持部署管理多版本的 Pod；</li>
+<li>Deployment 管理多版本的方式，是针对每个版本的 template 创建一个 ReplicaSet，由 * ReplicaSet 维护一定数量的 Pod 副本，而 Deployment 只需要关心不同版本的 ReplicaSet 里要指定多少数量的 Pod；</li>
+<li>Deployment 发布部署的根本原理，就是 Deployment 调整不同版本 ReplicaSet 里的终态副本数，以此来达到多版本 Pod 的升级和回滚。</li>
+</ul>
+<h3 id="job">Job</h3>
+<ul>
+<li>kubernetes 的 Job 是一个管理任务的控制器，它可以创建一个或多个 Pod 来指定 Pod 的数量，并可以监控它是否成功地运行或终止；</li>
+<li>可以根据 Pod 的状态来给 Job 设置重置的方式及重试的次数；</li>
+<li>还可以根据依赖关系，保证上一个任务运行完成之后再运行下一个任务；</li>
+<li>同时还可以控制任务的并行度，根据并行度来确保 Pod 运行过程中的并行次数和总体完成大小。</li>
+</ul>
+<h4 id="并行运行job">并行运行Job</h4>
+<p>有时候有些需求：希望 Job 运行的时候可以最大化的并行，并行出 n 个 Pod 去快速地执行。同时，由于我们的节点数有限制，可能也不希望同时并行的 Pod 数过多，有那么一个管道的概念，我们可以希望最大的并行度是多少，Job 控制器都可以帮我们来做到。</p>
+<p>这里主要看两个参数: 一个是 completions，一个是 parallelism。</p>
+<ul>
+<li>completions: 是用来指定本 Pod 队列执行次数。可能这个不是很好理解，其实可以把它认为是这个 Job 指定的可以运行的总次数。比如这里设置成 8，即这个任务一共会被执行 8 次；</li>
+<li>parallelism: 代表这个并行执行的个数。所谓并行执行的次数，其实就是一个管道或者缓冲器中缓冲队列的大小，把它设置成 2，也就是说这个 Job 一定要执行 8 次，每次并行 2 个 Pod，这样的话，一共会执行 4 个批次。</li>
+</ul>
+<h3 id="cronjob">CronJob</h3>
+<h3 id="架构设计-1">架构设计</h3>
+<h4 id="job管理模式">Job管理模式</h4>
+<ol>
+<li>Job Controller 负责根据配置创建Pod。</li>
+<li>Job Controller 跟踪Job状态，根据配置及时重试或者继续创建。</li>
+<li>Job Controller 会自动添加label 来跟踪对应的pod，并根据配置并行或者串行创建pod。</li>
+</ol>
+<h3 id="daemonset-守护进程控制器">DaemonSet 守护进程控制器</h3>
+<p>DaemonSet 也是 Kubernetes 提供的一个 default controller，它实际是做一个守护进程的控制器，它能帮我们做到以下几件事情：</p>
+<ul>
+<li>首先能保证集群内的每一个节点都运行一组相同的 pod；</li>
+<li>同时还能根据节点的状态保证新加入的节点自动创建对应的 pod；</li>
+<li>在移除节点的时候，能删除对应的 pod；</li>
+<li>而且它会跟踪每个 pod 的状态，当这个 pod 出现异常、Crash 掉了，会及时地去 recovery 这个状态。</li>
+</ul>
+<h4 id="daemonset语法">DaemonSet语法</h4>
+<p>适用场景</p>
+<ol>
+<li>集群存储进程: glusterd、ceph</li>
+<li>日志收集进程: fluentd、logstash</li>
+<li>需要在每个节点运行的监控收集器</li>
+</ol>
+<h4 id="更新-daemonset">更新 DaemonSet</h4>
+<p>DaemonSet 和 deployment 特别像，它也有两种更新策略：一个是 RollingUpdate，另一个是 OnDelete。</p>
+<ul>
+<li>RollingUpdate 其实比较好理解，就是会一个一个的更新。先更新第一个 pod，然后老的 pod 被移除，通过健康检查之后再去见第二个 pod，这样对于业务上来说会比较平滑地升级，不会中断；</li>
+<li>OnDelete 其实也是一个很好的更新策略，就是模板更新之后，pod 不会有任何变化，需要我们手动控制。我们去删除某一个节点对应的 pod，它就会重建，不删除的话它就不会重建，这样的话对于一些我们需要手动控制的特殊需求也会有特别好的作用。</li>
+</ul>
+<h4 id="daemonset管理模式">DaemonSet管理模式</h4>
+<ol>
+<li>DaemonSet Controller 负责根据配置创建Pod</li>
+<li>DaemonSet Controller 跟踪 Job 状态，根据配置及时重试Pod或者继续创建</li>
+<li>DaemonSet Controller 会自动添加affinity &amp; label来跟踪对应的Pod，并根据配置在每个节点或者适合的部分节点创建Pod</li>
+</ol>
+<h4 id="daemonset-的控制器">DaemonSet 的控制器</h4>
+<p>DaemonSet 其实和 Job controller 做的差不多：两者都需要根据 watch 这个 API Server 的状态。现在 DaemonSet 和 Job controller 唯一的不同点在于，DaemonsetSet Controller需要去 watch node 的状态，但其实这个 node 的状态还是通过 API Server 传递到 ETCD 上。</p>
+<p>当有 node 状态节点发生变化时，它会通过一个内存消息队列发进来，然后DaemonSet controller 会去 watch 这个状态，看一下各个节点上是都有对应的 Pod，如果没有的话就去创建。当然它会去做一个对比，如果有的话，它会比较一下版本，然后加上刚才提到的是否去做 RollingUpdate？如果没有的话就会重新创建，Ondelete 删除 pod 的时候也会去做 check 它做一遍检查，是否去更新，或者去创建对应的 pod。</p>
+<p>当然最后的时候，如果全部更新完了之后，它会把整个 DaemonSet 的状态去更新到 API Server 上，完成最后全部的更新。</p>
+<h2 id="应用配置管理">应用配置管理</h2>
+<h3 id="pod配置管理">Pod配置管理</h3>
+<ul>
+<li>可变配置: COnfigMap</li>
+<li>敏感信息: Secret</li>
+<li>身份认证: ServiceAccount</li>
+<li>资源配置: Resources</li>
+<li>安全管控: SecurityContext</li>
+<li>前置校验: InitContainers</li>
+</ul>
+<h3 id="configmap">ConfigMap</h3>
+<p>管理容器运行所需的配置文件、环境变量、命令行参数等可变配置，解耦容器镜像和可变配置，保证工作负载(Pod)的可移植性</p>
+<h3 id="configmap-注意要点">ConfigMap 注意要点</h3>
+<ol>
+<li>ConfigMap 文件大小: etcd有写入1MB限制</li>
+<li>Pod 引入 ConfigMap 时必须是相同 namespace 的 ConfigMap</li>
+<li>Pod 引用的 ConfigMap 如何不存在，pod会创建失败，pod需要先创建好要引用的configmap</li>
+<li>使用 envFrom 的方式，把 ConfigMap 里面所有的信息导入成环境变量时，如果 ConfigMap 里有些 key 是无效的，比如 key 的名字里面带有数字，这个环境变量是不会注入容器的，它会被忽略。但是这个 pod 本身是可以创建的。这个和第三点是不一样的方式，是 ConfigMap 文件存在基础上，整体导入成环境变量的一种形式。</li>
+<li>什么样的 pod 才能使用 ConfigMap？这里只有通过 K8s api 创建的 pod 才能使用 ConfigMap，比如说通过用命令行 kubectl 来创建的 pod，肯定是可以使用 ConfigMap 的，但其他方式创建的 pod，比如说 kubelet 通过 manifest 创建的 static pod，它是不能使用 ConfigMap 的。</li>
+</ol>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">minicloudsky</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+      2023-05-14
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="http://minicloudsky.github.io/tags/%E6%80%9D%E8%80%83/">思考</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/blog/2022/10/04/kkndme/">
+            <span class="next-text nav-default">kkndme</span>
+            <span class="prev-text nav-mobile">Next</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:minicloudsky@email.com" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="http://github.com/minicloudsky" rel="me noopener" class="iconfont"
+      title="github"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M512 12.672c-282.88 0-512 229.248-512 512 0 226.261333 146.688 418.133333 350.08 485.76 25.6 4.821333 34.986667-11.008 34.986667-24.618667 0-12.16-0.426667-44.373333-0.64-87.04-142.421333 30.890667-172.458667-68.693333-172.458667-68.693333C188.672 770.986667 155.008 755.2 155.008 755.2c-46.378667-31.744 3.584-31.104 3.584-31.104 51.413333 3.584 78.421333 52.736 78.421333 52.736 45.653333 78.293333 119.850667 55.68 149.12 42.581333 4.608-33.109333 17.792-55.68 32.426667-68.48-113.706667-12.8-233.216-56.832-233.216-253.013333 0-55.893333 19.84-101.546667 52.693333-137.386667-5.76-12.928-23.04-64.981333 4.48-135.509333 0 0 42.88-13.738667 140.8 52.48 40.96-11.392 84.48-17.024 128-17.28 43.52 0.256 87.04 5.888 128 17.28 97.28-66.218667 140.16-52.48 140.16-52.48 27.52 70.528 10.24 122.581333 5.12 135.509333 32.64 35.84 52.48 81.493333 52.48 137.386667 0 196.693333-119.68 240-233.6 252.586667 17.92 15.36 34.56 46.762667 34.56 94.72 0 68.522667-0.64 123.562667-0.64 140.202666 0 13.44 8.96 29.44 35.2 24.32C877.44 942.592 1024 750.592 1024 524.672c0-282.752-229.248-512-512-512"></path>
+</svg>
+
+    </a>
+
+
+<a href="http://minicloudsky.github.io/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+  
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+      2017 -
+    2023
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        minicloudsky
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

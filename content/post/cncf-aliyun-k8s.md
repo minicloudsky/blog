@@ -276,3 +276,21 @@ DaemonSet 其实和 Job controller 做的差不多：两者都需要根据 watch
 当有 node 状态节点发生变化时，它会通过一个内存消息队列发进来，然后DaemonSet controller 会去 watch 这个状态，看一下各个节点上是都有对应的 Pod，如果没有的话就去创建。当然它会去做一个对比，如果有的话，它会比较一下版本，然后加上刚才提到的是否去做 RollingUpdate？如果没有的话就会重新创建，Ondelete 删除 pod 的时候也会去做 check 它做一遍检查，是否去更新，或者去创建对应的 pod。
 
 当然最后的时候，如果全部更新完了之后，它会把整个 DaemonSet 的状态去更新到 API Server 上，完成最后全部的更新。
+## 应用配置管理
+### Pod配置管理
+* 可变配置: COnfigMap
+* 敏感信息: Secret
+* 身份认证: ServiceAccount
+* 资源配置: Resources
+* 安全管控: SecurityContext
+* 前置校验: InitContainers
+
+### ConfigMap
+管理容器运行所需的配置文件、环境变量、命令行参数等可变配置，解耦容器镜像和可变配置，保证工作负载(Pod)的可移植性
+
+### ConfigMap 注意要点
+1. ConfigMap 文件大小: etcd有写入1MB限制
+2. Pod 引入 ConfigMap 时必须是相同 namespace 的 ConfigMap
+3. Pod 引用的 ConfigMap 如何不存在，pod会创建失败，pod需要先创建好要引用的configmap
+4. 使用 envFrom 的方式，把 ConfigMap 里面所有的信息导入成环境变量时，如果 ConfigMap 里有些 key 是无效的，比如 key 的名字里面带有数字，这个环境变量是不会注入容器的，它会被忽略。但是这个 pod 本身是可以创建的。这个和第三点是不一样的方式，是 ConfigMap 文件存在基础上，整体导入成环境变量的一种形式。
+5. 什么样的 pod 才能使用 ConfigMap？这里只有通过 K8s api 创建的 pod 才能使用 ConfigMap，比如说通过用命令行 kubectl 来创建的 pod，肯定是可以使用 ConfigMap 的，但其他方式创建的 pod，比如说 kubelet 通过 manifest 创建的 static pod，它是不能使用 ConfigMap 的。

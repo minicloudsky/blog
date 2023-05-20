@@ -10,41 +10,55 @@
   
   <url>
     <loc>http://minicloudsky.github.io/categories/</loc>
-    <lastmod>2022-10-04T00:35:12+00:00</lastmod>
+    <lastmod>2023-05-14T21:35:12+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>http://minicloudsky.github.io/blog/2022/10/04/kkndme/</loc>
-    <lastmod>2022-10-04T00:35:12+00:00</lastmod>
+    <loc>http://minicloudsky.github.io/blog/2023/05/14/cncf-aliyun-k8s%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2023-05-14T21:35:12+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://minicloudsky.github.io/categories/k8a/</loc>
+    <lastmod>2023-05-14T21:35:12+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>http://minicloudsky.github.io/</loc>
-    <lastmod>2022-10-04T00:35:12+00:00</lastmod>
+    <lastmod>2023-05-14T21:35:12+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>http://minicloudsky.github.io/post/</loc>
-    <lastmod>2022-10-04T00:35:12+00:00</lastmod>
+    <lastmod>2023-05-14T21:35:12+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>http://minicloudsky.github.io/tags/</loc>
-    <lastmod>2022-10-04T00:35:12+00:00</lastmod>
+    <lastmod>2023-05-14T21:35:12+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>http://minicloudsky.github.io/tags/%E6%80%9D%E8%80%83/</loc>
+    <lastmod>2023-05-14T21:35:12+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://minicloudsky.github.io/blog/2022/10/04/kkndme/</loc>
     <lastmod>2022-10-04T00:35:12+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
