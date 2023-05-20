@@ -1,6 +1,6 @@
 ---
 categories:
-- k8a
+- k8s
 date: 2023-05-14 21:35:12
 tags:
 - 思考
