@@ -1166,7 +1166,7 @@ Liveness 指针和 Readiness 指针支持三种不同的探测方式：</p>
 <p>事件监控是 K8s 中比较另类的一种监控方式。在上一节课中给大家介绍了在 K8s 中的一个设计理念，就是基于状态机的一个状态转换。从正常的状态转换成另一个正常的状态的时候，会发生一个 normal 的事件，而从一个正常状态转换成一个异常状态的时候，会发生一个 warning 的事件。通常情况下，warning 的事件是我们比较关心的，而事件监控就是可以把 normal 的事件或者是 warning 事件离线到一个数据中心，然后通过数据中心的分析以及报警，把相应的一些异常通过像钉钉或者是短信、邮件的方式进行暴露，弥补常规监控的一些缺陷和弊端。</p>
 <h3 id="kubernetes-的监控演进">Kubernetes 的监控演进</h3>
 <p>
-<img src="/imgs/heapster.png" alt="">
+<img src="/img/heapster.png" alt="">
 
 首先，我们在每一个 Kubernetes 上面有一个包裹好的 cadvisor，这个 cadvisor 是负责数据采集的组件。当 cadvisor 把数据采集完成，Kubernetes 会把 cadvisor 采集到的数据进行包裹，暴露成相应的 API。在早期的时候，实际上是有三种不同的 API：</p>
 <ul>
@@ -1181,11 +1181,11 @@ Liveness 指针和 Readiness 指针支持三种不同的探测方式：</p>
 但是后来社区发现，这些 sink 很多时候都是没有人来维护的。这也导致整个 Heapster 的项目有很多的 bug，这个 bug 一直存留在社区里面，是没有人修复的，这个也是会给社区的项目的活跃度包括项目的稳定性带来了很多的挑战。</p>
 <p>基于这两点原因，K8s 把 Heapster 进行了 break 掉，然后做了一个精简版的监控采集组件，叫做 metrics-server。
 
-<img src="/imgs/heapster-2.png" alt="">
+<img src="/img/heapster-2.png" alt="">
 
 上图是 Heapster 内部的一个架构。大家可以发现它分为几个部分，第一个部分是 core 部分，然后上层是有一个通过标准的 http 或者 https 暴露的这个 API。然后中间是 source 的部分，source 部分相当于是采集数据暴露的不同的接口，然后 processor 的部分是进行数据转换以及数据聚合的部分。最后是 sink 部分，sink 部分是负责数据离线的，这个是早期的 Heapster 的一个应用的架构。那到后期的时候呢，K8s 做了这个监控接口的一个标准化，逐渐就把 Heapster 进行了裁剪，转化成了 metrics-server。
 
-<img src="/imgs/metrics-server.png" alt="">
+<img src="/img/metrics-server.png" alt="">
 
 目前 0.3.1 版本的 metrics-server 大致的一个结构就变成了上图这样，是非常简单的：有一个 core 层、中间的 source 层，以及简单的 API 层，额外增加了 API Registration 这层。这层的作用就是它可以把相应的数据接口注册到 K8s 的 API server 之上，以后客户不再需要通过这个 API 层去访问 metrics-server，而是可以通过这个 API 注册层，通过 API server 访问 API 注册层，再到 metrics-server。这样的话，真正的数据消费方可能感知到的并不是一个 metrics-server，而是说感知到的是实现了这样一个 API 的具体的实现，而这个实现是 metrics-server。这个就是 metrics-server 改动最大的一个地方。</p>
 <h3 id="kubernetes-的监控接口标准">Kubernetes 的监控接口标准</h3>
@@ -1204,7 +1204,7 @@ External Metrics 其实是比较特殊的一类，因为我们知道 K8s 现在�
 第二个是对于类似像比较常见的一些数据库、中间件这类的项目，它都有相应的 Prometheus 采集客户端。类似像 ETCD、zookeeper、MySQL 或者说 PostgreSQL，这些其实都有相应的这个 Prometheus 的接口，如果没有的，社区里面也会有相应的 exporter 进行接口的一个实现。
 那我们先来看一下 Prometheus 整个的大致一个结构。</p>
 <p>
-<img src="/imgs/prometheus.png" alt="">
+<img src="/img/prometheus.png" alt="">
 
 上图是 Prometheus 采集的数据链路，它主要可以分为三种不同的数据采集链路。</p>
 <p>第一种，是这个 push 的方式，就是通过 pushgateway 进行数据采集，然后数据线到 pushgateway，然后 Prometheus 再通过 pull 的方式去 pushgateway 去拉数据。这种采集方式主要应对的场景就是你的这个任务可能是比较短暂的，比如说我们知道 Prometheus，最常见的采集方式是拉模式，那带来一个问题就是，一旦你的数据声明周期短于数据的采集周期，比如我采集周期是 30s，而我这个任务可能运行 15s 就完了。这种场景之下，可能会造成有些数据漏采。对于这种场景最简单的一个做法就是先通过 pushgateway，先把你的 metrics push下来，然后再通过 pull 的方式从 pushgateway 去拉数据，通过这种方式可以做到，短时间的不丢作业任务。
@@ -1223,7 +1223,7 @@ External Metrics 其实是比较特殊的一类，因为我们知道 K8s 现在�
 <h4 id="kube-eventer---kubernetes-事件离线工具">kube-eventer - Kubernetes 事件离线工具</h4>
 <p>最后，我们给大家介绍一个 K8s 中的事件离线工具叫做 kube-eventer。kube-eventer 是阿里云容器服务开源出的一个组件，它可以将 K8s 里面，类似像 pod eventer、node eventer、核心组件的 eventer、crd 的 eventer 等等一系列的 eventer，通过 API sever 的这个 watch 机制离线到类似像 SLS、Dingtalk、kafka、InfluxDB，然后通过这种离线的机制进行一个时间的审计、监控和告警，我们现在已经把这个项目开源到 GitHub 上了，大家有兴趣的话可以来看一下这个项目。
 
-<img src="/imgs/kube-eventer.png" alt="">
+<img src="/img/kube-eventer.png" alt="">
 </p>
 <h3 id="日志">日志</h3>
 <p>k8s日志四大场景</p>
@@ -1244,7 +1244,7 @@ External Metrics 其实是比较特殊的一类，因为我们知道 K8s 现在�
 <h4 id="日志的采集">日志的采集</h4>
 <p>首先我们来看一下日志采集，从采集位置是哪个划分，需要支持如下三种
 
-<img src="/imgs/log-collect.png" alt="">
+<img src="/img/log-collect.png" alt="">
 </p>
 <ul>
 <li>宿主机文件，这种场景比较常见的是说我的这个容器里面，通过类似像 volume，把日志文件写到了宿主机之上。通过宿主机的日志轮转的策略进行日志的轮转，然后再通过我的宿主机上的这个 agent 进行采集；</li>
@@ -1365,7 +1365,7 @@ External Metrics 其实是比较特殊的一类，因为我们知道 K8s 现在�
 </ul>
 <p>这里我们简单用 unshare 示例一下 namespace 创立的过程。容器中 namespace 的创建其实都是用 unshare 这个系统调用来创建的。</p>
 <p>
-<img src="/img/namespace-exmaple.png" alt="">
+<img src="/img/namespace-example.png" alt="">
 </p>
 <p>上图上半部分是 unshare 使用的一个例子，下半部分是我实际用 unshare 这个命令去创建的一个 pid namespace。可以看到这个 bash 进程已经是在一个新的 pid namespace 里面，然后 ps 看到这个 bash 的 pid 现在是 1，说明它是一个新的 pid namespace。</p>
 <h4 id="cgroup">cgroup</h4>
@@ -1406,7 +1406,7 @@ External Metrics 其实是比较特殊的一类，因为我们知道 K8s 现在�
 <p>接下来我们讲一下容器镜像，以 docker 镜像为例去讲一下容器镜像的构成。</p>
 <p>docker 镜像是基于联合文件系统的。简单描述一下联合文件系统：大概的意思就是说，它允许文件是存放在不同的层级上面的，但是最终是可以通过一个统一的视图，看到这些层级上面的所有文件。</p>
 <p>
-<img src="/img/docker-image.png" alt="">
+<img src="/img/docker-images.png" alt="">
 </p>
 <p>如上图所示，右边是从 docker 官网拿过来的容器存储的一个结构图。这张图非常形象的表明了 docker 的存储，docker 存储也就是基于联合文件系统，是分层的。每一层是一个 Layer，这些 Layer 由不同的文件组成，它是可以被其他镜像所复用的。可以看一下，当镜像被运行成一个容器的时候，最上层就会是一个容器的读写层。这个容器的读写层也可以通过 commit 把它变成一个镜像顶层最新的一层。</p>
 <p>docker 镜像的存储，它的底层是基于不同的文件系统的，所以它的存储驱动也是针对不同的文件系统作为定制的，比如 AUFS、btrfs、devicemapper 还有 overlay。docker 对这些文件系统做了一些相对应的一个 graph driver 的驱动，也就是通过这些驱动把镜像存在磁盘上面。</p>
