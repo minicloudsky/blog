@@ -8,19 +8,19 @@
     <language>en</language>
     <lastBuildDate>Sun, 14 May 2023 21:35:12 +0000</lastBuildDate><atom:link href="http://minicloudsky.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>cncf &amp; aliyun k8s笔记</title>
-      <link>http://minicloudsky.github.io/blog/2023/05/14/cncf-aliyun-k8s%E7%AC%94%E8%AE%B0/</link>
+      <title>cncf x aliyun 云原生公开课笔记</title>
+      <link>http://minicloudsky.github.io/blog/2023/05/14/cncf-x-aliyun-%E4%BA%91%E5%8E%9F%E7%94%9F%E5%85%AC%E5%BC%80%E8%AF%BE%E7%AC%94%E8%AE%B0/</link>
       <pubDate>Sun, 14 May 2023 21:35:12 +0000</pubDate>
       
-      <guid>http://minicloudsky.github.io/blog/2023/05/14/cncf-aliyun-k8s%E7%AC%94%E8%AE%B0/</guid>
-      <description>&lt;h2 id=&#34;k8s核心概念&#34;&gt;K8s核心概念&lt;/h2&gt;
+      <guid>http://minicloudsky.github.io/blog/2023/05/14/cncf-x-aliyun-%E4%BA%91%E5%8E%9F%E7%94%9F%E5%85%AC%E5%BC%80%E8%AF%BE%E7%AC%94%E8%AE%B0/</guid>
+      <description>&lt;h2 id=&#34;k8s-核心概念&#34;&gt;K8s 核心概念&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;调度&lt;/li&gt;
 &lt;li&gt;自动修复&lt;/li&gt;
 &lt;li&gt;水平伸缩&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;k8s架构&#34;&gt;k8s架构&lt;/h3&gt;
-&lt;p&gt;典型的两层client-server架构&lt;/p&gt;
+&lt;h3 id=&#34;k8s-架构&#34;&gt;k8s 架构&lt;/h3&gt;
+&lt;p&gt;典型的两层 client-server 架构&lt;/p&gt;
 &lt;h3 id=&#34;master-核心组件&#34;&gt;master 核心组件&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;API Server&lt;/li&gt;

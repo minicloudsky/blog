@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>cncf &amp; aliyun k8s笔记 - Minicloudsky&#39;s blog</title>
+  <title>cncf x aliyun 云原生公开课笔记 - Minicloudsky&#39;s blog</title>
   
 
 <meta name="renderer" content="webkit" />
@@ -36,7 +36,7 @@ master 核心组件  API Server Controller Scheduler etcd " />
 <meta name="generator" content="Hugo 0.99.1" />
 
 
-<link rel="canonical" href="http://minicloudsky.github.io/blog/2023/05/14/cncf-aliyun-k8s%E7%AC%94%E8%AE%B0/" />
+<link rel="canonical" href="http://minicloudsky.github.io/blog/2023/05/14/cncf-x-aliyun-%E4%BA%91%E5%8E%9F%E7%94%9F%E5%85%AC%E5%BC%80%E8%AF%BE%E7%AC%94%E8%AE%B0/" />
 
 
 
@@ -62,7 +62,7 @@ master 核心组件  API Server Controller Scheduler etcd " />
 
 
 
-<meta property="og:title" content="cncf &amp; aliyun k8s笔记" />
+<meta property="og:title" content="cncf x aliyun 云原生公开课笔记" />
 <meta property="og:description" content="K8s 核心概念
 
 调度
@@ -79,11 +79,11 @@ Scheduler
 etcd
 " />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://minicloudsky.github.io/blog/2023/05/14/cncf-aliyun-k8s%E7%AC%94%E8%AE%B0/" /><meta property="article:section" content="post" />
+<meta property="og:url" content="http://minicloudsky.github.io/blog/2023/05/14/cncf-x-aliyun-%E4%BA%91%E5%8E%9F%E7%94%9F%E5%85%AC%E5%BC%80%E8%AF%BE%E7%AC%94%E8%AE%B0/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2023-05-14T21:35:12+00:00" />
 <meta property="article:modified_time" content="2023-05-14T21:35:12+00:00" />
 
-<meta itemprop="name" content="cncf &amp; aliyun k8s笔记">
+<meta itemprop="name" content="cncf x aliyun 云原生公开课笔记">
 <meta itemprop="description" content="K8s 核心概念
 
 调度
@@ -100,9 +100,9 @@ Scheduler
 etcd
 "><meta itemprop="datePublished" content="2023-05-14T21:35:12+00:00" />
 <meta itemprop="dateModified" content="2023-05-14T21:35:12+00:00" />
-<meta itemprop="wordCount" content="37580">
+<meta itemprop="wordCount" content="39324">
 <meta itemprop="keywords" content="思考," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="cncf &amp; aliyun k8s笔记"/>
+<meta name="twitter:title" content="cncf x aliyun 云原生公开课笔记"/>
 <meta name="twitter:description" content="K8s 核心概念
 
 调度
@@ -337,7 +337,7 @@ etcd
           <article class="post bg-white">
     
     <header class="post-header">
-      <h1 class="post-title">cncf &amp; aliyun k8s笔记</h1>
+      <h1 class="post-title">cncf x aliyun 云原生公开课笔记</h1>
       
       <div class="post-meta">
         <time datetime="2023-05-14" class="post-time">
@@ -368,15 +368,12 @@ etcd
       <ul>
         <li><a href="#k8s-架构">k8s 架构</a></li>
         <li><a href="#master-核心组件">master 核心组件</a></li>
-        <li><a href="#pod">Pod</a></li>
-        <li><a href="#进程组">进程组</a></li>
         <li><a href="#pod---k8s-原子调度单位-why">Pod -&gt; K8s 原子调度单位 Why?</a></li>
         <li><a href="#超亲密关系">超亲密关系</a></li>
         <li><a href="#pod-实现">Pod 实现</a></li>
         <li><a href="#容器设计模式">容器设计模式</a></li>
         <li><a href="#sidecar">Sidecar</a></li>
         <li><a href="#sidecar-代理容器">Sidecar 代理容器</a></li>
-        <li><a href="#sidecar-适配器容器">Sidecar 适配器容器</a></li>
         <li><a href="#设计模式本质--解耦和复用">设计模式本质 : 解耦和复用</a></li>
       </ul>
     </li>
@@ -454,6 +451,10 @@ etcd
     <li><a href="#深入理解linux容器">深入理解Linux容器</a>
       <ul>
         <li></li>
+        <li><a href="#一资源隔离和限制">一、资源隔离和限制</a></li>
+        <li><a href="#二容器镜像">二、容器镜像</a></li>
+        <li><a href="#三容器引擎">三、容器引擎</a></li>
+        <li><a href="#containerd-容器架构详解---容器流程示例">containerd 容器架构详解 - 容器流程示例</a></li>
       </ul>
     </li>
   </ul>
@@ -478,13 +479,13 @@ etcd
 <li>Scheduler</li>
 <li>etcd</li>
 </ul>
-<h3 id="pod">Pod</h3>
+<h4 id="pod">Pod</h4>
 <p>容器的本质实际上是一个进程，是一个视图被隔离，资源受限的进程</p>
 <ul>
 <li>k8s -&gt; 云操作系统</li>
 <li>容器镜像 -&gt; 云操作系统安装包</li>
 </ul>
-<h3 id="进程组">进程组</h3>
+<h4 id="进程组">进程组</h4>
 <p>容器是单进程模型，管理容器就是管理进程，一个程序有多个进程</p>
 <p>pod = &ldquo;进程组&rdquo;</p>
 <p>一个应用的多个进程定义为多个容器启动起来，定义在一个 pod 里面</p>
@@ -527,7 +528,7 @@ _ 共享 linux namespace(etc,一个容器要加入另一个容器的 network nam
 _ 容器之间通过 localhost 直接访问
 _ 代理容器的代码可以对全公司复用</li>
 </ul>
-<h3 id="sidecar-适配器容器">Sidecar 适配器容器</h3>
+<h4 id="sidecar-适配器容器">Sidecar 适配器容器</h4>
 <h3 id="设计模式本质--解耦和复用">设计模式本质 : 解耦和复用</h3>
 <h2 id="应用编排管理">应用编排管理</h2>
 <ol>
@@ -1347,7 +1348,7 @@ External Metrics 其实是比较特殊的一类，因为我们知道 K8s 现在�
 </p>
 <p>最下面是一个磁盘，容器的镜像是存储在磁盘上面的。上层是一个容器引擎，容器引擎可以是 docker，也可以是其它的容器引擎。引擎向下发一个请求，比如说创建容器，然后这时候它就把磁盘上面的容器镜像，运行成在宿主机上的一个进程。</p>
 <p>对于容器来说，最重要的是怎么保证这个进程所用到的资源是被隔离和被限制住的，在 Linux 内核上面是由 cgroup 和 namespace 这两个技术来保证的。接下来以 docker 为例，来详细介绍一下资源隔离和容器镜像这两部分内容。</p>
-<h4 id="一资源隔离和限制">一、资源隔离和限制</h4>
+<h3 id="一资源隔离和限制">一、资源隔离和限制</h3>
 <h4 id="namespace">namespace</h4>
 <p>namespace 是用来做资源隔离的，在 Linux 内核上有七种 namespace，docker 中用到了前六种。第七种 cgroup namespace 在 docker 本身并没有用到，但是在 runC 实现中实现了 cgroup namespace。</p>
 <p>
@@ -1400,7 +1401,7 @@ External Metrics 其实是比较特殊的一类，因为我们知道 K8s 现在�
 <li>perf_event</li>
 <li>rdma</li>
 </ul>
-<h4 id="二容器镜像">二、容器镜像</h4>
+<h3 id="二容器镜像">二、容器镜像</h3>
 <h4 id="docker-images">docker images</h4>
 <p>接下来我们讲一下容器镜像，以 docker 镜像为例去讲一下容器镜像的构成。</p>
 <p>docker 镜像是基于联合文件系统的。简单描述一下联合文件系统：大概的意思就是说，它允许文件是存放在不同的层级上面的，但是最终是可以通过一个统一的视图，看到这些层级上面的所有文件。</p>
@@ -1433,12 +1434,58 @@ External Metrics 其实是比较特殊的一类，因为我们知道 K8s 现在�
 <p>第二张图是 mount，可以看到这个容器 rootfs 的一个挂载，它是一个 overlay 的 type 作为挂载的。里面包括了 upper、lower 还有 workdir 这三个层级。</p>
 <p>接下来看一下容器里面新文件的写入。docker exec 去创建一个新文件，diff 这个从上面可以看到，是它的一个 upperdir。再看 upperdir 里面有这个文件，文件里面的内容也是 docker exec 写入的。</p>
 <p>最后看一下最下面的是 mergedir，mergedir 里面整合的 upperdir 和 lowerdir 的内容，也可以看到我们写入的数据。</p>
-<h4 id="三容器引擎">三、容器引擎</h4>
+<h3 id="三容器引擎">三、容器引擎</h3>
 <h4 id="containerd-容器架构详解">containerd 容器架构详解</h4>
 <p>接下来讲一下容器引擎，我们基于 CNCF 的一个容器引擎上的 containerd，来讲一下容器引擎大致的构成。下图是从 containerd 官网拿过来的一张架构图，基于这张架构图先简单介绍一下 containerd 的架构。</p>
 <p>
 <img src="/img/containerd-arch.png" alt="">
 </p>
+<p>上图如果把它分成左右两边的话，可以认为 containerd 提供了两大功能。</p>
+<p>第一个是对于 runtime，也就是对于容器生命周期的管理，左边 storage 的部分其实是对一个镜像存储的管理。containerd 会负责进行的拉取、镜像的存储。</p>
+<p>按照水平层次来看的话:</p>
+<ul>
+<li>第一层是 GRPC，containerd 对于上层来说是通过 GRPC serve 的形式来对上层提供服务的。Metrics 这个部分主要是提供 cgroup Metrics 的一些内容。</li>
+<li>下面这层的左边是容器镜像的一个存储，中线 images、containers 下面是 Metadata，这部分 Matadata 是通过 **bootfs **存储在磁盘上面的。右边的 Tasks 是管理容器的容器结构，Events 是对容器的一些操作都会有一个 Event 向上层发出，然后上层可以去订阅这个 Event，由此知道容器状态发生什么变化。</li>
+<li>最下层是 Runtimes 层，这个 Runtimes 可以从类型区分，比如说 runC 或者是安全容器之类的。</li>
+</ul>
+<h4 id="shim-v1v2-是什么">shim v1/v2 是什么</h4>
+<p>接下来讲一下 containerd 在 runtime 这边的大致架构。下面这张图是从 kata 官网拿过来的，上半部分是原图，下半部分加了一些扩展示例，基于这张图我们来看一下 containerd 在 runtime 这层的架构。</p>
+<p>
+<img src="/img/shim.png" alt="">
+</p>
+<p>如图所示：按照从左往右的一个顺序，从上层到最终 runtime 运行起来的一个流程。</p>
+<p>我们先看一下最左边，最左边是一个 CRI Client。一般就是 kubelet 通过 CRI 请求，向 containerd 发送请求。containerd 接收到容器的请求之后，会经过一个 containerd shim。containerd shim 是管理容器生命周期的，它主要负责两方面：</p>
+<ul>
+<li>第一个是它会对 io 进行转发。</li>
+<li>第二是它会对信号进行传递。</li>
+</ul>
+<p>图的上半部分画的是安全容器，也就是 kata 的一个流程，这个就不具体展开了。下半部分，可以看到有各种各样不同的 shim。下面介绍一下 containerd shim 的架构。</p>
+<p>一开始在 containerd 中只有一个 shim，也就是蓝色框框起来的 containerd-shim。这个进程的意思是，不管是 kata 容器也好、runc 容器也好、gvisor 容器也好，上面用的 shim 都是 containerd。</p>
+<p>后面针对不同类型的 runtime，containerd 去做了一个扩展。这个扩展是通过 shim-v2 这个 interface 去做的，也就是说只要去实现了这个 shim-v2 的 interface，不同的 runtime 就可以定制不同的自己的一个 shim。比如：runC 可以自己做一个 shim，叫 shim-runc；gvisor 可以自己做一个 shim 叫 shim-gvisor；像上面 kata 也可以自己去做一个 shim-kata 的 shim。这些 shim 可以替换掉上面蓝色框的 containerd-shim。</p>
+<p>这样做的好处有很多，举一个比较形象的例子。可以看一下 kata 这张图，它上面原先如果用 shim-v1 的话其实有三个组件，之所以有三个组件的原因是因为 kata 自身的一个限制，但是用了 shim-v2 这个架构后，三个组件可以做成一个二进制，也就是原先三个组件，现在可以变成一个 shim-kata 组件，这个可以体现出 shim-v2 的一个好处。</p>
+<h3 id="containerd-容器架构详解---容器流程示例">containerd 容器架构详解 - 容器流程示例</h3>
+<p>接下来我们以两个示例来详细解释一下容器的流程是怎么工作的，下面的两张图是基于 containerd 的架构画的一个容器的工作流程。</p>
+<h4 id="start-流程">start 流程</h4>
+<p>先看一下容器 start 的流程：</p>
+<p>
+<img src="/img/containerd-start.png" alt="">
+</p>
+<p>这张图由三个部分组成：</p>
+<ul>
+<li>第一个部分是容器引擎部分，容器引擎可以是 docker，也可以是其它的。</li>
+<li>两个虚线框框起来的 containerd 和 containerd-shim，它们两个是属于 containerd 架构的部分。</li>
+<li>最下面就是 container 的部分，这个部分是通过一个 runtime 去拉起的，可以认为是 shim 去操作 runC 命令创建的一个容器。</li>
+</ul>
+<p>先看一下这个流程是怎么工作的，图里面也标明了 1、2、3、4。这个 1、2、3、4 就是 containerd 怎么去创建一个容器的流程。</p>
+<p>首先它会去创建一个 matadata，然后会去发请求给 task service 说要去创建容器。通过中间一系列的组件，最终把请求下发到一个 shim。containerd 和 shim 的交互其实也是通过 GRPC 来做交互的，containerd 把创建请求发给 shim 之后，shim 会去调用 runtime 创建一个容器出来，以上就是容器 start 的一个示例。</p>
+<h4 id="exec-流程">exec 流程</h4>
+<p>接下来看下面这张图，是怎么去 exec 一个容器的。和 start 流程非常相似，结构也大概相同，不同的部分其实就是 containerd 怎么去处理这部分流程。和上面的图一样，我也在图中标明了 1、2、3、4，这些步骤就代表了 containerd 去做 exec 的一个先后顺序。</p>
+<p>由上图可以看到，exec 的操作还是发给 containerd-shim 的。对容器来说，去 start 一个容器和去 exec 一个容器，其实并没有本质的区别。</p>
+<p>最终的一个区别无非就是，是否对容器中跑的进程做一个 namespace 的创建：</p>
+<ul>
+<li>exec 的时候，需要把这个进程加入到一个已有的 namespace 里面；</li>
+<li>start 的时候，容器进程的 namespace 是需要去专门创建。</li>
+</ul>
     </div>
 
     
