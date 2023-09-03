@@ -1,10 +1,11 @@
 ---
+title: Github 学习与常见问题
+date: 2017-10-11 14:53:21
 categories:
 - git
-date: 2017-10-11 14:53:21
 tags:
 - git
-title: Github 学习与常见问题
+
 ---
 
 github以前用来搭建过博客，但是不会用git仓库，最近抽时间跳坑，把常见问题总结了下。
@@ -28,13 +29,13 @@ windows下直接出了点默认
 + ### 配置账号
 
  你的用户名
-`git config --global user.name   "yawuplus"`
+`git config --global user.name   "xxx"`
 你的邮箱名
-`git config --global user.email    "1397991131@qq.com"`
+`git config --global user.email    "xxx"`
 
 生成ssh keys
 
-`ssh-keygen -t rsa -C     "1397991131@qq.com"`
+`ssh-keygen -t rsa -C     "xxx"`
 
 一路 Enter 过来就好，得到信息：
 
@@ -46,9 +47,9 @@ git —— Key：输入刚才复制的—— Add SSH key
 在git bash 输入
 `ssh -T git@github.com`
 
-如果输出下面的(yawuplus是我的用户名，你配置时候这里应该显示的是你的用户名)
+如果输出下面的(xxx是我的用户名，你配置时候这里应该显示的是你的用户名)
 
-Hi yawuplus! You've successfully authenticated, but GitHub does not provide shell access.
+Hi xxx! You've successfully authenticated, but GitHub does not provide shell access.
 
 就说明你的git已经配置成功了。
 
@@ -60,7 +61,7 @@ Hi yawuplus! You've successfully authenticated, but GitHub does not provide shel
 
 先生成 对应账号的ssh keys
 
-`ssh-keygen -t rsa -C     "1397991131@qq.com"`
+`ssh-keygen -t rsa -C     "xxx@qq.com"`
 
 这里不要着急按回车键，把ssh keys改名，比如 id_rsa, id_rsa_work
 
@@ -88,41 +89,31 @@ ssh-**add** -K ~/.ssh/id_rsa_work
 
 文件内容如下:
 
-# 该文件用于配置私钥对应的服务器
-`Host git@github.com   
-    HostName https://github.com`
-    `User yawuplus`
-    `IdentityFile ~/.ssh/id_rsa_yawuplus`    
+```shell
+Host gitlab.xxx.com
+HostName gitlab.xxx.com
+Port 12345
+User xxx
+IdentityFile ~/.ssh/id_rsa_work
+```
 
 # 你第二个账号(公司gitlab账号)的host和主机地址，用户名，端口号等信息.
 
-`Host gitlab.zhichiwangluo.com`
-    `HostName gitlab.zhichiwangluo.com`
-    `Port 12345`
-    `User jiayawu`
-    `IdentityFile ~/.ssh/id_rsa_work`
-
+```shell
+Host gitlab.xxx.com
+HostName gitlab.xxx.com
+Port 12345
+User xxx
+IdentityFile ~/.ssh/id_rsa_work
+```
 这些配置完，基本上就可以了，不过要注意的是，因为之前你用unset取消了全局的email name设置，因此，在你每个项目的repo下，可以使用
 
-`git config --local  user.name  jiayawu`
+`git config --local  user.name  xx`
 
-`git config --local user.email  “3013568147@qq.com”`
+`git config --local user.email  “xxx@qq.com”`
 
 这样的方式来设置对应repo的 name email。
 
-遇到出现没有权限时候，执行以下命令
-
-`$ ssh-agent bash`
-
-`jia@DESKTOP-0FM6II9 MINGW64 /d/codes/Lianjia (master)`
-`$ ssh-add ~/.ssh/id_rsa_github`
-`Identity added: /c/Users/13979/.ssh/id_rsa_github (“1397991131@qq.com“)`
-
-`jia@DESKTOP-0FM6II9 MINGW64 /d/codes/Lianjia (master)`
-`$ git config user.email "1397991131@qq.com"`
-
-`jia@DESKTOP-0FM6II9 MINGW64 /d/codes/Lianjia (master)`
-`$ git config user.name "yawuplus"`
 
 git 常用命令
 ![](github-study/common.jpg)
@@ -146,7 +137,7 @@ git push origin master
 创建本地仓库到提交
 git init
 关联仓库
- git remote add origin git@github.com:yawuplus/Data_Structures-in-C.git
+ git remote add origin git@github.com:xxx.git
 提交时候把上面的仓库换成你自己的repository地址
 添加文件
 git add .
@@ -158,7 +149,7 @@ git push origin master
 强制push到远程仓库
 git push -u origin master -f
 从远程仓库clone到本地
- git clone git@github.com:yawuplus/Data_Structures-in-C.git
+ git clone git@github.com:xxx.git
 如果在github的remote上已经有了文件，会出现错误。此时应当先pull一下，即：
 git pull origin master
 然后再进行：
@@ -167,7 +158,7 @@ git push origin master
 git status
 
 ```
-    把本地库的内容推送到远程，用gitpush命令，实际上是把当前分支master推送到远程
+把本地库的内容推送到远程，用git push命令，实际上是把当前分支master推送到远程
 由于远程库是空的，我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令
 推送成功后，可以立刻在GitHub页面中看到远程库的内容已经和本地一模一样：
 场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout -- file。
