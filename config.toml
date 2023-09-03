@@ -1,4 +1,3 @@
-# This is a simple configuration.
 # If you want to see the full configuration, please check `full-config.toml` .
 # And see https://gohugo.io/getting-started/configuration/ .
 
@@ -86,5 +85,4 @@ defaultContentLanguage = "en"           # Default language to use
 [permalinks]
   post = "/blog/:year/:month/:day/:slug/"
 
-disablePathToLower = true
 

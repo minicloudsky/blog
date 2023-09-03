@@ -1227,3 +1227,6 @@ upper 并列的有一个 workdir，它的作用是充当一个中间层的作用
 
 - exec 的时候，需要把这个进程加入到一个已有的 namespace 里面；
 - start 的时候，容器进程的 namespace 是需要去专门创建。
+
+## 深入理解etcd - 基本原理解析
+

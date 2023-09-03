@@ -817,6 +817,10 @@ External Metrics 其实是比较特殊的一类，因为我们知道 K8s 现在�
 &lt;li&gt;容器内有日志文件，那这种常见方式怎么处理呢，比较常见的一个方式是说我通过一个 Sidecar 的 streaming 的 container，转写到 stdout，通过 stdout 写到相应的 log-file，然后再通过本地的一个日志轮转，然后以及外部的一个 agent 采集；&lt;/li&gt;
 &lt;li&gt;直接写到 stdout，这种比较常见的一个策略，第一种就是直接我拿这个 agent 去采集到远端，第二种我直接通过类似像一些 sls 的标准 API 采集到远端。&lt;/li&gt;
 &lt;li&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;社区推荐使用 **Fluentd **的一个采集方案，Fluentd 是在每一个节点上面都会起相应的 agent，然后这个 agent 会把数据汇集到一个 Fluentd 的一个 server，这个 server 里面可以将数据离线到相应的类似像 elasticsearch，然后再通过 kibana 做展现；或者是离线到 influxdb，然后通过 Grafana 做展现。这个其实是社区里目前比较推荐的一个做法。&lt;/p&gt;
+&lt;h4 id=&#34;阿里云容器服务监控体系&#34;&gt;阿里云容器服务监控体系&lt;/h4&gt;
+&lt;ul&gt;
 &lt;li&gt;sls&lt;/li&gt;
 &lt;li&gt;arms&lt;/li&gt;
 &lt;li&gt;ahas&lt;/li&gt;
@@ -1051,7 +1055,8 @@ External Metrics 其实是比较特殊的一类，因为我们知道 K8s 现在�
 &lt;ul&gt;
 &lt;li&gt;exec 的时候，需要把这个进程加入到一个已有的 namespace 里面；&lt;/li&gt;
 &lt;li&gt;start 的时候，容器进程的 namespace 是需要去专门创建。&lt;/li&gt;
-&lt;/ul&gt;</description>
+&lt;/ul&gt;
+&lt;h2 id=&#34;深入理解etcd---基本原理解析&#34;&gt;深入理解etcd - 基本原理解析&lt;/h2&gt;</description>
       
     </item>
     
@@ -3402,8 +3407,9 @@ LZ既然熟读历史，又在安抚众人去接受被统治的命运，那能否
 &lt;p&gt;1）夫妻两人均在西部某高校任职，一个教师，一个行政人员，年龄都不小了，37和35，两人每月总收入在8000-10000，1年算10万收入，应该会多一点。&lt;/p&gt;
 &lt;ol start=&#34;2&#34;&gt;
 &lt;li&gt;一个女儿，才两个多月。&lt;/li&gt;
-&lt;li&gt;3）每年给双方父母1万，双方父母均已60出头，一方父母城里的有退休金及医保。另一方父母农村的，得为他们准备点钱。&lt;/li&gt;
+&lt;li&gt;&lt;/li&gt;
 &lt;/ol&gt;
+&lt;p&gt;3）每年给双方父母1万，双方父母均已60出头，一方父母城里的有退休金及医保。另一方父母农村的，得为他们准备点钱。&lt;/p&gt;
 &lt;p&gt;4）目前租住单位两室一厅房，就在学校住宅小区内，除了小点，别的都好，房租100。&lt;/p&gt;
 &lt;p&gt;5）公积金两人很少，约1000元每月，未来1-2年内会有购福利房机会，估计90多平方的旧三室一厅（约需 10万元），可能有120平米的房子，但需要排队看单位建房情况（2000每平米）。&lt;/p&gt;
 &lt;p&gt;6）两人都有单位医疗保险。&lt;/p&gt;

@@ -1,12 +1,12 @@
 ---
-categories:
+title: Github + hexo 搭建简易博客
+date: 2017-03-12 21:42:19
+tags: 
+    - hexo
+    - 主题 
+categories: 
 - Github
 - hexo
-date: 2017-03-12 21:42:19
-tags:
-- hexo
-- 主题
-title: Github + hexo 搭建简易博客
 ---
 使用 hexo+Github搭建博客
 ![](github-hexo-deploy-blog/git-logo.jpg)

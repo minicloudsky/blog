@@ -23,8 +23,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 
 <meta name="author" content="minicloudsky" />
-  <meta name="description" content="K8s 核心概念  调度 自动修复 水平伸缩  k8s 架构 典型的两层 client-server 架构
-master 核心组件  API Server Controller Scheduler etcd " />
+  <meta name="description" content="K8s 核心概念 调度 自动修复 水平伸缩 k8s 架构 典型的两层 client-server 架构
+master 核心组件 API Server Controller Scheduler etcd " />
 
   <meta name="keywords" content="minicloudsky" />
 
@@ -33,7 +33,7 @@ master 核心组件  API Server Controller Scheduler etcd " />
 
 
 
-<meta name="generator" content="Hugo 0.99.1" />
+<meta name="generator" content="Hugo 0.118.2" />
 
 
 <link rel="canonical" href="http://minicloudsky.github.io/blog/2023/05/14/cncf-x-aliyun-%E4%BA%91%E5%8E%9F%E7%94%9F%E5%85%AC%E5%BC%80%E8%AF%BE%E7%AC%94%E8%AE%B0/" />
@@ -82,7 +82,6 @@ etcd
 <meta property="og:url" content="http://minicloudsky.github.io/blog/2023/05/14/cncf-x-aliyun-%E4%BA%91%E5%8E%9F%E7%94%9F%E5%85%AC%E5%BC%80%E8%AF%BE%E7%AC%94%E8%AE%B0/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2023-05-14T21:35:12+00:00" />
 <meta property="article:modified_time" content="2023-05-14T21:35:12+00:00" />
-
 <meta itemprop="name" content="cncf x aliyun 云原生公开课笔记">
 <meta itemprop="description" content="K8s 核心概念
 
@@ -100,7 +99,7 @@ Scheduler
 etcd
 "><meta itemprop="datePublished" content="2023-05-14T21:35:12+00:00" />
 <meta itemprop="dateModified" content="2023-05-14T21:35:12+00:00" />
-<meta itemprop="wordCount" content="39324">
+<meta itemprop="wordCount" content="39507">
 <meta itemprop="keywords" content="思考," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="cncf x aliyun 云原生公开课笔记"/>
 <meta name="twitter:description" content="K8s 核心概念
@@ -457,6 +456,7 @@ etcd
         <li><a href="#containerd-容器架构详解---容器流程示例">containerd 容器架构详解 - 容器流程示例</a></li>
       </ul>
     </li>
+    <li><a href="#深入理解etcd---基本原理解析">深入理解etcd - 基本原理解析</a></li>
   </ul>
 </nav>
   </div>
@@ -1251,6 +1251,10 @@ External Metrics 其实是比较特殊的一类，因为我们知道 K8s 现在�
 <li>容器内有日志文件，那这种常见方式怎么处理呢，比较常见的一个方式是说我通过一个 Sidecar 的 streaming 的 container，转写到 stdout，通过 stdout 写到相应的 log-file，然后再通过本地的一个日志轮转，然后以及外部的一个 agent 采集；</li>
 <li>直接写到 stdout，这种比较常见的一个策略，第一种就是直接我拿这个 agent 去采集到远端，第二种我直接通过类似像一些 sls 的标准 API 采集到远端。</li>
 <li></li>
+</ul>
+<p>社区推荐使用 **Fluentd **的一个采集方案，Fluentd 是在每一个节点上面都会起相应的 agent，然后这个 agent 会把数据汇集到一个 Fluentd 的一个 server，这个 server 里面可以将数据离线到相应的类似像 elasticsearch，然后再通过 kibana 做展现；或者是离线到 influxdb，然后通过 Grafana 做展现。这个其实是社区里目前比较推荐的一个做法。</p>
+<h4 id="阿里云容器服务监控体系">阿里云容器服务监控体系</h4>
+<ul>
 <li>sls</li>
 <li>arms</li>
 <li>ahas</li>
@@ -1486,6 +1490,7 @@ External Metrics 其实是比较特殊的一类，因为我们知道 K8s 现在�
 <li>exec 的时候，需要把这个进程加入到一个已有的 namespace 里面；</li>
 <li>start 的时候，容器进程的 namespace 是需要去专门创建。</li>
 </ul>
+<h2 id="深入理解etcd---基本原理解析">深入理解etcd - 基本原理解析</h2>
     </div>
 
     
