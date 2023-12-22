@@ -6,24 +6,21 @@
     <description>Recent content in 大数据 on Minicloudsky&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 01 Jul 2020 12:59:55 +0000</lastBuildDate><atom:link href="http://minicloudsky.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 01 Jul 2020 12:59:55 +0000</lastBuildDate>
+    <atom:link href="http://minicloudsky.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>neo4j 图数据库学习</title>
       <link>http://minicloudsky.github.io/blog/2020/07/01/neo4j-%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%A6%E4%B9%A0/</link>
       <pubDate>Wed, 01 Jul 2020 12:59:55 +0000</pubDate>
-      
       <guid>http://minicloudsky.github.io/blog/2020/07/01/neo4j-%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%A6%E4%B9%A0/</guid>
       <description>neo4j 图数据库学习 节点 属性 关系 标签 create 创建节点 create(node_name:label_name {attribute_key:value}) create(张小龙:微信 {age:45,company:&amp;#34;腾讯&amp;#34;,positi</description>
     </item>
-    
     <item>
       <title>大数据笔记</title>
       <link>http://minicloudsky.github.io/blog/2017/04/26/%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%AC%94%E8%AE%B0/</link>
       <pubDate>Wed, 26 Apr 2017 00:35:12 +0000</pubDate>
-      
       <guid>http://minicloudsky.github.io/blog/2017/04/26/%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%AC%94%E8%AE%B0/</guid>
       <description>运算符 标识符关键字 输入输出 变量和类型 vim scp-远程复制 人生苦短，我用python linux 命令 资料汇总 https://coolshell.cn/articles/12052.html https://mp.weixin.qq.com/s/UsOr9RR4WSqHvt5rZaf0uQ hadoop https://mp.weixin.qq.com/s/JDDTTy6QfZtwz547M88GMQ https://mp.weixin.qq.com/s/4rnJh5OJ1DjgB1OJNXx1QA http://hadoop.apache.org/docs/stable/hadoop-project-dist http://book.51cto.com/art/201312/422044.htm RPC说明 https://github.com/Snailclimb/JavaGuide/blob/master/docs/java/Java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.md https://blog.csdn.net/jameslvt/article/details/81348499 面试题</description>
     </item>
-    
   </channel>
 </rss>

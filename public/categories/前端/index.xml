@@ -6,15 +6,14 @@
     <description>Recent content in 前端 on Minicloudsky&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 09 Jul 2020 12:59:55 +0000</lastBuildDate><atom:link href="http://minicloudsky.github.io/categories/%E5%89%8D%E7%AB%AF/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 09 Jul 2020 12:59:55 +0000</lastBuildDate>
+    <atom:link href="http://minicloudsky.github.io/categories/%E5%89%8D%E7%AB%AF/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>力导向图</title>
       <link>http://minicloudsky.github.io/blog/2020/07/09/%E5%8A%9B%E5%AF%BC%E5%90%91%E5%9B%BE/</link>
       <pubDate>Thu, 09 Jul 2020 12:59:55 +0000</pubDate>
-      
       <guid>http://minicloudsky.github.io/blog/2020/07/09/%E5%8A%9B%E5%AF%BC%E5%90%91%E5%9B%BE/</guid>
       <description>force-graph 力导向图属性总结 力导向图 基础容器 &amp;lt;div id=&amp;#34;graph&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; 基础节点数据 const gData = { &amp;#34;nodes&amp;#34;: [ { &amp;#34;id&amp;#34;: &amp;#34;mysql&amp;#34;, &amp;#34;group&amp;#34;: 1 }, { &amp;#34;id&amp;#34;: &amp;#34;redis&amp;#34;, &amp;#34;group&amp;#34;: 1 }, { &amp;#34;id&amp;#34;: &amp;#34;hive&amp;#34;, &amp;#34;group&amp;#34;: 2 }, { &amp;#34;id&amp;#34;: &amp;#34;impala&amp;#34;, &amp;#34;group&amp;#34;: 2 }, { &amp;#34;id&amp;#34;: &amp;#34;hdfs&amp;#34;, &amp;#34;group&amp;#34;: 3 }, { &amp;#34;id&amp;#34;: &amp;#34;张三</description>
     </item>
-    
   </channel>
 </rss>
