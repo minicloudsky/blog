@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>docker on Minicloudsky&#39;s blog</title>
-    <link>http://minicloudsky.github.io/categories/docker/</link>
+    <link>https://minicloudsky.cn/categories/docker/</link>
     <description>Recent content in docker on Minicloudsky&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Wed, 15 May 2019 08:33:42 +0000</lastBuildDate>
-    <atom:link href="http://minicloudsky.github.io/categories/docker/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://minicloudsky.cn/categories/docker/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>docker学习笔记</title>
-      <link>http://minicloudsky.github.io/blog/2019/05/15/docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+      <link>https://minicloudsky.cn/blog/2019/05/15/docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
       <pubDate>Wed, 15 May 2019 08:33:42 +0000</pubDate>
-      <guid>http://minicloudsky.github.io/blog/2019/05/15/docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+      <guid>https://minicloudsky.cn/blog/2019/05/15/docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
       <description>什么是docker docker包括一个命令行程序、一个后台守护进程、以及一组远程服务。它解决了常见的软件问题，并建华路安装、运行、发布和删除</description>
     </item>
   </channel>

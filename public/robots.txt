@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: http://minicloudsky.github.io/sitemap.xml
+Sitemap: https://minicloudsky.cn/sitemap.xml

@@ -2,101 +2,101 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Minicloudsky&#39;s blog</title>
-    <link>http://minicloudsky.github.io/categories/</link>
+    <link>https://minicloudsky.cn/categories/</link>
     <description>Recent content in Categories on Minicloudsky&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Sun, 14 May 2023 21:35:12 +0000</lastBuildDate>
-    <atom:link href="http://minicloudsky.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://minicloudsky.cn/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>k8s</title>
-      <link>http://minicloudsky.github.io/categories/k8s/</link>
+      <link>https://minicloudsky.cn/categories/k8s/</link>
       <pubDate>Sun, 14 May 2023 21:35:12 +0000</pubDate>
-      <guid>http://minicloudsky.github.io/categories/k8s/</guid>
+      <guid>https://minicloudsky.cn/categories/k8s/</guid>
       <description></description>
     </item>
     <item>
       <title>思考</title>
-      <link>http://minicloudsky.github.io/categories/%E6%80%9D%E8%80%83/</link>
+      <link>https://minicloudsky.cn/categories/%E6%80%9D%E8%80%83/</link>
       <pubDate>Tue, 04 Oct 2022 00:35:12 +0000</pubDate>
-      <guid>http://minicloudsky.github.io/categories/%E6%80%9D%E8%80%83/</guid>
+      <guid>https://minicloudsky.cn/categories/%E6%80%9D%E8%80%83/</guid>
       <description></description>
     </item>
     <item>
       <title>devops</title>
-      <link>http://minicloudsky.github.io/categories/devops/</link>
+      <link>https://minicloudsky.cn/categories/devops/</link>
       <pubDate>Fri, 14 Aug 2020 14:33:42 +0000</pubDate>
-      <guid>http://minicloudsky.github.io/categories/devops/</guid>
+      <guid>https://minicloudsky.cn/categories/devops/</guid>
       <description></description>
     </item>
     <item>
       <title>前端</title>
-      <link>http://minicloudsky.github.io/categories/%E5%89%8D%E7%AB%AF/</link>
+      <link>https://minicloudsky.cn/categories/%E5%89%8D%E7%AB%AF/</link>
       <pubDate>Thu, 09 Jul 2020 12:59:55 +0000</pubDate>
-      <guid>http://minicloudsky.github.io/categories/%E5%89%8D%E7%AB%AF/</guid>
+      <guid>https://minicloudsky.cn/categories/%E5%89%8D%E7%AB%AF/</guid>
       <description></description>
     </item>
     <item>
       <title>图数据库 大数据</title>
-      <link>http://minicloudsky.github.io/categories/%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%A4%A7%E6%95%B0%E6%8D%AE/</link>
+      <link>https://minicloudsky.cn/categories/%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%A4%A7%E6%95%B0%E6%8D%AE/</link>
       <pubDate>Wed, 01 Jul 2020 12:59:55 +0000</pubDate>
-      <guid>http://minicloudsky.github.io/categories/%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%A4%A7%E6%95%B0%E6%8D%AE/</guid>
+      <guid>https://minicloudsky.cn/categories/%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%A4%A7%E6%95%B0%E6%8D%AE/</guid>
       <description></description>
     </item>
     <item>
       <title>docker</title>
-      <link>http://minicloudsky.github.io/categories/docker/</link>
+      <link>https://minicloudsky.cn/categories/docker/</link>
       <pubDate>Wed, 15 May 2019 08:33:42 +0000</pubDate>
-      <guid>http://minicloudsky.github.io/categories/docker/</guid>
+      <guid>https://minicloudsky.cn/categories/docker/</guid>
       <description></description>
     </item>
     <item>
       <title>人生</title>
-      <link>http://minicloudsky.github.io/categories/%E4%BA%BA%E7%94%9F/</link>
+      <link>https://minicloudsky.cn/categories/%E4%BA%BA%E7%94%9F/</link>
       <pubDate>Sun, 27 May 2018 18:05:14 +0000</pubDate>
-      <guid>http://minicloudsky.github.io/categories/%E4%BA%BA%E7%94%9F/</guid>
+      <guid>https://minicloudsky.cn/categories/%E4%BA%BA%E7%94%9F/</guid>
       <description></description>
     </item>
     <item>
       <title>心情</title>
-      <link>http://minicloudsky.github.io/categories/%E5%BF%83%E6%83%85/</link>
+      <link>https://minicloudsky.cn/categories/%E5%BF%83%E6%83%85/</link>
       <pubDate>Tue, 12 Dec 2017 16:39:55 +0000</pubDate>
-      <guid>http://minicloudsky.github.io/categories/%E5%BF%83%E6%83%85/</guid>
+      <guid>https://minicloudsky.cn/categories/%E5%BF%83%E6%83%85/</guid>
       <description></description>
     </item>
     <item>
       <title>生活</title>
-      <link>http://minicloudsky.github.io/categories/%E7%94%9F%E6%B4%BB/</link>
+      <link>https://minicloudsky.cn/categories/%E7%94%9F%E6%B4%BB/</link>
       <pubDate>Tue, 12 Dec 2017 16:39:55 +0000</pubDate>
-      <guid>http://minicloudsky.github.io/categories/%E7%94%9F%E6%B4%BB/</guid>
+      <guid>https://minicloudsky.cn/categories/%E7%94%9F%E6%B4%BB/</guid>
       <description></description>
     </item>
     <item>
       <title>git</title>
-      <link>http://minicloudsky.github.io/categories/git/</link>
+      <link>https://minicloudsky.cn/categories/git/</link>
       <pubDate>Wed, 11 Oct 2017 14:53:21 +0000</pubDate>
-      <guid>http://minicloudsky.github.io/categories/git/</guid>
+      <guid>https://minicloudsky.cn/categories/git/</guid>
       <description></description>
     </item>
     <item>
       <title>大数据</title>
-      <link>http://minicloudsky.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/</link>
+      <link>https://minicloudsky.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/</link>
       <pubDate>Wed, 26 Apr 2017 00:35:12 +0000</pubDate>
-      <guid>http://minicloudsky.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/</guid>
+      <guid>https://minicloudsky.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/</guid>
       <description></description>
     </item>
     <item>
       <title>Github</title>
-      <link>http://minicloudsky.github.io/categories/github/</link>
+      <link>https://minicloudsky.cn/categories/github/</link>
       <pubDate>Sun, 12 Mar 2017 21:42:19 +0000</pubDate>
-      <guid>http://minicloudsky.github.io/categories/github/</guid>
+      <guid>https://minicloudsky.cn/categories/github/</guid>
       <description></description>
     </item>
     <item>
       <title>hexo</title>
-      <link>http://minicloudsky.github.io/categories/hexo/</link>
+      <link>https://minicloudsky.cn/categories/hexo/</link>
       <pubDate>Sun, 12 Mar 2017 21:42:19 +0000</pubDate>
-      <guid>http://minicloudsky.github.io/categories/hexo/</guid>
+      <guid>https://minicloudsky.cn/categories/hexo/</guid>
       <description></description>
     </item>
   </channel>

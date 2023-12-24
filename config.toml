@@ -1,7 +1,7 @@
 # If you want to see the full configuration, please check `full-config.toml` .
 # And see https://gohugo.io/getting-started/configuration/ .
 
-baseURL = "http://minicloudsky.github.io"
+baseURL = "https://minicloudsky.cn"
 title = "Minicloudsky's blog"
 enableRobotsTXT = true
 enableEmoji = true

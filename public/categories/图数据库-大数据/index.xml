@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>图数据库 大数据 on Minicloudsky&#39;s blog</title>
-    <link>http://minicloudsky.github.io/categories/%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%A4%A7%E6%95%B0%E6%8D%AE/</link>
+    <link>https://minicloudsky.cn/categories/%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%A4%A7%E6%95%B0%E6%8D%AE/</link>
     <description>Recent content in 图数据库 大数据 on Minicloudsky&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Wed, 01 Jul 2020 12:59:55 +0000</lastBuildDate>
-    <atom:link href="http://minicloudsky.github.io/categories/%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%A4%A7%E6%95%B0%E6%8D%AE/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://minicloudsky.cn/categories/%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%A4%A7%E6%95%B0%E6%8D%AE/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>neo4j 图数据库学习</title>
-      <link>http://minicloudsky.github.io/blog/2020/07/01/neo4j-%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%A6%E4%B9%A0/</link>
+      <link>https://minicloudsky.cn/blog/2020/07/01/neo4j-%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%A6%E4%B9%A0/</link>
       <pubDate>Wed, 01 Jul 2020 12:59:55 +0000</pubDate>
-      <guid>http://minicloudsky.github.io/blog/2020/07/01/neo4j-%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%A6%E4%B9%A0/</guid>
+      <guid>https://minicloudsky.cn/blog/2020/07/01/neo4j-%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%A6%E4%B9%A0/</guid>
       <description>neo4j 图数据库学习 节点 属性 关系 标签 create 创建节点 create(node_name:label_name {attribute_key:value}) create(张小龙:微信 {age:45,company:&amp;#34;腾讯&amp;#34;,positi</description>
     </item>
   </channel>
