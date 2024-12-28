@@ -9,8 +9,50 @@
   </url>
   
   <url>
+    <loc>https://minicloudsky.cn/blog/2024/03/09/</loc>
+    <lastmod>2024-03-09T22:01:35+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://minicloudsky.cn/categories/</loc>
-    <lastmod>2023-05-14T21:35:12+00:00</lastmod>
+    <lastmod>2024-03-09T22:01:35+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://minicloudsky.cn/tags/cicd/</loc>
+    <lastmod>2024-03-09T22:01:35+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://minicloudsky.cn/categories/cicd/</loc>
+    <lastmod>2024-03-09T22:01:35+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://minicloudsky.cn/</loc>
+    <lastmod>2024-03-09T22:01:35+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://minicloudsky.cn/post/</loc>
+    <lastmod>2024-03-09T22:01:35+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://minicloudsky.cn/tags/</loc>
+    <lastmod>2024-03-09T22:01:35+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -24,27 +66,6 @@
   
   <url>
     <loc>https://minicloudsky.cn/categories/k8s/</loc>
-    <lastmod>2023-05-14T21:35:12+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://minicloudsky.cn/</loc>
-    <lastmod>2023-05-14T21:35:12+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://minicloudsky.cn/post/</loc>
-    <lastmod>2023-05-14T21:35:12+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://minicloudsky.cn/tags/</loc>
     <lastmod>2023-05-14T21:35:12+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>

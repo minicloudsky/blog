@@ -6,8 +6,15 @@
     <description>Recent content in Categories on Minicloudsky&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 14 May 2023 21:35:12 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 09 Mar 2024 22:01:35 +0000</lastBuildDate>
     <atom:link href="https://minicloudsky.cn/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>cicd</title>
+      <link>https://minicloudsky.cn/categories/cicd/</link>
+      <pubDate>Sat, 09 Mar 2024 22:01:35 +0000</pubDate>
+      <guid>https://minicloudsky.cn/categories/cicd/</guid>
+      <description></description>
+    </item>
     <item>
       <title>k8s</title>
       <link>https://minicloudsky.cn/categories/k8s/</link>
