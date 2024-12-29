@@ -24,11 +24,11 @@
     </item>
     
     <item>
-      <title>深入解析Golang异常机制：Panic 与 Recover 的原理与最佳实践</title>
-      <link>https://minicloudsky.cn/blog/2024/12/28/%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90golang%E5%BC%82%E5%B8%B8%E6%9C%BA%E5%88%B6panic-%E4%B8%8E-recover-%E7%9A%84%E5%8E%9F%E7%90%86%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</link>
+      <title>深入解析Golang异常机制：Panic 与 Recover</title>
+      <link>https://minicloudsky.cn/blog/2024/12/28/%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90golang%E5%BC%82%E5%B8%B8%E6%9C%BA%E5%88%B6panic-%E4%B8%8E-recover/</link>
       <pubDate>Sat, 28 Dec 2024 20:53:21 +0000</pubDate>
       
-      <guid>https://minicloudsky.cn/blog/2024/12/28/%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90golang%E5%BC%82%E5%B8%B8%E6%9C%BA%E5%88%B6panic-%E4%B8%8E-recover-%E7%9A%84%E5%8E%9F%E7%90%86%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</guid>
+      <guid>https://minicloudsky.cn/blog/2024/12/28/%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90golang%E5%BC%82%E5%B8%B8%E6%9C%BA%E5%88%B6panic-%E4%B8%8E-recover/</guid>
       
         <description>&lt;h1 id=&#34;一前言&#34;&gt;一、前言&lt;/h1&gt;
 &lt;p&gt;在 Go 中，&lt;code&gt;panic&lt;/code&gt; 是一种用于处理异常的机制。&lt;code&gt;panic&lt;/code&gt; 能够改变程序的控制流，调用 &lt;code&gt;panic&lt;/code&gt; 后会立刻停止执行当前函数的剩余代码，并在当前 Goroutine 中递归执行调用方的 &lt;code&gt;defer&lt;/code&gt;；当程序遇到不可恢复的错误或异常状态时，可以通过调用 &lt;code&gt;panic&lt;/code&gt; 来中止当前函数的执行，触发递归的函数栈退出，最终程序崩溃并打印错误信息。&lt;/p&gt;

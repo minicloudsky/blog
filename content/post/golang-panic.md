@@ -1,5 +1,5 @@
 ---
-title: 深入解析Golang异常机制：Panic 与 Recover 的原理与最佳实践
+title: 深入解析Golang异常机制：Panic 与 Recover
 date: 2024-12-28 20:53:21
 categories:
 - golang
