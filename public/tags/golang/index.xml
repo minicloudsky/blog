@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>golang on Minicloudsky&#39;s blog</title>
+    <link>https://minicloudsky.cn/tags/golang/</link>
+    <description>Recent content in golang on Minicloudsky&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 28 Dec 2024 20:53:21 +0000</lastBuildDate>
+    <atom:link href="https://minicloudsky.cn/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>深入解析Golang异常机制：Panic 与 Recover 的原理与最佳实践</title>
+      <link>https://minicloudsky.cn/blog/2024/12/28/%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90golang%E5%BC%82%E5%B8%B8%E6%9C%BA%E5%88%B6panic-%E4%B8%8E-recover-%E7%9A%84%E5%8E%9F%E7%90%86%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Sat, 28 Dec 2024 20:53:21 +0000</pubDate>
+      <guid>https://minicloudsky.cn/blog/2024/12/28/%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90golang%E5%BC%82%E5%B8%B8%E6%9C%BA%E5%88%B6panic-%E4%B8%8E-recover-%E7%9A%84%E5%8E%9F%E7%90%86%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</guid>
+      <description>一、前言 在 Go 中，panic 是一种用于处理异常的机制。panic 能够改变程序的控制流，调用 panic 后会立刻停止执行当前函数的剩余代码，并在当前 Goroutine 中递</description>
+    </item>
+  </channel>
+</rss>
